@@ -56,17 +56,42 @@
                     ?>
                 </div>
                 <!-- TABLE RETORNO NFE -->
-                <!-- NFES DETAILS -->
-                <div class="d-none details-container">
-                    <?php
-                    $details = new Pagebuilder();
-                    $details->module = "logistica";
-                    $details->folder = "template/view";
-                    $details->file = "retorno-nfe-details";
-                    include $details->loudTemplatePHP_parts();
-                    ?>
+                <div class="d-none details-container flex-column align-items-center">
+                    <!-- NFES DETAILS -->
+                    <div class="d-flex details-nfe flex-rows">
+                        <?php
+                        $details = new Pagebuilder();
+                        $details->module = "logistica";
+                        $details->folder = "template/view";
+                        $details->file = "retorno-nfe-details";
+                        include $details->loudTemplatePHP_parts();
+                        ?>
+                    </div>
+                    <!-- NFES DETAILS -->
+                    <!-- NFES FEEDBACK -->
+                    <div class="d-flex feedback-nfe flex-rows">
+                        <?php
+                        $details = new Pagebuilder();
+                        $details->module = "logistica";
+                        $details->folder = "template/view";
+                        $details->file = "retorno-nfe-feedback";
+                        include $details->loudTemplatePHP_parts();
+                        ?>
+                    </div>
+                    <!-- NFES FEEDBACK -->
+                    <!-- NFES AVARIAS -->
+                    <div class="d-none avarias-nfe flex-rows">
+                        <?php
+                        $details = new Pagebuilder();
+                        $details->module = "logistica";
+                        $details->folder = "template/view";
+                        $details->file = "retorno-nfe-avarias";
+                        include $details->loudTemplatePHP_parts();
+                        ?>
+                    </div>
+                    <!-- NFES AVARIAS -->
                 </div>
-                <!-- NFES DETAILS -->
+
             </div>
             <!-- TABLES -->
             <!-- PAGINATIONS -->

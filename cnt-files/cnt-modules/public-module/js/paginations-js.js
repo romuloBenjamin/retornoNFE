@@ -11,6 +11,7 @@ function setPaginationsPatterns() {
     patterns.path = createRequestPath(patterns);
     return patterns;
 }
+console.log(paginations);
 /*SET DEFAULT PAGINATIONS*/
 function setPaginations(params, mode = false) {
     var pages = {ini:0, max:15};
@@ -48,29 +49,40 @@ function paginationsLouderCarrousel(mode = "put") {
 }
 /*---------------------->INIT PAGINATIONS<----------------------*/
 /*PREPARE PAGINATIONS*/
-function prepare_paginations(params, autoloud = false) {
-    /*'autoloud => FALSE' is DEFAULT PAGINATIONS AND 'autoloud => true' is INFINITE PAGINATIONS*/
-    paginations.paginations = params.paginations;
-    if(params.swit != false) paginations.swit = params.swit;
-    if(autoloud === false) setDefaultPaginations(paginations);
-    if(autoloud === true) setInfinitePaginations(paginations);
+async function prepare_paginations_object(params, paginations, autoloud = false) {
+    /*PATTERNS PAGINATIONS*/
+    var paginations = setPaginationsPatterns();
+    /*CREATE OBJ PAGINATIONS*/
+    var obj_paginations = {registrosTotais:"", registrosPorPagina:"", registroInit:"", registroAtual:"", paginasDisponiveis:""};
+    obj_paginations.registrosTotais = params;
+    obj_paginations.registrosPorPagina = paginations.paginations.max;
+    obj_paginations.registroInit = paginations.paginations.ini;
+    obj_paginations.registroAtual = paginations.paginations.current;
+    /*CALCULAR QTD DE PAGINAS*/
+    let qtd = params/paginations.paginations.max;
+    qtd = Math.floor(qtd);
+    if(qtd % 1 === 0) qtd = Math.ceil(qtd);
+    /*PLACE QTD DE PAGINAS*/
+    obj_paginations.paginasDisponiveis = qtd;
+    //if(params.swit != false) paginations.swit = params.swit;
+    if(autoloud === false) await setDefaultPaginations(obj_paginations);
+    //if(autoloud === true) setInfinitePaginations(paginations);
 }
 function placeSmalls(params) {
-    if(params.registroAtual === 0) params.registroAtual = 1;
+    console.log(params);
+    if(params.registroAtual === undefined) params.registroAtual = 1;
     var min_titulos = document.querySelectorAll("small#qtdRegistros");
+    /**/
     min_titulos.forEach(placers => {
-        placers.innerHTML = "<span>"+((params.registroAtual*params.registrosPagina)-14)+" de "+params.totalRegistros+" registros</span><br>";
+        placers.innerHTML = "<span>"+params.registroAtual+" de "+params.registrosTotais+" registros</span><br>";
         placers.innerHTML += "<span><i>Total de <b>"+params.paginasDisponiveis+" páginas!</b></i></span>";
     });
+    return null;
 }
 /*------------------->DEFAULT PAGINATIONS DATA<-------------------*/
 /*DEFAULT PAGINATIONS*/
-function setDefaultPaginations(params) {
-    if(params.swit === false) params.swit = "listar-funcionarios-paginations";
-    var send_request = sendRequestPaginations(params);
-}
-/*RECEIVE PAGINATIONS DATA*/
-function receiveRequest_paginations(params, patterns) {
+async function setDefaultPaginations(params) {
+    console.log(params);
     /*PLACE SMALL DATA*/
     var place_smalls = placeSmalls(params);
     /*PLACE PAGE CARROSSEL*/
@@ -81,6 +93,7 @@ function receiveRequest_paginations(params, patterns) {
 }
 /*PLACE PAGE CARROUSSEL*/
 function placePageCarrousel(params) {
+    if(params.registroAtual === undefined) params.registroAtual = 1;
     /*SET LOUDER PAGINATIONS -> PUT MODE*/
     var louderCarrousel = paginationsLouderCarrousel("put");
     /*PLACE PAGE CURRENT*/

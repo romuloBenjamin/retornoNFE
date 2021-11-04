@@ -29,31 +29,13 @@ async function sendRequest(params) {
     var results = await fetch(louds, config);
     try {
         results = await results?.json();
-        console.log(results);
         if(params.swit === "listar-funcionarios-short") await receiveRequest(results, params);
         if(params.swit === "listar-retornos-nfe") await receiveRequest(results, params);
         if(params.swit === "listar-retornos-nfe-search") await receiveRequest(results, params, true);
+        if(params.swit === "listar-retronos-nfe-paginations") await prepare_paginations_object(results, params.paginations);
     } catch (error) {
         console.log("erro ao gerar REQUEST Principal");
     }
-}
-/*SET REQUESTS PAGINATIONS -> POST*/
-function sendRequestPaginations(params) {
-    //console.log(params);
-    /*FORM DATA*/
-     var data = new FormData();
-     data.append("swit", params.swit);
-     data.append("entry", JSON.stringify(params.paginations));
-     /*SET REQUEST*/    
-     var config = {method: 'post', body: data};
-     var louds = loudRequest(params);
-     fetch(louds, config)
-        .then(responser => responser.json())
-        .then(data => {
-            if(params.swit === "listar-funcionarios-paginations") receiveRequest_paginations(data, params);
-            if(params.swit === "listar-retronos-nfe-paginations") receiveRequest_paginations(data, params);
-        })
-        .catch(()=>{console.log("erro ao gerar a Paginação.");});
 }
 /*GET N REQUEST*/
 function createRequestPath(params) {

@@ -48,7 +48,7 @@ class Logistica_compound
                 $this->build["loopdata"] = $compound->loopdata_logistica();
                 $resultSet = $this->build["loopdata"];
                 break;
-            case 'listar-paginations-max-view':
+            case 'listar-retronos-nfe-paginations':
                 $compound->swit = $this->swit;
                 $compound->entry = $this->entry;
                 $compound->build = $this->build;

@@ -71,7 +71,7 @@ class Logistica_loopdata
                     $resultSet = $loops->loopdata_build();
                 }
                 break;
-            case 'listar-paginations-max-view':
+            case 'listar-retronos-nfe-paginations':
                 $sql = $loops->loopdata_listar_registros_nfe();
                 $loops->entry = $sql;
                 $result = $loops->loopdata_exec();

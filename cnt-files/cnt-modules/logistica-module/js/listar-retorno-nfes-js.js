@@ -14,9 +14,13 @@ function setRetornosNFEPatterns() {
 /*-------------------------->SEND REQUEST DATA<--------------------------*/
 /*DEFAULT DATA LISTAR REGISTROS -> SEND REQUEST*/
 //console.log(patterns);
-var send_request = pre_sendRequest();
-async function pre_sendRequest() {
+var send_request = pre_sendRequest("retornoNFE");
+var send_request_paginations = pre_sendRequest("Paginations");
+
+/*PRE SEND REQUEST*/
+async function pre_sendRequest(str) {
     var patterns = setRetornosNFEPatterns();
+    if(str === "Paginations") patterns.swit = "listar-retronos-nfe-paginations";
     await sendRequest(patterns);
 }
 /*ONCHANGE DATA LISTAR REGISTROS -> SEND REQUEST*/
@@ -25,7 +29,6 @@ async function pre_sendRequest() {
 /*-------------------------->RECEIVE REQUEST DATA<--------------------------*/
 /*RECIEVE REQUEST*/
 async function receiveRequest(params, patterns, search = false) {
-    console.log(search);
     /*IF EMPTY DATA*/
     if(params.data.length === 0) return emptySearch(params, true);
     if(params.data.length > 0) {
@@ -34,15 +37,13 @@ async function receiveRequest(params, patterns, search = false) {
         var loops = params.data;
         /*SET PLACERS*/
         var placers = document.querySelector("table#table-retorno-nfe > tbody");
-        console.log(params);
+        //console.log(params);
         /*BUILD VIEWER*/
         if(search === false) var build_loopdata = build_loopRequest(loops, placers);
         if(search === true) {
             var build_loopdata = build_loopRequest(loops, placers);
+            return false;
         }
-        /*PREPARE PAGINATIONS*/
-        patterns.swit = "listar-retronos-nfe-paginations";
-        var setDefaultPaginations = prepare_paginations(patterns, false);
     } 
 }
 /*VIEW RECEIVE REQUEST IN FOREACH LOOP*/

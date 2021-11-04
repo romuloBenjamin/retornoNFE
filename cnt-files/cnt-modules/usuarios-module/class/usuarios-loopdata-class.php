@@ -104,6 +104,14 @@ class Usuarios_loopdata
                 $loops->swit = "listar-equipes";
                 $resultSet = $loops->loopdata_buildset();
                 break;
+            case 'listar-lideres':
+                $sql = $loops->usuarios_listar_lideres();
+                $loops->entry = $sql;
+                $result = $loops->loopdata_execute();
+                $loops->entry = $result;
+                $loops->swit = "listar-lideres";
+                $resultSet = $loops->loopdata_buildset();
+                break;
             case 'listar-generos':
                 $sql = $loops->usuarios_listar_generos();
                 $loops->entry = $sql;
@@ -305,6 +313,17 @@ class Usuarios_loopdata
     public function usuarios_listar_equipes()
     {
         $sql = "SELECT uie_id, uie_nome FROM uni_intra_equipes WHERE uie_status = '1'";
+        return $sql;
+    }
+    /*SQL -> LISTAR LIDERES*/
+    public function usuarios_listar_lideres()
+    {
+        $sql = "SELECT uie_id, uie_nome, ui_funcionarios_apelido ";
+        $sql .= "FROM uni_intra_equipes ";
+        $sql .= "INNER JOIN uni_intra_funcionarios ";
+        $sql .= "ON uni_intra_equipes.uie_id = uni_intra_funcionarios.ui_funcionarios_equipe_id ";
+        $sql .= "WHERE ";
+        $sql .= "uni_intra_funcionarios.ui_funcionarios_cargo_id = '5' AND uni_intra_equipes.uie_status = '1'";
         return $sql;
     }
     /*SQL -> LISTAR GENEROS*/

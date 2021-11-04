@@ -31,6 +31,9 @@ class Usuarios_patterns
             case 'listar-equipes':
                 $resultSet = json_encode(array("ids", "equipes"));
                 break;
+            case 'listar-lideres':
+                $resultSet = json_encode(array("ids", "equipes", "lider"));
+                break;
             case 'listar-status':
                 $resultSet = json_encode(array("ids", "status"));
                 break;

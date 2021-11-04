@@ -30,10 +30,11 @@ function createSearchMap() {
     var nObj = new Object();
     nObj[fieldName] = values;
     /*SET LOCALSTORAGE*/
-    var saveLocalStorage = localStorage_toSearch(JSON.stringify(nObj), "searchdata", fieldName);
+    if(nObj[fieldName].id === "*") var saveLocalStorage = localStorage_toSearch_removeProperty(JSON.stringify(nObj), "searchdata", fieldName);
+    if(nObj[fieldName].id != "*") var saveLocalStorage = localStorage_toSearch(JSON.stringify(nObj), "searchdata", fieldName);
 }
 /*SET LOCAL STORAGE -> SEARCHDATA*/
-function localStorage_toSearch(params, local, property) {    
+async function localStorage_toSearch(params, local, property) {    
     /*REMOVE STORAGE SQL IF EXIST'S*/
     var localstorage_noOverride = localStorageNoOverride();
     Object.keys(localStorage).forEach(tags => {
@@ -45,7 +46,7 @@ function localStorage_toSearch(params, local, property) {
     if(localStorage.getItem(local) != null) {
         /*DESTRINGFY OBJ*/
         const nParans = JSON.parse(params);
-        /**/
+        /*CREATE OBJ IN LOCAL STORAGE*/
         var storage_to_local = JSON.parse(localStorage.getItem(local));
         var obj = new Object(storage_to_local);
         obj[property] = nParans[property];
@@ -53,14 +54,24 @@ function localStorage_toSearch(params, local, property) {
     }
     
 }
+/*REMOVE LOCAL STORAGE -> SEARCHDATA*/
+async function localStorage_toSearch_removeProperty(params, local, property) {
+    /*GET LOCAL STORAGE DATA*/
+    var obj_storage = JSON.parse(localStorage[local]);
+    /*REMOVE PROPERTY IF '*'*/
+    delete obj_storage[property];
+    localStorage.setItem(local, JSON.stringify(obj_storage));
+}
 /*---------------------------------------->SEND RESQUEST SEARCH<----------------------------------------*/
 /*BUSCAR RETORNO NFE*/
 async function buscarRetornosSearch() {
     if(localStorage.getItem("searchdata") != null) {
+        /*CALL PATTERNS PAGE*/
         var patterns_search = setRetornosNFESearchPatterns(); patterns_search.module = "logistica"; 
         patterns_search.file = "retornos-nfe"; patterns_search.paginations.search = JSON.parse(localStorage.getItem("searchdata"));
         patterns_search.swit = "listar-retornos-nfe-search"; patterns_search.path = createRequestPath(patterns_search);
         /*SEND REQUEST*/
-        var send_request = sendRequestSearch(patterns_search);
+        //var send_request = sendRequestSearch(patterns_search);
+        await sendRequest(patterns_search);
     }
 }

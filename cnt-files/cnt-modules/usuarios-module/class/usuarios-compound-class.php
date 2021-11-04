@@ -77,6 +77,13 @@ class Usuarios_module
                 $this->build["loopdata"] = $compound->compound_loopdata();
                 $resultSet = $this->build["loopdata"];
                 break;
+            case 'listar-lideres':
+                $compound->swit = $this->swit;
+                $this->build["patterns"] = $compound->compound_patterns();
+                $compound->build = $this->build;
+                $this->build["loopdata"] = $compound->compound_loopdata();
+                $resultSet = $this->build["loopdata"];
+                break;
             case 'listar-status':
                 $compound->swit = $this->swit;
                 $this->build["patterns"] = $compound->compound_patterns();

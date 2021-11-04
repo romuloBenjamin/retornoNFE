@@ -17,8 +17,8 @@ function loudRequest(params) {
     return new Request(params.path.toString());
 }
 /*SET REQUESTS -> POST*/
-function sendRequest(params) {
-    console.log(params);
+async function sendRequest(params) {
+    //console.log(params);
     /*FORM DATA*/
     var data = new FormData();
     data.append("swit", params.swit);
@@ -26,35 +26,16 @@ function sendRequest(params) {
     /*SET REQUEST*/    
     var config = {method: 'post', body: data};
     var louds = loudRequest(params);
-    fetch(louds, config)
-        .then(response => {
-            if(response.status === 200) return response.json();
-        })
-        .then(data => {
-            //console.log(data);
-            if(params.swit === "listar-funcionarios-short") receiveRequest(data, params);
-            if(params.swit === "listar-retornos-nfe") receiveRequest(data, params);
-        })
-        .catch(()=>{console.log("erro ao gerar REQUEST Principal");});
+    var results = await fetch(louds, config);
+    try {
+        results = await results?.json();
+        console.log(results);
+        if(params.swit === "listar-funcionarios-short") await receiveRequest(results, params);
+        if(params.swit === "listar-retornos-nfe") await receiveRequest(results, params);
+        if(params.swit === "listar-retornos-nfe-search") await receiveRequest(results, params, true);
+    } catch (error) {
+        console.log("erro ao gerar REQUEST Principal");
     }
-    /*SET REQUESTS SEARCH -> POST*/
-    function sendRequestSearch(params) {
-        //console.log(params);
-        /*FORM DATA*/
-        var data = new FormData();
-        data.append("swit", params.swit);
-        data.append("entry", JSON.stringify(params.paginations));
-        /*SET REQUEST*/    
-        var config = {method: 'post', body: data};
-        var louds = loudRequest(params);
-        fetch(louds, config)
-        .then(response => {
-            if(response.status === 200) return response.json();
-        })
-        .then(data => {
-            if(params.swit === "listar-retornos-nfe-search") receiveRequest(data, params, true);
-        })
-        .catch(()=>{console.log("erro ao gerar REQUEST Principal");});
 }
 /*SET REQUESTS PAGINATIONS -> POST*/
 function sendRequestPaginations(params) {

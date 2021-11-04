@@ -13,14 +13,19 @@ function setRetornosNFEPatterns() {
 }
 /*-------------------------->SEND REQUEST DATA<--------------------------*/
 /*DEFAULT DATA LISTAR REGISTROS -> SEND REQUEST*/
-console.log(patterns);
-var sendRequest = sendRequest(patterns);
+//console.log(patterns);
+var send_request = pre_sendRequest();
+async function pre_sendRequest() {
+    var patterns = setRetornosNFEPatterns();
+    await sendRequest(patterns);
+}
 /*ONCHANGE DATA LISTAR REGISTROS -> SEND REQUEST*/
 //var listarRegistros = document.querySelector("select#forListar");
 
 /*-------------------------->RECEIVE REQUEST DATA<--------------------------*/
 /*RECIEVE REQUEST*/
-function receiveRequest(params, patterns, search = false) {
+async function receiveRequest(params, patterns, search = false) {
+    console.log(search);
     /*IF EMPTY DATA*/
     if(params.data.length === 0) return emptySearch(params, true);
     if(params.data.length > 0) {
@@ -29,6 +34,7 @@ function receiveRequest(params, patterns, search = false) {
         var loops = params.data;
         /*SET PLACERS*/
         var placers = document.querySelector("table#table-retorno-nfe > tbody");
+        console.log(params);
         /*BUILD VIEWER*/
         if(search === false) var build_loopdata = build_loopRequest(loops, placers);
         if(search === true) {
@@ -36,8 +42,8 @@ function receiveRequest(params, patterns, search = false) {
         }
         /*PREPARE PAGINATIONS*/
         patterns.swit = "listar-retronos-nfe-paginations";
-        var setDefaultPaginations = prepare_paginations(patterns, false);        
-    }    
+        var setDefaultPaginations = prepare_paginations(patterns, false);
+    } 
 }
 /*VIEW RECEIVE REQUEST IN FOREACH LOOP*/
 function build_loopRequest(params, placers) {
@@ -63,7 +69,7 @@ function build_loopRequest(params, placers) {
         clone.querySelectorAll("td")[8].innerHTML = "not implemented";
         clone.querySelectorAll("td")[9].innerHTML = "not implemented";
         placers.appendChild(clone);
-        /*ADD ON CLICK EVENT*/
+        /*ADD SHOW DATA ON CLICK EVENT ON EACH ELEMENT*/
         const items = clone.querySelectorAll("td")[7].getElementsByClassName('list-group-item');
         for(let j = 0; j < items.length; j++) {
             items[j].addEventListener('click', () => show_details(data, j));

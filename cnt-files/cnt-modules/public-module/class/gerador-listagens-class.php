@@ -39,6 +39,11 @@ class Gerador_listagens
                 $gerador->swit = $this->module;
                 $resultSet = $gerador->create_json_list();
                 break;
+            case 'listar-lideres':
+                $gerador->listas = $this->listas;
+                $gerador->swit = $this->module;
+                $resultSet = $gerador->create_json_list();
+                break;
             case 'listar-generos':
                 $gerador->listas = $this->listas;
                 $gerador->swit = $this->module;

@@ -36,24 +36,23 @@ function sendRequest(params) {
             if(params.swit === "listar-retornos-nfe") receiveRequest(data, params);
         })
         .catch(()=>{console.log("erro ao gerar REQUEST Principal");});
-}
-/*SET REQUESTS SEARCH -> POST*/
-function sendRequestSearch(params) {
-    console.log(params);
-    /*FORM DATA*/
-    var data = new FormData();
-    data.append("swit", params.swit);
-    data.append("entry", JSON.stringify(params.paginations));
-    /*SET REQUEST*/    
-    var config = {method: 'post', body: data};
-    var louds = loudRequest(params);
-    fetch(louds, config)
+    }
+    /*SET REQUESTS SEARCH -> POST*/
+    function sendRequestSearch(params) {
+        //console.log(params);
+        /*FORM DATA*/
+        var data = new FormData();
+        data.append("swit", params.swit);
+        data.append("entry", JSON.stringify(params.paginations));
+        /*SET REQUEST*/    
+        var config = {method: 'post', body: data};
+        var louds = loudRequest(params);
+        fetch(louds, config)
         .then(response => {
             if(response.status === 200) return response.json();
         })
         .then(data => {
-            //console.log(data);
-            if(params.swit === "listar-retornos-nfe-search") receiveRequest_search(data, params);
+            if(params.swit === "listar-retornos-nfe-search") receiveRequest(data, params, true);
         })
         .catch(()=>{console.log("erro ao gerar REQUEST Principal");});
 }
@@ -113,4 +112,13 @@ function localStorageNoOverride() {
     nArray.push("searchdata");
     nArray.push("listar");
     return nArray;
+}
+/* Capitalize the first letter of each word */
+function capitalize(string) {
+    let pieces = string.split(" ");
+    var n_map = [];
+    pieces.forEach(piece => {
+        n_map.push(piece.charAt(0).toString().toUpperCase() + piece.slice(1));
+    });
+    return n_map.join(" ");
 }

@@ -64,22 +64,3 @@ async function buscarRetornosSearch() {
         var send_request = sendRequestSearch(patterns_search);
     }
 }
-
-function receiveRequest_search(params, patterns) {
-    if(params.data.length === 0) return emptySearch(params);
-    if(params.data.length > 0) {
-        console.log("populate it");
-    }
-}
-
-/*EMPTY SEARCH*/
-function emptySearch(params) {
-    var placers = document.querySelector("table#table-retorno-nfe > tbody");
-    var removeLines = placers.querySelectorAll("tr");
-    for (let index = 1; index < removeLines.length; index++) {
-        const rem = removeLines[index];
-        rem.remove();
-    }
-    placers.appendChild(document.createElement("tr")).setAttribute("id", "emptySearch");
-    placers.querySelector("tr#emptySearch").innerHTML = "<td colspan=\"10\"><span class=\"d-flex alert alert-warning w-100\">"+params.msn.split("->")[0]+"</span></td>";
-}

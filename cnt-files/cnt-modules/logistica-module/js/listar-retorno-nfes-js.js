@@ -20,26 +20,38 @@ var sendRequest = sendRequest(patterns);
 
 /*-------------------------->RECEIVE REQUEST DATA<--------------------------*/
 /*RECIEVE REQUEST*/
-function receiveRequest(params, patterns) {
-    /*SET LOOPDATA*/
-    var loops = params.data;
-    /*SET PLACERS*/
-    var placers = document.querySelector("table#table-retorno-nfe > tbody");
-    /*BUILD VIEWER*/
-    var build_loopdata = build_loopRequest(loops, placers);
-    /*PREPARE PAGINATIONS*/
-    patterns.swit = "listar-retronos-nfe-paginations";
-    var setDefaultPaginations = prepare_paginations(patterns, false);
+function receiveRequest(params, patterns, search = false) {
+    /*IF EMPTY DATA*/
+    if(params.data.length === 0) return emptySearch(params, true);
+    if(params.data.length > 0) {
+        if(search === true) emptySearch(params);
+        /*SET LOOPDATA*/
+        var loops = params.data;
+        /*SET PLACERS*/
+        var placers = document.querySelector("table#table-retorno-nfe > tbody");
+        /*BUILD VIEWER*/
+        if(search === false) var build_loopdata = build_loopRequest(loops, placers);
+        if(search === true) {
+            var build_loopdata = build_loopRequest(loops, placers);
+        }
+        /*PREPARE PAGINATIONS*/
+        patterns.swit = "listar-retronos-nfe-paginations";
+        var setDefaultPaginations = prepare_paginations(patterns, false);        
+    }    
 }
 /*VIEW RECEIVE REQUEST IN FOREACH LOOP*/
 function build_loopRequest(params, placers) {
     i = 1;
     Object.values(params).forEach(data => {
-        //console.log(data);
         /*SET CLONE*/
         const clone = placers.querySelector("tr#cloneNode").cloneNode(true);
         /*REMOVE ID FROM CLONE*/
         clone.id = ""; clone.removeAttribute("id");
+        /*IF EXIST CLASS IN CLONE*/
+        if(clone.classList.contains("d-none") === true) {
+            clone.classList.remove("d-none");
+            clone.removeAttribute("class");
+        }
         clone.querySelectorAll("td")[0].innerHTML = "#"+i.toString().padStart(2,"0");
         clone.querySelectorAll("td")[1].innerHTML = data.cadastro_data;
         clone.querySelectorAll("td")[2].innerHTML = data.agregado_id;
@@ -51,13 +63,11 @@ function build_loopRequest(params, placers) {
         clone.querySelectorAll("td")[8].innerHTML = "not implemented";
         clone.querySelectorAll("td")[9].innerHTML = "not implemented";
         placers.appendChild(clone);
-
         /*ADD ON CLICK EVENT*/
         const items = clone.querySelectorAll("td")[7].getElementsByClassName('list-group-item');
         for(let j = 0; j < items.length; j++) {
             items[j].addEventListener('click', () => show_details(data, j));
         }
-
         i++;
     });
     /*REMOVE CLONE*/
@@ -73,6 +83,22 @@ function listar_retornos(params) {
     }
     return retornos.join("");
 }
+
+/*LISTAR EMPTY DATA NFE*/
+function emptySearch(params, mode = false) {
+    var placers = document.querySelector("table#table-retorno-nfe > tbody");
+    var removeLines = placers.querySelectorAll("tr");
+    for (let index = 1; index < removeLines.length; index++) {
+        const rem = removeLines[index];
+        rem.remove();
+    }
+    /*IF MODE FALSE*/
+    if(mode === true){
+        placers.appendChild(document.createElement("tr")).setAttribute("id", "emptySearch");
+        placers.querySelector("tr#emptySearch").innerHTML = "<td colspan=\"10\"><span class=\"d-flex alert alert-warning w-100\">"+params.msn.split("->")[0]+"</span></td>";
+    }
+}
+
 /*LISTAR NFES*/
 function listar_regiao(params, clone) {
     var patterns = setRetornosNFEPatterns();

@@ -116,9 +116,8 @@ class Logistica_loopdata
         }
         /*IF EXIST PROPERTY -> motivo*/
         if (property_exists($patterns_search->search, "motivos") == true) {
-            $search_part2 = serialize(json_decode(json_encode($patterns_search->search->motivos, true), true));
-            $search_part2 = str_replace($removes, "", $search_part2);
-            $sql .= "uirn_notas_retorno LIKE '%" . $search_part2 . "%'";
+            $search_part2 = $patterns_search->search->motivos->name;
+            $sql .= "uirn_notas_retorno LIKE '%" . trim($search_part2) . "%'";
             if (count(get_object_vars($patterns_search->search)) > 3) $sql .= " AND ";
         }
         $sql .= " LIMIT " . trim($patterns->ini) . ", " . trim($patterns->max);
@@ -154,7 +153,6 @@ class Logistica_loopdata
         $sql .= "uirnm_status = '1'";
         return $sql;
     }
-
     /*EXECUTE LOOPDATA*/
     public function loopdata_exec()
     {
@@ -162,7 +160,6 @@ class Logistica_loopdata
         $exec->sql = $this->entry;
         return $exec->executeQuery();
     }
-
     /*BUILD LOOPDATA*/
     public function loopdata_build()
     {
@@ -176,6 +173,10 @@ class Logistica_loopdata
             }
             $array_combine["data"][] = array_combine($this->build["patterns"], $nArray);
             if ($this->swit == "listar-retornos-nfe") {
+                $array_combine["data"][$i]["data_cli"] = unserialize($array_combine["data"][$i]["data_cli"]);
+                $array_combine["data"][$i]["data_nfe"] = unserialize($array_combine["data"][$i]["data_nfe"]);
+            }
+            if ($this->swit == "listar-retornos-nfe-search") {
                 $array_combine["data"][$i]["data_cli"] = unserialize($array_combine["data"][$i]["data_cli"]);
                 $array_combine["data"][$i]["data_nfe"] = unserialize($array_combine["data"][$i]["data_nfe"]);
             }

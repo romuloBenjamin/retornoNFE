@@ -1,0 +1,43 @@
+div.form-container {
+    width: $fullWidth - 40%;
+    height: $fullHeight - 5%;
+    @include backgrounds;
+    @include borders($colors: rgba(183, 183, 183, 1), $radius: 5px);
+    form {
+        width: $fullWidth;
+        height: $fullHeight;
+        @include margins($top: 0, $left: 0, $if: true);
+        input#pesquisarFuncionario,
+        input#pesquisarGoogle {
+            width: $fullWidth;
+            height: $fullHeight;
+            @include borders($size: 0, $colors: transparent);
+            @include paddings($top: 0, $left: 0, $bottom: 0, $right: 10px);
+        }
+        input.inputFormularios:hover,
+        input.inputFormularios:focus,
+        input.inputFormularios:focus-visible,
+        input.inputFormularios:active {
+            @include borders($size: 0px, $colors: transparent, $ifb: true);
+            outline: none !important;
+            box-shadow: none !important;
+        }
+        button {
+            height: $fullHeight;
+        }
+        button:hover {
+            @include backgrounds($colors: rgba(176, 176, 176, 0.8));
+        }
+    }
+}
+div.google-search {
+    width: $fullWidth - 85%;
+}
+div.google-search::before {
+    content: "";
+    @include backgrounds($url: url(../images/logo/google-logo.png));
+    width: 50px;
+    position: absolute;
+    height: 30px;
+    margin-left: -60px;
+}

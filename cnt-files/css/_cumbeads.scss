@@ -1,0 +1,13 @@
+div.container-beads {
+    width: $fullWidth;
+    ul {
+        width: $fullWidth;
+        li {
+            width: $fullWidth;
+            a {
+                font-size: 0.8rem;
+                color: rgba(155, 155, 155, 1);
+            }
+        }
+    }
+}

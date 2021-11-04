@@ -1,0 +1,53 @@
+section.main-intranet {
+    width: $fullWidth - 20%;
+    justify-content: space-between;
+    @include margins;
+    margin-bottom: 3rem !important;
+    div.coluna-1 {
+        width: 22%;
+    }
+    div.coluna-2 {
+        max-width: 45.5%;
+        @include backgrounds($url: url(../images/bks/home/index_cleaner.jpg), $size: 90%);
+    }
+    div.coluna-3 {
+        max-width: 25%;
+    }
+    div.coluna {
+        @include margins($left: 0.25rem);
+        div.nfeSite {
+            @include paddings($top: 0.8rem, $left: 0.25rem);
+        }
+        div.container-informativos-home {
+            padding: 55% 0 0 0;
+        }
+        div.container-politicas-home,
+        div.container-informativos-home {
+            h2 {
+                @include fontFormater($size: $fontSizeTitle, $weight: normal);
+            }
+            div.efeito-texto-entrada {
+                p {
+                    @include fontFormater($weight: normal);
+                }
+            }
+            div.container-informativos {
+                ul {
+                    li {
+                        text-align: center;
+                        strong {
+                            @include fontFormater;
+                            text-align: center;
+                            span {
+                                @include fontFormater($colors: rgba(255, 0, 0, 1));
+                            }
+                        }
+                    }
+                    li:last-child {
+                        @include fontFormater($size: 0.8rem, $weight: normal);
+                    }
+                }
+            }
+        }
+    }
+}

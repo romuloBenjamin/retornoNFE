@@ -1,0 +1,86 @@
+<section class="d-flex justify-content-center container-retornos">
+    <div class="d-flex flex-column container-page">
+        <h1 class="text-center">Retorno de Notas Fiscais</h1>
+        <hr>
+        <!-- MODULE CONTROLS -->
+        <div class="d-flex flex-rows justify-content-start menu-principal">
+            <!-- CONTROLS -->
+            <div class="d-flex flex-rows module-controls">
+                <?php
+                $controls_actions = new Pagebuilder();
+                $controls_actions->module = "public";
+                $controls_actions->folder = "template/defaults";
+                $controls_actions->file = "container-actions";
+                $controls_actions->gerador_defaults();
+                ?>
+            </div>
+            <!-- CONTROLS -->
+            <!-- PAGINATIONS -->
+            <div class="d-flex flex-rows paginations-controls">
+                <?php
+                $paginations = new Pagebuilder();
+                $paginations->module = "public";
+                $paginations->folder = "template/defaults";
+                $paginations->file = "container-paginations";
+                $paginations->gerador_defaults();
+                ?>
+            </div>
+            <!-- PAGINATIONS -->
+        </div>
+        <!-- MODULE CONTROLS -->
+        <hr>
+        <!-- FILTROS DE PESQUISA -->
+        <div class="d-flex filtros-pesquisa">
+            <?php
+            $loudSearch = new Pagebuilder();
+            $loudSearch->module = "search";
+            $loudSearch->folder = "template/forms";
+            $loudSearch->file = "pesquisa-filtros";
+            include $loudSearch->loudTemplatePHP_parts();
+            ?>
+        </div>
+        <!-- FILTROS DE PESQUISA -->
+
+        <!-- CONTAINER TABLES -->
+        <div class="d-flex container-retorno-nfes flex-column">
+            <!-- TABLES -->
+            <div class="d-flex listagem-retornos justify-content-between">
+                <!-- TABLE RETORNO NFE -->
+                <div class="d-flex tables-container">
+                    <?php
+                    $tablesNFE = new Pagebuilder();
+                    $tablesNFE->module = "logistica";
+                    $tablesNFE->folder = "template/view";
+                    $tablesNFE->file = "retornos-nfe";
+                    include $tablesNFE->loudTemplatePHP_parts();
+                    ?>
+                </div>
+                <!-- TABLE RETORNO NFE -->
+                <!-- NFES DETAILS -->
+                <div class="d-none details-container">
+                    <?php
+                    $details = new Pagebuilder();
+                    $details->module = "logistica";
+                    $details->folder = "template/view";
+                    $details->file = "retorno-nfe-details";
+                    include $details->loudTemplatePHP_parts();
+                    ?>
+                </div>
+                <!-- NFES DETAILS -->
+            </div>
+            <!-- TABLES -->
+            <!-- PAGINATIONS -->
+            <div class="d-flex flex-rows paginations-controls">
+                <?php
+                $paginations = new Pagebuilder();
+                $paginations->module = "public";
+                $paginations->folder = "template/defaults";
+                $paginations->file = "container-paginations";
+                $paginations->gerador_defaults();
+                ?>
+            </div>
+            <!-- PAGINATIONS -->
+        </div>
+        <!-- CONTAINER TABLES -->
+    </div>
+</section>

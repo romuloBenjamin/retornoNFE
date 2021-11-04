@@ -1,0 +1,104 @@
+section.main-funcionarios {
+    width: $fullWidth - 20%;
+    justify-content: start;
+    @include margins;
+    margin-bottom: 3rem !important;
+    h2 {
+        @include fontFormater($size: 1.6rem, $weight: normal);
+    }
+    section.container-funcionarios {
+        width: $fullWidth;
+        hr {
+            width: $fullWidth;
+        }
+        div {
+            width: $fullWidth;
+            div.container-actions {
+                width: $fullWidth - 20%;
+                ul {
+                    li {
+                        @include paddings($top: 0.25rem, $left: 0.12rem);
+                    }
+                }
+            }
+            div.container-outros {
+                width: $fullWidth - 80%;
+                @include paddings($top: 0.25rem, $left: 0.5rem);
+            }
+            div.container-pesquisa-formulario {
+                width: $fullWidth;
+                form {
+                    width: $fullWidth;
+                    @include margins($if: true);
+                    ul {
+                        li {
+                            @include paddings($top: 0.25rem, $left: 0.5rem);
+                            label {
+                                margin-bottom: 0.1rem;
+                                margin-left: 0.5rem;
+                                @include fontFormater($size: 0.9rem);
+                                text-transform: uppercase;
+                            }
+                            div.datas-admissao {
+                                div {
+                                    width: 2.5rem;
+                                    @include paddings($top: 0.5rem, $left: 0.5rem);
+                                }
+                            }
+                        }
+                        li:last-child {
+                            ul {
+                                padding-top: 0;
+                                li {
+                                    @include paddings($top: 0.25rem, $left: 0.25rem);
+                                }
+                            }
+                            button {
+                                margin-bottom: 0.2rem;
+                            }
+                            div.louder-modules {
+                                width: 2rem;
+                                align-items: end;
+                                padding-bottom: 0.5rem;
+                            }
+                        }
+                    }
+                }
+            }
+            div.card-foncionarios {
+                width: $fullWidth;
+                ul {
+                    width: $fullWidth;
+                    li {
+                        width: $fullWidth / 3;
+                        max-width: $fullWidth / 3;
+                        max-height: 12rem;
+                        @include paddings($top: 0.25rem, $left: 0.25rem);
+                        div.foto-funcionario {
+                            width: $fullWidth - 40%;
+                            justify-content: center;
+                        }
+                        div.dados-funcionarios {
+                            ul {
+                                width: $fullWidth;
+                                li {
+                                    width: $fullWidth;
+                                    max-width: $fullWidth;
+                                    @include fontFormater($size: $fontSise - 0.2rem, $weight: normal);
+                                    strong {
+                                        @include fontFormater($size: $fontSise - 0.1rem);
+                                    }
+                                }
+                                li:last-child {
+                                    span {
+                                        @include fontFormater($size: $fontSise - 0.2rem, $weight: normal);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

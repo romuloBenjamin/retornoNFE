@@ -1,0 +1,19 @@
+div.container-telefones {
+    margin-top: 1.8rem;
+    h2 {
+        @include fontFormater($size: 1.6rem, $weight: normal);
+    }
+    ul {
+        li {
+            @include paddings($top: 0.2rem, $left: 0.5rem);
+            strong {
+                @include fontFormater($weight: 400);
+            }
+            @include fontFormater($size: 0.8rem, $weight: normal);
+            border-bottom: 1px solid rgba(176, 176, 176, 0.6) !important;
+        }
+        li:last-child {
+            border-bottom: none !important;
+        }
+    }
+}

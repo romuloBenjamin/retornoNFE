@@ -1,0 +1,59 @@
+{
+    "modules": [
+        {
+            "module": "public",
+            "folder":"class",
+            "file": "controladora"
+        },
+        {
+            "module": "public",
+            "folder":"class",
+            "file": "pagebuilder"
+        },
+        {
+            "module": "public",
+            "folder":"class",
+            "file": "gerador-listagens"
+        },
+        {
+            "module": "public",
+            "folder":"class",
+            "file": "paginations"
+        },
+        {
+            "module": "public",
+            "folder":"class",
+            "file": "paginations-loopdata"
+        },
+        {
+            "module": "usuarios",
+            "folder":"class",
+            "file": "usuarios-compound"
+        },
+        {
+            "module": "usuarios",
+            "folder":"class",
+            "file": "usuarios-patterns"
+        },
+        {
+            "module": "usuarios",
+            "folder":"class",
+            "file": "usuarios-loopdata"
+        },
+        {
+            "module": "logistica",
+            "folder":"class",
+            "file": "logistica-compound"
+        },
+        {
+            "module": "logistica",
+            "folder":"class",
+            "file": "logistica-patterns"
+        },
+        {
+            "module": "logistica",
+            "folder":"class",
+            "file": "logistica-loopdata"
+        }
+    ]
+}

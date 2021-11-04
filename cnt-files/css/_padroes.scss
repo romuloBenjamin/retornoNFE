@@ -1,0 +1,10 @@
+a {
+    @include fontFormater($weight: normal);
+}
+a:hover {
+    @include fontFormater($weight: normal);
+}
+
+.capitalizedProfile {
+    text-transform: capitalize !important;
+}

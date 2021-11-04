@@ -1,0 +1,84 @@
+section.main-funcionarios-aniversariantes {
+    width: $fullWidth - 20%;
+    justify-content: start;
+    @include margins;
+    margin-bottom: 3rem !important;
+    h2 {
+        @include fontFormater($size: 1.6rem, $weight: normal);
+    }
+    div.aniversariantes-container {
+        h3 {
+            width: $fullWidth;
+        }
+        div {
+            width: $fullWidth;
+            h3 {
+                width: $fullWidth;
+            }
+            ul {
+                width: $fullWidth;
+                margin-right: 0;
+                margin-left: 0;
+                li {
+                    width: $fullWidth;
+                    @include paddings($top: 0rem, $left: 0rem);
+                    @include backgrounds($colors: rgba(174, 174, 174, 0.6));
+                    @include margins($top: 0.1rem, $left: 0);
+                    border-radius: 0px !important;
+                    div.image-avatar {
+                        width: 18rem;
+                        height: 10rem;
+                        @include paddings($top: 0.25rem, $left: 0.5rem);
+                        div.container-avatar {
+                            width: $fullWidth;
+                            border-radius: $fullWidth - 40%;
+                            overflow: hidden;
+                            img {
+                                width: $fullWidth;
+                                height: $fullHeight;
+                            }
+                        }
+                    }
+                    div.dados-funcionarios {
+                        width: $fullWidth;
+                        border-radius: 0px !important;
+                        border-top: none !important;
+                        border-left: 1px solid rgba(176, 176, 176, 1);
+                        border-right: none !important;
+                        border-bottom: none !important;
+                        @include backgrounds($colors: rgba(255, 255, 255, 1));
+                        ul {
+                            width: $fullWidth;
+                            @include paddings($top: 0.25rem, $left: 0.25rem);
+                            li {
+                                width: $fullWidth;
+                                @include paddings($top: 0.5rem, $left: 0.5rem);
+                                @include backgrounds($colors: rgba(255, 255, 255, 1));
+                                border-top: none !important;
+                                border-left: none !important;
+                                border-right: none !important;
+                                border-radius: 0 !important;
+                            }
+                        }
+                    }
+                }
+            }
+            div.louder {
+                width: $fullWidth;
+                div.spinner-border {
+                    width: 2rem;
+                    height: 2rem;
+                }
+            }
+        }
+        div.aniversariantes-de-hoje {
+            width: $fullWidth;
+        }
+        div.proximos-aniversariantes-do-mes {
+            width: $fullWidth;
+        }
+        hr {
+            width: $fullWidth;
+        }
+    }
+}

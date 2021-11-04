@@ -1,0 +1,30 @@
+div.container-aniversariantes {
+    @include fontFormater($size: $fontSise, $weight: normal);
+    h2 {
+        @include fontFormater($size: 1.6rem, $weight: normal);
+    }
+    div.container-animated {
+        @include paddings($top: 0.2rem, $left: 0.5rem);
+        @include borders($colors: rgba(176, 176, 176, 0.6), $radius: 5px);
+        ul {
+            li {
+                div.avatar {
+                    @include fontFormater($size: 2.4rem, $weight: normal);
+                    margin-right: 0.8rem;
+                }
+                div.dados-aniversariantes {
+                    p {
+                        @include margins;
+                    }
+                }
+            }
+        }
+        div.verMais-container {
+            border-top: 1px solid rgba(176, 176, 176, 0.6);
+            a {
+                width: $fullWidth;
+                @include paddings($left: 1.5rem);
+            }
+        }
+    }
+}

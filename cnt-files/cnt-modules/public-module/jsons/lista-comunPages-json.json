@@ -1,0 +1,9 @@
+{
+    "comunPages":[
+        {
+            "module":"logistica",
+            "folder":false,
+            "file":"retornoNFES"
+        }
+    ]
+}

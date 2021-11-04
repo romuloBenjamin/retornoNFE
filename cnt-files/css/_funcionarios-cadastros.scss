@@ -1,0 +1,67 @@
+section.cadastrar-funcionarios {
+    width: $fullWidth - 20%;
+    justify-content: start;
+    @include margins;
+    margin-bottom: 3rem !important;
+    h2 {
+        @include fontFormater($size: 1.6rem, $weight: normal);
+    }
+    form.container-funcionarios {
+        div {
+            width: $fullWidth;
+            div.dados-title {
+                width: 12rem;
+                justify-content: end;
+                @include paddings($top: 0.5rem, $left: 0.25rem);
+            }
+            div.dados-title::after {
+                content: "";
+            }
+            div.dados-form {
+                width: 80rem;
+                ul {
+                    width: $fullWidth;
+                    li {
+                        width: $fullWidth;
+                        @include paddings($top: 0.25rem, $left: 0.25rem);
+                        button:first-child {
+                            @include margins($top: 0, $left: 0.25rem, $right: 0);
+                        }
+                    }
+                }
+                hr {
+                    width: $fullWidth;
+                }
+            }
+        }
+        div.dados-cadastrais {
+        }
+        div.outros-dados {
+        }
+        div.dados-adicionais {
+            div {
+                ul {
+                    li {
+                        div.spinner-louder {
+                            width: 20px;
+                            height: 20px;
+                        }
+                    }
+                }
+            }
+        }
+        div.dados-controle {
+            width: $fullWidth;
+            div.input-group.forAcesso {
+                width: $fullWidth;
+                input#forAcesso {
+                    @include margins($top: auto, $left: auto, $right: 0.25rem);
+                    max-width: 1rem;
+                }
+            }
+        }
+        div.actions-cadastro {
+            width: $fullWidth;
+        }
+    }
+}

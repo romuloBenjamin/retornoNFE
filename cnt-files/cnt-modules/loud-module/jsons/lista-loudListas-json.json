@@ -1,0 +1,24 @@
+{
+    "listas": [
+        {
+            "listas": "listar-equipes",
+            "module":"usuarios",
+            "folder":"class"
+        },
+        {
+            "listas": "listar-transportadores",
+            "module":"logistica",
+            "folder":"class"
+        },
+        {
+            "listas": "listar-regioes-transportadas",
+            "module":"logistica",
+            "folder":"class"
+        },
+        {
+            "listas": "listar-motivos-retorno-nfe",
+            "module":"logistica",
+            "folder":"class"
+        }
+    ]
+}

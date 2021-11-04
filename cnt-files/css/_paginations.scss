@@ -1,0 +1,12 @@
+div.paginations-containers {
+    width: $fullWidth;
+    ul {
+        @include margins($left: 0.15rem);
+        li.louder-paginations {
+            div.spinner-border {
+                width: 15px;
+                height: 15px;
+            }
+        }
+    }
+}

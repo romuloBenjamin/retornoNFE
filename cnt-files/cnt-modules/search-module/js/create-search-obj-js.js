@@ -66,12 +66,14 @@ async function localStorage_toSearch_removeProperty(params, local, property) {
 /*BUSCAR RETORNO NFE*/
 async function buscarRetornosSearch() {
     if(localStorage.getItem("searchdata") != null) {
+        /*IF UNDEFINED OR STORAGE {}*/
+        if(localStorage?.searchdata === undefined) location.reload();
+        if(localStorage?.searchdata === "{}") location.reload();
         /*CALL PATTERNS PAGE*/
         var patterns_search = setRetornosNFESearchPatterns(); patterns_search.module = "logistica"; 
         patterns_search.file = "retornos-nfe"; patterns_search.paginations.search = JSON.parse(localStorage.getItem("searchdata"));
         patterns_search.swit = "listar-retornos-nfe-search"; patterns_search.path = createRequestPath(patterns_search);
         /*SEND REQUEST*/
-        //var send_request = sendRequestSearch(patterns_search);
         await sendRequest(patterns_search);
     }
 }

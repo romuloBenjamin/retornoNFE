@@ -54,6 +54,11 @@
             "module": "logistica",
             "folder":"class",
             "file": "logistica-loopdata"
+        },
+        {
+            "module": "search",
+            "folder":"class",
+            "file": "pesquisar-compound"
         }
     ]
 }

@@ -9,10 +9,22 @@
             "file":"container"
         },
         {
+            "file":"container-cadastro"
+        },
+        {
             "file":"container-actions"
         },
         {
             "file":"container-paginations"
+        },
+        {
+            "file":"container-dados-retorno"
+        },
+        {
+            "file":"container-retorno-nfe"
+        },
+        {
+            "file":"container-avarias-nfe"
         }
     ]
 }

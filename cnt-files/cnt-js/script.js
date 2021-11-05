@@ -38,6 +38,24 @@ async function sendRequest(params) {
         console.log("erro ao gerar REQUEST Principal");
     }
 }
+/*SET REQUEST OLD DATA-> POST*/
+async function sendOldRequest(params) {
+    /*CREATE FORM DATA TO SEND*/
+    var data = new FormData();
+    data.append("swit", params.swit);
+    data.append("entry", JSON.stringify(params.paginations));
+    /*SEND DATA VIA CONFIG*/
+    var config = {method: "post", body: data};
+    /*OPEN CONECTIONS TO PATH*/
+    var louds = loudRequest(params);
+    var results = await fetch(louds, config);
+    try {
+       results = await results?.text(); 
+       console.log(results);
+    } catch (error) {
+       console.log("erro ao resgatar dados antigos"); 
+    }
+}
 /*GET N REQUEST*/
 function createRequestPath(params) {
     var path = "cnt-files/cnt-modules/[MODULES]/[FOLDER]/[FILE]";
@@ -85,4 +103,16 @@ function capitalize(string) {
         n_map.push(piece.charAt(0).toString().toUpperCase() + piece.slice(1));
     });
     return n_map.join(" ");
+}
+/*CALMEL CASE*/
+function camel_case(params) {
+    var nArray = [];    
+    splode = params.split("-");
+    splode.forEach((data, index) => {        
+        if(index > 0){
+            data = capitalize(data);
+        }
+        nArray.push(data);
+    });
+    return nArray.join("");
 }

@@ -9,10 +9,17 @@ class Conexao
 
     public function __construct()
     {
-        $this->host = "127.0.0.1";
-        $this->user = "root";
-        $this->table = "wwsale_intranet_unificado";
-        $this->password = "";
+        if (PERFIL_BD_ANTIGO == false) {
+            $this->host = "127.0.0.1";
+            $this->user = "root";
+            $this->table = "wwsale_intranet_unificado";
+            $this->password = "";
+        } else {
+            $this->host = "127.0.0.1";
+            $this->user = "root";
+            $this->table = "intranet2";
+            $this->password = "";
+        }
     }
 
     public function get_conexao()

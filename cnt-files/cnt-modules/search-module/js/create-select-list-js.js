@@ -20,6 +20,22 @@ selectFilial.addEventListener('click', function(){
     }
 });
 }
+/*SET CHILDREN -> EMPRESAS*/
+var selectEmpresa = document.querySelector("select#forEmpresa");
+if(selectEmpresa != null) {
+    selectEmpresa.addEventListener('click', function(){
+    if(this.children.length <= 1){
+        var sentdata = setPatternsCreateList();
+        sentdata.module = "public";
+        sentdata.file = "empresas";
+        sentdata.path = createRequestPath(sentdata);
+        var nView = new Map();
+        nView.set("ids", "ids");
+        nView.set("names", "empresa");
+        handleChildren(nView, sentdata, this, true);
+    }
+});
+}
 /*SET CHILDREN -> DEPARTAMENTOS*/
 var selectDepto = document.querySelector("select#forDepto");
 if(selectDepto != null) {
@@ -135,7 +151,7 @@ selectMotivos.addEventListener('click', function(){
 });
 }
 /*HANDLE CHILDREN ELEMENTS*/
-function handleChildren(e, data, placer) {
+function handleChildren(e, data, placer, prefixId = false) {
     /*CREATE MAPS*/
     var gets = new Map(e);
     var loud_request = loudRequest(data);
@@ -152,8 +168,13 @@ function handleChildren(e, data, placer) {
                     var motivoNome = looneys[gets.get("names")].charAt(0).toUpperCase() + looneys[gets.get("names")].slice(1);
                     placer.querySelectorAll("option")[leftIndex].textContent = motivoNome.slice(0, 54)+"...";
                 }else{
-                    placer.querySelectorAll("option")[leftIndex].textContent = looneys[gets.get("names")]
-                        .charAt(0).toUpperCase() + looneys[gets.get("names")].slice(1);
+                    let textContent = "";
+                    /* Prefixes "[id] - " to the text content */
+                    if(prefixId === true) {
+                        textContent = looneys[gets.get("ids")] + " - ";
+                    }
+                    textContent += looneys[gets.get("names")].charAt(0).toUpperCase() + looneys[gets.get("names")].slice(1);
+                    placer.querySelectorAll("option")[leftIndex].textContent = textContent;
                 }
                 if(gets?.get("current") != undefined){
                     if(looneys[gets.get("names")] == gets.get("current")) 

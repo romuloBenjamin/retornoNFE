@@ -57,6 +57,7 @@
                 </div>
                 <!-- TABLE RETORNO NFE -->
                 <div class="d-none details-container flex-column align-items-center">
+                    <button type="button" class="d-flex flex-rows btn btn-secondary align-self-end" onClick="close_details();"><strong>X</strong></button>
                     <!-- NFES DETAILS -->
                     <div class="d-flex details-nfe flex-rows">
                         <?php

@@ -12,6 +12,14 @@ function setRetornosNFEDetailsPatterns() {
     return pattern_details;
 }
 
+/* Close the NFE details */
+function close_details() {
+    /* Hide the details container by changing the class */
+    const details_container = document.getElementsByClassName("details-container")[0];
+    details_container.classList.remove("d-flex");
+    details_container.classList.add("d-none");
+}
+
 /* SHOW NFE DETAILS */
 async function show_details(data, item_index) {
     /* Show the details container by changing the class */

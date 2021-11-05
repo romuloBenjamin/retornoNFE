@@ -20,3 +20,4 @@
         </li>
     </ul>
 </section>
+<script src="cnt-files/cnt-modules/logistica-module/js/listar-command-actions-js.js" defer></script>

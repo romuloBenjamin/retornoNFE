@@ -36,12 +36,16 @@ function list_feedback(params) {
     for (let index = 0; index < params.length; index++) {
         const feedback = params[index];
         feedbacks.push(
-            "<li class=\"list-group-item\">" + 
+            "<div class=\"card text-black bg-light mb-2\">" +
+                "<div class=\"card-header\"><small>" + feedback.date + " - " + feedback.nome + "</small></div>" +
+                "<div class=\"card-body\"><p class=\"card-text\">" + feedback.content + "</p></div>" +
+            "</div>"
+            /*"<li class=\"list-group-item\">" +
                 "<small>" + feedback.date + " - " + feedback.nome + "</small><br>" +
                 feedback.content +
-            "</li>"
+            "</li>"*/
         );
     }
     /* Insert the list with the items for display */
-    document.getElementById("display-feeds").innerHTML = "<ul class=\"list-group\">" + feedbacks.join("") + "</ul>";
+    document.getElementById("display-feeds").innerHTML = "<div class=\"list-group\">" + feedbacks.join("") + "</div>";
 }

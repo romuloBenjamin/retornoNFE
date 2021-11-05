@@ -11,6 +11,11 @@
             "folder":"class"
         },
         {
+            "listas": "listar-filiais",
+            "module":"usuarios",
+            "folder":"class"
+        },
+        {
             "listas": "listar-transportadores",
             "module":"logistica",
             "folder":"class"

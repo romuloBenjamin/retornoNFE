@@ -86,9 +86,14 @@ class Logistica_loopdata
     public function loopdata_sql_retorno_nfes()
     {
         $patterns = json_decode($this->entry);
+        $ini = ((intval($patterns->ini) * intval($patterns->max)) - (intval($patterns->max) - 1));
+        if (isset($patterns->current)) $ini = ((intval($patterns->current) * intval($patterns->max)) - (intval($patterns->max) - 1));
+
+        if ($ini < 0) $ini = 0;
+
         $sql = "SELECT * FROM uni_intra_retorno_nfes";
         $sql .= " ";
-        $sql .= "LIMIT " . trim($patterns->ini) . ", " . trim($patterns->max);
+        $sql .= "LIMIT " . trim($ini) . ", " . trim($patterns->max);
         return $sql;
     }
     /*SQL*/

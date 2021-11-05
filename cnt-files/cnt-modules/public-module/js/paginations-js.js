@@ -11,7 +11,6 @@ function setPaginationsPatterns() {
     patterns.path = createRequestPath(patterns);
     return patterns;
 }
-console.log(paginations);
 /*SET DEFAULT PAGINATIONS*/
 function setPaginations(params, mode = false) {
     var pages = {ini:0, max:15};
@@ -60,8 +59,7 @@ async function prepare_paginations_object(params, paginations, autoloud = false)
     obj_paginations.registroAtual = paginations.paginations.current;
     /*CALCULAR QTD DE PAGINAS*/
     let qtd = params/paginations.paginations.max;
-    qtd = Math.floor(qtd);
-    if(qtd % 1 === 0) qtd = Math.ceil(qtd);
+    if(qtd % 1 != 0) qtd = Math.ceil(qtd);
     /*PLACE QTD DE PAGINAS*/
     obj_paginations.paginasDisponiveis = qtd;
     //if(params.swit != false) paginations.swit = params.swit;
@@ -69,12 +67,16 @@ async function prepare_paginations_object(params, paginations, autoloud = false)
     //if(autoloud === true) setInfinitePaginations(paginations);
 }
 function placeSmalls(params) {
-    console.log(params);
+    //console.log(params);
     if(params.registroAtual === undefined) params.registroAtual = 1;
+    /*PLACERS*/
     var min_titulos = document.querySelectorAll("small#qtdRegistros");
-    /**/
+    /*CALCULOS*/
+    let regsitro_ini_pagina = (params.registroAtual*params.registrosPorPagina) - (params.registrosPorPagina - 1);
+    if(regsitro_ini_pagina < 0) regsitro_ini_pagina = 1;
+    /*PLACE DATA IN SMALL -> DETALHES DA PAGINATIONS*/
     min_titulos.forEach(placers => {
-        placers.innerHTML = "<span>"+params.registroAtual+" de "+params.registrosTotais+" registros</span><br>";
+        placers.innerHTML = "<span>"+regsitro_ini_pagina+" de "+params.registrosTotais+" registros</span><br>";
         placers.innerHTML += "<span><i>Total de <b>"+params.paginasDisponiveis+" páginas!</b></i></span>";
     });
     return null;
@@ -90,6 +92,9 @@ async function setDefaultPaginations(params) {
     /*ACTIVE NEXT AND LAST PAGES BUTTON*/
     var active_next = activePageControls(params, "next");
     var active_last = activePageControls(params, "last");
+    /*ACTIVE PREV AND FIRST PAGES BUTTON*/
+    var active_prev = activePageControls(params, "prev");
+    var active_first = activePageControls(params, "first");
 }
 /*PLACE PAGE CARROUSSEL*/
 function placePageCarrousel(params) {
@@ -106,26 +111,79 @@ function placePageCarrousel(params) {
         carrol.appendChild(document.createElement("li")).setAttribute("id", "pageSND");
         carrol.querySelector("li#pageSND").classList.add("list-group-item");
         carrol.querySelector("li#pageSND").innerHTML = "<a href='?page="+(params.registroAtual+1)+"'>"+(params.registroAtual+1)+"</a>";
+        if((params.registroAtual+1) >= params.paginasDisponiveis) {
+            if(carrol.querySelector("li#pageSND").classList.contains("d-none") === false) carrol.querySelector("li#pageSND").classList.add("d-none");
+        }
+        if((params.registroAtual+1) <= params.paginasDisponiveis) {
+            if(carrol.querySelector("li#pageSND").classList.contains("d-none") === true) carrol.querySelector("li#pageSND").classList.remove("d-none");
+        }
         /*PLACE PAGE THR*/
         carrol.appendChild(document.createElement("li")).setAttribute("id", "pageTHR");
         carrol.querySelector("li#pageTHR").classList.add("list-group-item");
         carrol.querySelector("li#pageTHR").innerHTML = "<a href='?page="+(params.registroAtual+2)+"'>"+(params.registroAtual+2)+"</a>";
+        if((params.registroAtual+2) >= params.paginasDisponiveis) {
+            if(carrol.querySelector("li#pageTHR").classList.contains("d-none") === false) carrol.querySelector("li#pageTHR").classList.add("d-none");
+        }
+        if((params.registroAtual+2) <= params.paginasDisponiveis) {
+            if(carrol.querySelector("li#pageTHR").classList.contains("d-none") === true) carrol.querySelector("li#pageTHR").classList.remove("d-none");
+        }
     });
     /*SET LOUDER PAGINATIONS -> REMOVE MODE*/
     var louderCarrousel = paginationsLouderCarrousel("remove");
 }
 /*ACTIVE PAGE CONTROLS*/
 function activePageControls(params, mode = "next") {
+    /*VISUALIZAR NEXT AND LAST*/
+    if((params.registroAtual + 2) <= params.paginasDisponiveis) {
+        var placers = document.querySelectorAll("ul.next-controls");
+        placers.forEach(data => { 
+            if(data.classList.contains("d-none") === true) data.classList.remove("d-none"); 
+        });
+    }else{
+        var placers = document.querySelectorAll("ul.next-controls");
+        placers.forEach(data => { 
+            if(data.classList.contains("d-none") === false) data.classList.add("d-none"); 
+        });
+    }
+    /*VISUALIZAR PREV AND FIRST*/
+    if((params.registroAtual - 2) <= params.registroInit) {
+        var placers = document.querySelectorAll("ul.prev-controls");
+        placers.forEach(data => {
+            if(data.classList.contains("d-none") === false) data.classList.add("d-none");
+        });
+    }else{
+        var placers = document.querySelectorAll("ul.prev-controls");
+        placers.forEach(data => {
+            if(data.classList.contains("d-none") === true) data.classList.remove("d-none");
+        });
+    }
+    /*PLACE PAGE IN NEXT PAGINATIONS*/
     if(mode === "next") {
         var placers = document.querySelectorAll("ul.next-controls > li#pageNXT > a");
         placers.forEach(nxt => {
             nxt.setAttribute("href", "?page="+(params.registroAtual+1)+"");
         });
     }
+    /*PLACE PAGE IN LAST PAGINATIONS*/
     if(mode === "last") {
         var placers = document.querySelectorAll("ul.next-controls > li#pageLST > a");
         placers.forEach(lst => {
             lst.setAttribute("href", "?page="+params.paginasDisponiveis+"");
+        });
+    }
+    /*PLACE PAGE IN PREV PAGINATIONS*/
+    if(mode === "prev") {
+        var placers = document.querySelectorAll("ul.prev-controls > li#pagePRV > a");
+        placers.forEach(prev => {
+            prev.setAttribute("href", "?page="+(params.registroAtual-1)+"");
+        });
+    }
+    /*PLACE PAGE IN FIRST PAGINATIONS*/
+    if(mode === "first") {
+        var placers = document.querySelectorAll("ul.prev-controls > li#pageFST > a");
+        var href = location.origin+"/"+location.pathname;
+        placers.forEach(frst => {
+            frst.setAttribute("href", href);
         });
     }
 }

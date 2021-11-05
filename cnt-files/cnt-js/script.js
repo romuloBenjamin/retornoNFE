@@ -29,6 +29,7 @@ async function sendRequest(params) {
     var results = await fetch(louds, config);
     try {
         results = await results?.json();
+        //console.log(results);
         if(params.swit === "listar-funcionarios-short") await receiveRequest(results, params);
         if(params.swit === "listar-retornos-nfe") await receiveRequest(results, params);
         if(params.swit === "listar-retornos-nfe-search") await receiveRequest(results, params, true);

@@ -14,14 +14,16 @@ class Pesquisar_compound
     {
         $compound = new Pesquisar_compound();
         switch ($this->swit) {
-            case 'pesquisar-romaneios-db-antigo':
+            case 'pesquisar-romaneios':
+                $compound->swit = $this->swit;
                 $this->build["patterns"] = $compound->patterns_pesquisar();
                 $compound->build = $this->build;
-                var_dump($compound);
-                //$resultSet = $compound->loopdata_logistica();
+                $compound->entry = $this->entry;
+                $resultSet = $compound->loopdata_pesquisar();
                 break;
                 /*default:break;*/
         }
+        return $resultSet;
     }
     /*PATTERNS PESQUISAR*/
     public function patterns_pesquisar()

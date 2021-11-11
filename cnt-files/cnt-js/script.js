@@ -29,31 +29,13 @@ async function sendRequest(params) {
     var results = await fetch(louds, config);
     try {
         results = await results?.json();
-        //console.log(results);
         if(params.swit === "listar-funcionarios-short") await receiveRequest(results, params);
         if(params.swit === "listar-retornos-nfe") await receiveRequest(results, params);
         if(params.swit === "listar-retornos-nfe-search") await receiveRequest(results, params, true);
         if(params.swit === "listar-retronos-nfe-paginations") await prepare_paginations_object(results, params.paginations);
+        if(params.swit === "pesquisar-romaneios") await receiveRequest(results, params);
     } catch (error) {
         console.log("erro ao gerar REQUEST Principal");
-    }
-}
-/*SET REQUEST OLD DATA-> POST*/
-async function sendOldRequest(params) {
-    /*CREATE FORM DATA TO SEND*/
-    var data = new FormData();
-    data.append("swit", params.swit);
-    data.append("entry", JSON.stringify(params.paginations));
-    /*SEND DATA VIA CONFIG*/
-    var config = {method: "post", body: data};
-    /*OPEN CONECTIONS TO PATH*/
-    var louds = loudRequest(params);
-    var results = await fetch(louds, config);
-    try {
-       results = await results?.text(); 
-       console.log(results);
-    } catch (error) {
-       console.log("erro ao resgatar dados antigos"); 
     }
 }
 /*GET N REQUEST*/

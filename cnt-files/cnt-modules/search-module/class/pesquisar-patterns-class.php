@@ -6,8 +6,8 @@ class Pesquisar_patterns
         $lista_keys = new Pesquisar_patterns();
         $lista_keys->swit = $this->swit;
         switch ($this->swit) {
-            case 'listar-retornos-nfe':
-                $lista_keys->entry = "";
+            case 'pesquisar-romaneios':
+                $lista_keys->entry = "ids,cadastro-data,cadastro-hora,transportador,qtd,dados-nfe,dados-cli,data-saida,romaneio,setor,diaria,descontos,valorFinal";
                 $resultSet = $lista_keys->patterns_build();
                 break;
                 /*default:break; */

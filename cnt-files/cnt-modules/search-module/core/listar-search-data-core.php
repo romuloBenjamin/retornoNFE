@@ -1,6 +1,5 @@
 <?php session_start();
 $core = "core";
-$perfil1 = true;
 require_once "../../../cnt-php/defines.php";
 require DIR_PATH . "cnt-php/TryVars.php";
 ///*CALL CONECTIONS*/

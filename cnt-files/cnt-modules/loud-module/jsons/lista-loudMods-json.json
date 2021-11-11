@@ -59,6 +59,16 @@
             "module": "search",
             "folder":"class",
             "file": "pesquisar-compound"
+        },
+        {
+            "module": "search",
+            "folder":"class",
+            "file": "pesquisar-patterns"
+        },
+        {
+            "module": "search",
+            "folder":"class",
+            "file": "pesquisar-loopdata"
         }
     ]
 }

@@ -496,6 +496,61 @@ section.section-module h1 {
   text-align: center;
 }
 
+/*PAGE RETORNO NFE -> CADASTRO NFE*/
+#painel-novo-registro-nfes {
+  padding: 0.3rem 0 0.3rem 0;
+}
+
+div.table-container-cadastro-nfe {
+  width: 100%;
+}
+
+table.table-new-registro thead tr th {
+  padding: 0.25rem 0.25rem 0.25rem 0.25rem;
+  vertical-align: middle;
+}
+
+table.table-new-registro tbody tr td {
+  padding: 0.25rem 0.25rem 0.25rem 0.25rem;
+  vertical-align: middle;
+}
+
+table.table-new-registro tbody tr td .container-motivos #motivo-input {
+  margin: 0.12rem auto 0.12rem auto;
+  width: 20%;
+}
+
+table.table-new-registro tbody tr .select-filial-td {
+  width: 19%;
+}
+
+div.inner-container-data-columns div.flex-column div.input-group {
+  margin: 0.12rem auto 0.12rem auto;
+}
+
+td button.btn-view-avarias {
+  padding: 0.15rem 0.5rem 0.15rem 0.5rem;
+}
+
+/*PAGE RETORNO NFE -> CADASTRO AVARIAS*/
+table.cadastro-retorno-avarias tbody tr td {
+  padding: 0.25rem 0.25rem 0.25rem 0.25rem;
+  vertical-align: middle;
+}
+
+table.cadastro-retorno-avarias tbody tr td#textarea textarea {
+  min-width: 20vw;
+  max-width: 20vw;
+}
+
+div.container-motivos-avaria ul li {
+  padding: 0.25rem 0.25rem 0.25rem 0.25rem;
+}
+
+div.container-motivos-avaria ul li div {
+  margin: 0.25rem 0.25rem 0.25rem 0.25rem;
+}
+
 footer {
   width: 100%;
   background-color: #30537f;

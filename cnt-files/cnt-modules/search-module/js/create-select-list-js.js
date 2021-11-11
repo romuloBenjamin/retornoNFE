@@ -20,10 +20,9 @@ selectFilial.addEventListener('click', function(){
     }
 });
 }
-/*SET CHILDREN -> EMPRESAS*/
-var selectEmpresa = document.querySelector("select#forEmpresa");
-if(selectEmpresa != null) {
-    selectEmpresa.addEventListener('click', function(){
+
+// The function to run on select empresa click
+function onEmpresaSelectClick() {
     if(this.children.length <= 1){
         var sentdata = setPatternsCreateList();
         sentdata.module = "public";
@@ -34,8 +33,8 @@ if(selectEmpresa != null) {
         nView.set("names", "empresa");
         handleChildren(nView, sentdata, this, true);
     }
-});
 }
+
 /*SET CHILDREN -> DEPARTAMENTOS*/
 var selectDepto = document.querySelector("select#forDepto");
 if(selectDepto != null) {

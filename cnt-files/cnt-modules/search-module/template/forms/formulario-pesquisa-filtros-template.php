@@ -26,5 +26,4 @@
         <button id="forSearch" class="btn btn-secondary"><i class="fas fa-search"></i></button>
     </div>
 </form>
-<script src="<?= DIR_PATH; ?>cnt-modules/search-module/js/create-select-list-js.js" defer></script>
 <script src="<?= DIR_PATH; ?>cnt-modules/search-module/js/create-search-obj-js.js" defer></script>

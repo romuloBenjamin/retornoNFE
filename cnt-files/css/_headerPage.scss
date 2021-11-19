@@ -88,17 +88,15 @@ header {
                         a:hover,
                         a:active {
                             width: $fullWidth;
-                            @include fontFormater($colors: rgba(255, 255, 255, 1), $weight: normal);
+                            @include fontFormater($colors: rgba(255, 255, 255, 1));
+                            @include textFormater($weight: normal);
                             i {
                                 margin-right: 0.35rem;
                             }
                         }
                         a:hover {
-                            @include fontFormater(
-                                $colors: rgba(255, 255, 255, 1),
-                                $weight: normal,
-                                $decoration: underline
-                            );
+                            @include fontFormater($colors: rgba(255, 255, 255, 1));
+                            @include textFormater($weight: normal, $decoration: underline);
                         }
                     }
                 }

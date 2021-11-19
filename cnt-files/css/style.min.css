@@ -15,17 +15,17 @@
     
 }*/
 a {
-  font-size: 1rem;
-  color: black;
+  text-align: left;
   font-weight: normal;
   text-decoration: none;
+  text-transform: none;
 }
 
 a:hover {
-  font-size: 1rem;
-  color: black;
+  text-align: left;
   font-weight: normal;
   text-decoration: none;
+  text-transform: none;
 }
 
 .capitalizedProfile {
@@ -92,21 +92,21 @@ div.modal-container-fixed div.inner-modal-container#genericModal ul li:last-chil
   background-color: rgba(176, 176, 176, 0.6) !important;
   font-size: 0.8rem;
   color: black;
+  text-align: left;
   font-weight: 600;
   text-decoration: none;
+  text-transform: none;
 }
 
 div.modal-container-fixed div.inner-modal-container#loginModal ul li:last-child button:hover,
 div.modal-container-fixed div.inner-modal-container#genericModal ul li:last-child button:hover {
   background-color: rgba(176, 176, 176, 0.8) !important;
-  font-size: 1rem;
-  color: black;
-  font-weight: 600;
-  text-decoration: none;
   font-size: 0.8rem;
   color: black;
+  text-align: left;
   font-weight: 600;
   text-decoration: none;
+  text-transform: none;
 }
 
 div.modal-container-fixed div.inner-modal-container#loginModal ul li,
@@ -114,16 +114,20 @@ div.modal-container-fixed div.inner-modal-container#genericModal ul li {
   padding: 0.55rem 0.85rem 0.55rem 0.85rem;
   font-size: 0.8rem;
   color: black;
+  text-align: left;
   font-weight: normal;
   text-decoration: none;
+  text-transform: none;
 }
 
 div.modal-container-fixed div.inner-modal-container#loginModal ul li h1,
 div.modal-container-fixed div.inner-modal-container#genericModal ul li h1 {
   font-size: 1.4rem;
   color: black;
+  text-align: left;
   font-weight: normal;
   text-decoration: none;
+  text-transform: none;
   margin: 0 !important;
 }
 
@@ -170,10 +174,10 @@ div.modal-container-fixed div.inner-modal-container#genericModal ul li div.conta
 
 div.modal-container-fixed div.inner-modal-container#loginModal ul li div.container-input i,
 div.modal-container-fixed div.inner-modal-container#genericModal ul li div.container-input i {
-  font-size: 1rem;
-  color: black;
+  text-align: left;
   font-weight: normal;
   text-decoration: none;
+  text-transform: none;
   padding: 0 0.5rem 0 0.5rem;
 }
 
@@ -202,8 +206,10 @@ div.modal-container-fixed div.inner-modal-container#loginModal ul li small.error
 div.modal-container-fixed div.inner-modal-container#genericModal ul li small.errorMessage {
   font-size: 0.6rem;
   color: red;
+  text-align: left;
   font-weight: normal;
   text-decoration: underline;
+  text-transform: none;
 }
 
 header {
@@ -250,8 +256,6 @@ header section.first-container-header-page div.coluna-02 a.login-container-btn,
 header section.first-container-header-page div.coluna-02 * {
   font-size: 1rem;
   color: white;
-  font-weight: 600;
-  text-decoration: none;
 }
 
 header section.first-container-header-page div.coluna-02 a.login-pseudo-btn,
@@ -341,8 +345,10 @@ header section.first-container-header-page div.coluna-02 div.loginOptions ul li 
   width: 100%;
   font-size: 1rem;
   color: white;
+  text-align: left;
   font-weight: normal;
   text-decoration: none;
+  text-transform: none;
 }
 
 header section.first-container-header-page div.coluna-02 div.loginOptions ul li a i,
@@ -354,8 +360,10 @@ header section.first-container-header-page div.coluna-02 div.loginOptions ul li 
 header section.first-container-header-page div.coluna-02 div.loginOptions ul li a:hover {
   font-size: 1rem;
   color: white;
+  text-align: left;
   font-weight: normal;
   text-decoration: underline;
+  text-transform: none;
 }
 
 header section.second-container-header-page {
@@ -470,12 +478,72 @@ div.container-menu-atalhos {
 div.container-menu-atalhos h2 {
   font-size: 1.6rem;
   color: black;
+  text-align: left;
   font-weight: normal;
   text-decoration: none;
+  text-transform: none;
 }
 
 div.container-menu-atalhos ul li {
   padding: 0.5rem 0.8rem 0.5rem 0.8rem;
+}
+
+/*FIXED MENUS*/
+div.container-fixed-menu {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-color: #6695bc;
+  -webkit-box-shadow: 0px 1px 15px -3px black;
+          box-shadow: 0px 1px 15px -3px black;
+  z-index: 999;
+}
+
+section.fixed-menus {
+  width: 100%;
+  padding: 0 1rem 0 1rem;
+}
+
+section.fixed-menus ul {
+  width: 100%;
+}
+
+section.fixed-menus ul li {
+  background: transparent !important;
+  padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+  width: 100%;
+}
+
+section.fixed-menus ul li:last-child {
+  width: 30%;
+}
+
+section.fixed-menus ul li:last-child div#fixedCadastrar {
+  width: 100%;
+}
+
+section.fixed-menus ul li:last-child div#fixedCadastrar ul {
+  width: 100%;
+}
+
+section.fixed-menus ul li:last-child div#fixedCadastrar ul li {
+  width: 100%;
+  padding: 0 0.2rem 0 0.2rem;
+}
+
+section.fixed-menus ul li:last-child div#fixedCadastrar ul li button {
+  width: 100%;
+  font-size: 1rem;
+  color: white;
+  text-align: center;
+  font-weight: 400;
+  text-decoration: none;
+  text-transform: none;
+}
+
+section.fixed-menus ul li:last-child div#fixedCadastrar ul li button i {
+  margin: 0 0.3rem 0 0.3rem;
 }
 
 body {
@@ -491,9 +559,164 @@ section.section-module h1 {
   margin: 1.5rem 0 1.5rem 0;
   font-size: 2rem;
   color: black;
+  text-align: left;
   font-weight: 500;
   text-decoration: none;
+  text-transform: none;
   text-align: center;
+}
+
+section.container-dados-nfe-retornadas {
+  width: 100%;
+}
+
+section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro {
+  width: 100%;
+}
+
+section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro div.container-dados-entrada {
+  width: 100%;
+}
+
+section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro div.container-dados-entrada div.calendar-time-cadastro {
+  width: 30%;
+}
+
+section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro div.container-dados-entrada div.calendar-time-cadastro small {
+  text-align: left;
+  font-weight: 400;
+  text-decoration: none;
+  text-transform: uppercase;
+  padding: 0 0.8rem 0 0;
+}
+
+section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro div.container-dados-entrada div.calendar-time-cadastro div#dataCadastro {
+  width: 100%;
+  height: 60px;
+}
+
+section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro div.container-dados-entrada div.calendar-time-cadastro div#dataCadastro ul {
+  width: 100%;
+}
+
+section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro div.container-dados-entrada div.calendar-time-cadastro div#dataCadastro ul li {
+  width: 100%;
+  text-align: center;
+  font-weight: 200;
+  text-decoration: none;
+  text-transform: none;
+}
+
+section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro div.container-dados-entrada div.calendar-time-cadastro div#dataCadastro ul li i {
+  margin: 0 0.2rem 0 0.2rem;
+  font-size: 1rem;
+  color: #838383;
+  text-align: left;
+  font-weight: 400;
+  text-decoration: none;
+  text-transform: none;
+}
+
+section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro div.container-dados-entrada div.actions-cadastro {
+  width: 25%;
+  padding: 0 0.5rem 0 0.5rem;
+}
+
+section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro div.container-dados-entrada div.actions-cadastro ul {
+  width: 100%;
+}
+
+section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro div.container-dados-entrada div.actions-cadastro ul li {
+  width: 100%;
+  padding: 0 0.2rem 0 0.2rem;
+}
+
+section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro div.container-dados-entrada div.actions-cadastro ul li button {
+  width: 100%;
+  font-size: 1rem;
+  color: white;
+  text-align: center;
+  font-weight: 400;
+  text-decoration: none;
+  text-transform: none;
+}
+
+section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro div.container-dados-entrada div.actions-cadastro ul li button i {
+  margin: 0 0.3rem 0 0.3rem;
+}
+
+section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro div.container-dados {
+  width: 100%;
+}
+
+section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro div.container-dados div.container-dados-retorno {
+  width: 100%;
+}
+
+section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro div.container-dados div.container-dados-retorno div.search-romaneios,
+section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro div.container-dados div.container-dados-retorno div.dados-retornos-nfe {
+  width: 100%;
+}
+
+section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro div.container-dados div.container-dados-retorno div.search-romaneios small,
+section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro div.container-dados div.container-dados-retorno div.dados-retornos-nfe small {
+  width: 100%;
+  text-align: left;
+  font-weight: 400;
+  text-decoration: none;
+  text-transform: uppercase;
+  padding: 0 0.8rem 0 0;
+}
+
+section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro div.container-dados div.container-dados-retorno div.search-romaneios div.container-pesquisa,
+section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro div.container-dados div.container-dados-retorno div.search-romaneios div.container-dados-retornos-nfe,
+section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro div.container-dados div.container-dados-retorno div.dados-retornos-nfe div.container-pesquisa,
+section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro div.container-dados div.container-dados-retorno div.dados-retornos-nfe div.container-dados-retornos-nfe {
+  width: 100%;
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+}
+
+section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro div.container-dados div.container-dados-retorno div.search-romaneios div.container-pesquisa ul,
+section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro div.container-dados div.container-dados-retorno div.search-romaneios div.container-dados-retornos-nfe ul,
+section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro div.container-dados div.container-dados-retorno div.dados-retornos-nfe div.container-pesquisa ul,
+section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro div.container-dados div.container-dados-retorno div.dados-retornos-nfe div.container-dados-retornos-nfe ul {
+  width: 100%;
+}
+
+section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro div.container-dados div.container-dados-retorno div.search-romaneios div.container-pesquisa ul li.spacer,
+section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro div.container-dados div.container-dados-retorno div.search-romaneios div.container-dados-retornos-nfe ul li.spacer,
+section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro div.container-dados div.container-dados-retorno div.dados-retornos-nfe div.container-pesquisa ul li.spacer,
+section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro div.container-dados div.container-dados-retorno div.dados-retornos-nfe div.container-dados-retornos-nfe ul li.spacer {
+  width: 5%;
+}
+
+section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro div.container-dados div.container-dados-retorno div.search-romaneios div.container-pesquisa ul li,
+section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro div.container-dados div.container-dados-retorno div.search-romaneios div.container-dados-retornos-nfe ul li,
+section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro div.container-dados div.container-dados-retorno div.dados-retornos-nfe div.container-pesquisa ul li,
+section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro div.container-dados div.container-dados-retorno div.dados-retornos-nfe div.container-dados-retornos-nfe ul li {
+  width: 100%;
+  padding: 0.2rem 0 !important;
+}
+
+section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro div.container-dados div.container-dados-retorno div.search-romaneios div.container-pesquisa ul li div div span i,
+section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro div.container-dados div.container-dados-retorno div.search-romaneios div.container-dados-retornos-nfe ul li div div span i,
+section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro div.container-dados div.container-dados-retorno div.dados-retornos-nfe div.container-pesquisa ul li div div span i,
+section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro div.container-dados div.container-dados-retorno div.dados-retornos-nfe div.container-dados-retornos-nfe ul li div div span i {
+  font-size: 1rem;
+  color: #b0b0b0;
+  margin: 0 0.2rem 0 0.2rem;
+}
+
+section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro div.container-dados div.container-dados-retorno div.search-romaneios div.container-dados-retornos-nfe,
+section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro div.container-dados div.container-dados-retorno div.dados-retornos-nfe div.container-dados-retornos-nfe {
+  border: 0 solid black;
+  border-radius: 10px;
+}
+
+section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro hr {
+  width: 100%;
 }
 
 /*PAGE RETORNO NFE -> CADASTRO NFE*/
@@ -501,27 +724,60 @@ section.section-module h1 {
   padding: 0.3rem 0 0.3rem 0;
 }
 
-div.table-container-cadastro-nfe {
+.container-novo-registro .table-container-cadastro-nfe {
+  width: 100%;
+  background-color: blue;
+}
+
+.container-novo-registro .table-container-cadastro-nfe .new-registro-nfe-container {
   width: 100%;
 }
 
-table.table-new-registro thead tr th {
+.container-novo-registro .table-container-cadastro-nfe .new-registro-nfe-container .table-new-registro {
+  background-color: red;
+}
+
+.container-novo-registro .table-container-cadastro-nfe .new-registro-nfe-container .table-new-registro thead tr th {
   padding: 0.25rem 0.25rem 0.25rem 0.25rem;
   vertical-align: middle;
 }
 
-table.table-new-registro tbody tr td {
+.container-novo-registro .table-container-cadastro-nfe .new-registro-nfe-container .table-new-registro tbody tr td {
   padding: 0.25rem 0.25rem 0.25rem 0.25rem;
   vertical-align: middle;
+  background-color: blueviolet;
 }
 
-table.table-new-registro tbody tr td .container-motivos #motivo-input {
-  margin: 0.12rem auto 0.12rem auto;
-  width: 20%;
+.container-novo-registro .table-container-cadastro-nfe .new-registro-nfe-container .table-new-registro tbody tr td button {
+  padding: 0;
 }
 
-table.table-new-registro tbody tr .select-filial-td {
+.container-novo-registro .table-container-cadastro-nfe .new-registro-nfe-container .table-new-registro tbody tr td .container-motivos {
+  padding: 0;
+}
+
+.container-novo-registro .table-container-cadastro-nfe .new-registro-nfe-container .table-new-registro tbody tr td .hora-de-para-view {
+  width: 11rem;
+}
+
+.container-novo-registro .table-container-cadastro-nfe .new-registro-nfe-container .table-new-registro tbody tr td .container-motivos-avaria {
+  background-color: aqua;
+}
+
+.container-novo-registro .table-container-cadastro-nfe .new-registro-nfe-container .table-new-registro tbody tr td .container-motivos-avaria ul {
+  padding-left: initial;
+  background-color: red;
+}
+
+.container-novo-registro .table-container-cadastro-nfe .new-registro-nfe-container .table-new-registro tbody tr .select-filial-td {
   width: 19%;
+}
+
+.container-novo-registro .table-container-cadastro-nfe .new-registro-nfe-container .table-new-registro .table-container-retorno-avarias {
+  background-color: yellow;
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
 }
 
 div.inner-container-data-columns div.flex-column div.input-group {
@@ -533,12 +789,15 @@ td button.btn-view-avarias {
 }
 
 /*PAGE RETORNO NFE -> CADASTRO AVARIAS*/
-table.cadastro-retorno-avarias tbody tr td {
+#tableAvarias tbody tr td {
   padding: 0.25rem 0.25rem 0.25rem 0.25rem;
-  vertical-align: middle;
 }
 
-table.cadastro-retorno-avarias tbody tr td#textarea textarea {
+#tableAvarias tbody tr td button {
+  padding: 0;
+}
+
+#tableAvarias tbody tr td#textarea textarea {
   min-width: 20vw;
   max-width: 20vw;
 }
@@ -560,8 +819,10 @@ footer {
   background-size: contain;
   font-size: 1rem;
   color: white;
+  text-align: left;
   font-weight: normal;
   text-decoration: none;
+  text-transform: none;
   padding: 0.65rem 0 0 0;
 }
 
@@ -585,15 +846,19 @@ footer section.rights p {
   padding: 0.85rem 0 0.85rem 0;
   font-size: 0.8rem;
   color: white;
+  text-align: left;
   font-weight: normal;
   text-decoration: none;
+  text-transform: none;
 }
 
 footer section.rights p a {
   font-size: 0.8rem;
   color: #0099ff;
+  text-align: left;
   font-weight: normal;
   text-decoration: none;
+  text-transform: none;
   margin: auto 0.5rem auto 0.5rem;
 }
 
@@ -602,8 +867,10 @@ footer section.rights p a:visited,
 footer section.rights p a:active {
   font-size: 0.8rem;
   color: #2381bf;
+  text-align: left;
   font-weight: normal;
   text-decoration: underline;
+  text-transform: none;
 }
 
 footer section div.coluna {
@@ -613,8 +880,6 @@ footer section div.coluna {
 footer section div.coluna p {
   font-size: 0.8rem;
   color: white;
-  font-weight: 600;
-  text-decoration: none;
 }
 
 footer section div.coluna hr {
@@ -629,7 +894,5 @@ footer section div.coluna hr {
 footer section div.coluna ul li a {
   font-size: 0.8rem;
   color: white;
-  font-weight: 600;
-  text-decoration: none;
 }
 /*# sourceMappingURL=style.min.css.map */

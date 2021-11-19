@@ -28,19 +28,22 @@ div.modal-container-fixed {
                     @include margins($left: 0.35rem);
                     @include borders($colors: rgba(176, 176, 176, 1));
                     background-color: rgba(176, 176, 176, 0.6) !important;
-                    @include fontFormater($size: 0.8rem, $weight: 600, $colors: rgba(0, 0, 0, 1));
+                    @include fontFormater($size: 0.8rem, $colors: rgba(0, 0, 0, 1));
+                    @include textFormater($weight: 600);
                 }
                 button:hover {
                     background-color: rgba(176, 176, 176, 0.8) !important;
-                    @include fontFormater($weight: 600, $colors: rgba(0, 0, 0, 1));
-                    @include fontFormater($size: 0.8rem, $weight: 600, $colors: rgba(0, 0, 0, 1));
+                    @include fontFormater($size: 0.8rem, $colors: rgba(0, 0, 0, 1));
+                    @include textFormater($weight: 600);
                 }
             }
             li {
                 @include paddings($top: 0.55rem, $left: 0.85rem);
-                @include fontFormater($size: 0.8rem, $weight: normal);
+                @include fontFormater($size: 0.8rem);
+                @include textFormater($weight: normal);
                 h1 {
-                    @include fontFormater($size: 1.4rem, $weight: normal);
+                    @include fontFormater($size: 1.4rem);
+                    @include textFormater($weight: normal);
                     margin: 0 !important;
                 }
                 hr {
@@ -71,7 +74,7 @@ div.modal-container-fixed {
                 div.container-input {
                     @include borders($colors: rgba(176, 176, 176, 0.8));
                     i {
-                        @include fontFormater($weight: normal);
+                        @include textFormater($weight: normal);
                         @include paddings($top: 0, $left: 0.5rem);
                     }
                     input {
@@ -89,12 +92,8 @@ div.modal-container-fixed {
                     }
                 }
                 small.errorMessage {
-                    @include fontFormater(
-                        $size: 0.6rem,
-                        $colors: rgba(255, 0, 0, 1),
-                        $weight: normal,
-                        $decoration: underline
-                    );
+                    @include fontFormater($size: 0.6rem, $colors: rgba(255, 0, 0, 1));
+                    @include textFormater($weight: normal, $decoration: underline);
                 }
             }
         }

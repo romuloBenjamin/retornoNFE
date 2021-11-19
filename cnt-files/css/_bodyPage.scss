@@ -6,7 +6,8 @@ section.section-module {
     min-height: $fullViewPH - 40vh;
     h1 {
         @include margins($top: 1.5rem, $left: 0);
-        @include fontFormater($size: 2rem, $weight: 500);
+        @include fontFormater($size: 2rem);
+        @include textFormater($weight: 500);
         text-align: center;
     }
 }

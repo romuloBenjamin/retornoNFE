@@ -1,0 +1,109 @@
+/*PAGE RETORNO NFE -> CADASTRO NFE*/
+#painel-novo-registro-nfes {
+  @include paddings($top: 0.3rem, $left: 0);
+}
+.table-container-cadastro-nfe {
+  width: $fullWidth;
+  .new-registro {
+    .new-registro-container {
+      background-color: #e9ecef;
+    }
+    div {
+      //border: 1px solid black;
+    }
+    .item-name {
+      padding: 0.25rem 0.75rem;
+      background-color: #cacdd1;
+    }
+    .resizable-container {
+      width: fit-content;
+    }
+    button {
+      padding: 0;
+    }
+    .cliente-name-view {
+      margin: auto;
+    }
+    .description-view {
+      padding-left: 1rem;
+      margin: auto 0;
+    }
+  }
+}
+.table-container-retorno-avarias {
+  background-color: rgb(182, 206, 211);
+  table {
+    margin: 0;
+    .container-header {
+      background-color: rgba(201, 168, 201, 0.288);
+    }
+    .item-name-avarias {
+      padding: 0.25rem 0.75rem;
+    }
+    .button-container {
+      vertical-align: middle;
+      padding: 0;
+    }
+    .table-container {
+      border: 0;
+      padding: 0 !important;
+    }
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+    }
+    input[type="number"] {
+      -moz-appearance: textfield;
+    }
+    input {
+      text-align: right;
+    }
+    ul {
+      margin: auto;
+    }
+    .input-group-prepend {
+      margin: 0;
+    }
+  }
+}
+div.inner-container-data-columns {
+  div.flex-column {
+    div.input-group {
+      @include margins($top: 0.12rem, $left: auto, $right: auto, $bottom: 0.12rem);
+    }
+  }
+}
+td {
+  button.btn-view-avarias {
+    @include paddings($top: 0.15rem, $left: 0.5rem);
+  }
+}
+/*PAGE RETORNO NFE -> CADASTRO AVARIAS*/
+#tableAvarias {
+  tbody {
+    tr {
+      td {
+        @include paddings($top: 0.25rem, $left: 0.25rem);
+        button {
+          padding: 0;
+        }
+      }
+      td#textarea {
+        textarea {
+          min-width: 20vw;
+          max-width: 20vw;
+        }
+      }
+    }
+  }
+}
+div.container-motivos-avaria {
+  ul {
+    li {
+      @include paddings($top: 0.25rem, $left: 0.25rem);
+      div {
+        @include margins($top: 0.25rem, $left: 0.25rem, $right: 0.25rem, $bottom: 0.25rem);
+      }
+    }
+  }
+}

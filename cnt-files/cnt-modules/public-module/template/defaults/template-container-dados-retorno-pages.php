@@ -12,13 +12,16 @@
     <!-- PARTE FORMULARIO CADASTRO -->
     <!-- PARTE DA PESQUISA -->
     <div class="d-none cadastro-pesquisa-retorno">
-        <?php
-        $btn = new Pagebuilder();
-        $btn->module = "search";
-        $btn->folder = "template/view";
-        $btn->file = "retorno-nfe-container-results";
-        include $btn->loudTemplateHTML_parts();
-        ?>
+        <h2>Pesquisa por Romaneios:</h2>
+        <div class="d-flex pesquisa-cadastro-romaneios">
+            <?php
+            $btn = new Pagebuilder();
+            $btn->module = "search";
+            $btn->folder = "template/view";
+            $btn->file = "retorno-nfe-container-results";
+            include $btn->loudTemplateHTML_parts();
+            ?>
+        </div>
     </div>
     <!-- PARTE DA PESQUISA -->
 </section>

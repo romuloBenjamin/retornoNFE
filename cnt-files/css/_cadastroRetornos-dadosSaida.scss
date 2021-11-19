@@ -1,0 +1,99 @@
+section.container-dados-nfe-retornadas {
+    width: $fullWidth;
+
+    div.form-parts-transportador-cadastro {
+        width: $fullWidth;
+        div.container-dados-entrada {
+            width: $fullWidth;
+            div.calendar-time-cadastro {
+                width: $fullWidth - 70%;
+                small {
+                    @include textFormater($transform: uppercase, $weight: 400);
+                    @include paddings($left: 0.8rem, $right: 0);
+                }
+                div#dataCadastro {
+                    width: $fullWidth;
+                    height: 60px;
+                    ul {
+                        width: $fullWidth;
+                        li {
+                            width: $fullWidth;
+                            @include textFormater($align: center);
+                            i {
+                                @include margins($left: 0.2rem);
+                                @include fontFormater($colors: rgba(131, 131, 131, 1));
+                                @include textFormater($weight: 400);
+                            }
+                        }
+                    }
+                }
+            }
+            div.actions-cadastro {
+                width: $fullWidth - 75%;
+                @include paddings($left: 0.5rem);
+                ul {
+                    width: $fullWidth;
+                    li {
+                        width: $fullWidth;
+                        @include paddings($left: 0.2rem);
+                        button {
+                            width: $fullWidth;
+                            @include fontFormater($size: 1rem, $colors: rgba(255, 255, 255, 1));
+                            @include textFormater($align: center, $weight: 400);
+                            i {
+                                @include margins($left: 0.3rem);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        div.container-dados {
+            width: $fullWidth;
+            div.container-dados-retorno {
+                width: $fullWidth;
+                div.search-romaneios,
+                div.dados-retornos-nfe {
+                    width: $fullWidth;
+                    small {
+                        width: $fullWidth;
+                        @include textFormater($transform: uppercase, $weight: 400);
+                        @include paddings($left: 0.8rem, $right: 0);
+                    }
+                    div.container-pesquisa,
+                    div.container-dados-retornos-nfe {
+                        width: $fullWidth;
+                        @include paddings($top: 0.5rem, $left: 1rem);
+                        @include borders($colors: rgba(206, 212, 218, 1), $radius: 5px);
+                        ul {
+                            width: $fullWidth;
+                            li.spacer {
+                                width: $fullWidth - 95%;
+                            }
+                            li {
+                                width: $fullWidth;
+                                padding: 0.2rem 0 !important;
+                                div {
+                                    div {
+                                        span {
+                                            i {
+                                                @include fontFormater($colors: rgba(176, 176, 176, 1));
+                                                @include margins($left: 0.2rem);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    div.container-dados-retornos-nfe {
+                        @include borders($size: 0);
+                    }
+                }
+            }
+        }
+        hr {
+            width: $fullWidth;
+        }
+    }
+}

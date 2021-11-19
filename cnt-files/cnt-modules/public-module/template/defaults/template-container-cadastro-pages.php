@@ -1,9 +1,18 @@
 <section class="d-flex justify-content-center container-retornos">
     <!-- RETORNO PADRÃO NFE -->
     <div class="d-flex flex-column container-page">
-        <h1 class="text-center">Cadastro de Retorno de Notas Fiscais por Romaneio</h1>
+        <div class="d-none container-fixed-menu">
+            <?php
+            $fixedMenu = new Pagebuilder();
+            $fixedMenu->module = "menu";
+            $fixedMenu->folder = "template/view";
+            $fixedMenu->file = "menu-fixed-cadastrar";
+            include $fixedMenu->loudTemplatePHP_parts();
+            ?>
+        </div>
+        <h1 id="title-page" class="text-center">Cadastro de Retorno de Notas Fiscais por Romaneio</h1>
         <!-- FORMULARIO DE RETORNO DE DADOS -->
-        <form id="formulario-cadastro" action="javascript: void(0);" method="post" class="d-flex flex-column justify-content-center">
+        <form id="cadastros" action="javascript: void(0);" method="post" class="d-flex flex-column justify-content-center">
             <!-- DADOS DE ENTRADA -->
             <div class="d-flex container-retornos-dados">
                 <?php

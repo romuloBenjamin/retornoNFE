@@ -14,11 +14,55 @@ div.container-menu-atalhos {
     width: $fullWidth;
     height: $fullHeight;
     h2 {
-        @include fontFormater($size: $fontSizeTitle, $weight: normal);
+        @include fontFormater($size: $fontSizeTitle);
+        @include textFormater($weight: normal);
     }
     ul {
         li {
             @include paddings($top: 0.5rem, $left: 0.8rem);
+        }
+    }
+}
+/*FIXED MENUS*/
+div.container-fixed-menu {
+    position: fixed;
+    width: $fullWidth;
+    top: 0;
+    left: 0;
+    background-color: rgba(102, 149, 188, 1);
+    box-shadow: 0px 1px 15px -3px rgba(0, 0, 0, 1);
+    z-index: 999;
+}
+section.fixed-menus {
+    width: $fullWidth;
+    @include paddings($left: 1rem);
+    ul {
+        width: $fullWidth;
+        li {
+            background: transparent !important;
+            @include paddings($top: 0.5rem, $left: 0.5rem);
+            width: $fullWidth;
+        }
+        li:last-child {
+            width: $fullHeight - 70%;
+            div#fixedCadastrar {
+                width: $fullWidth;
+                ul {
+                    width: $fullWidth;
+                    li {
+                        width: $fullWidth;
+                        @include paddings($left: 0.2rem);
+                        button {
+                            width: $fullWidth;
+                            @include fontFormater($size: 1rem, $colors: rgba(255, 255, 255, 1));
+                            @include textFormater($align: center, $weight: 400);
+                            i {
+                                @include margins($left: 0.3rem);
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

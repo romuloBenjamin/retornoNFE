@@ -80,15 +80,17 @@ function localStorageNoOverride() {
 /* Capitalize the first letter of each word */
 function capitalize(string) {
     let pieces = string.split(" ");
+    var noCaps = ["da", "das", "de", "o", "a"];
     var n_map = [];
     pieces.forEach(piece => {
-        n_map.push(piece.charAt(0).toString().toUpperCase() + piece.slice(1));
+        if(noCaps.includes(piece) === true) n_map.push(piece.toString());
+        if(noCaps.includes(piece) === false) n_map.push(piece.charAt(0).toString().toUpperCase() + piece.slice(1));
     });
     return n_map.join(" ");
 }
 /*CALMEL CASE*/
 function camel_case(params) {
-    var nArray = [];    
+    var nArray = [];
     splode = params.split("-");
     splode.forEach((data, index) => {        
         if(index > 0){

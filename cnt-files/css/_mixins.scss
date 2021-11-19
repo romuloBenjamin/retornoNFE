@@ -92,9 +92,14 @@
     }
 }
 
-@mixin fontFormater($size: $fontSise, $colors: $fontColor, $weight: 600, $decoration: none) {
+@mixin fontFormater($size: $fontSise, $colors: $fontColor) {
     font-size: $size;
     color: $colors;
+}
+
+@mixin textFormater($align: left, $weight: 200, $decoration: none, $transform: none) {
+    text-align: $align;
     font-weight: $weight;
     text-decoration: $decoration;
+    text-transform: $transform;
 }

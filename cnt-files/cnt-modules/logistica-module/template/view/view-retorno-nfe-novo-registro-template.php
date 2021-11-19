@@ -1,110 +1,120 @@
-<div class="d-flex flex-column table-container-cadastro-nfe" id="table-container-cadastro-nfe">
-    <table id="tableNewRegistroCloneNode" class="table-new-registro table">
-        <thead class="thead-light">
-            <tr>
-                <th scope="col"></th>
-                <th scope="col">NFe</th>
-                <th scope="col">Emissão</th>
-                <th scope="col">Cliente</th>
-                <th scope="col">Vendedor</th>
-                <th scope="col">Filial</th>
-                <th scope="col">Motivo</th>
-                <!--
-                <th id="data_de_para" class="d-none table_line_oculta" scope="col">Periodo</th>
-                <th id="hora_de_para" class="d-none table_line_oculta" scope="col">Periodo</th>
-                <th id="liberadopor" class="d-none table_line_oculta" scope="col">Liberado por</th>
-                <th id="qtd_retorno" class="d-none table_line_oculta" scope="col">Qtd NFe</th>
-                <th class="d-none" scope="col">Desconto</th>
-                <th id="vv_avarias" class="d-none view-avarias" scope="col"></th>
-                -->
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>
+<div class="d-block table-container-cadastro-nfe" id="newRegistroNFEsContainer">
+    <div id="newRegistroNFEContainerCloneNode" class="new-registro-nfe-container">
+        <div id="tableNewRegistro" class="d-flex flex-column justify-content-center new-registro">
+            <div class="d-flex new-registro-container">
+                <div class="d-flex border">
                     <!-- Add new nfe item -->
-                    <button id="addNFETable" type="button" class="btn">
+                    <button id="addNFEButton" type="button" class="btn add-nfe-btn">
                         <i class="fas fa-plus-circle"></i>
                     </button>
                     <!-- Remove nfe item -->
-                    <button id="deleteNFETable" type="button" class="d-none btn">
+                    <button id="deleteNFEButton" type="button" class="d-none btn delete-nfe-btn">
                         <i class="fa fa-minus-circle"></i>
                     </button>
-                </td>
-                <!-- NFe -->
-                <td>
-                    <div class="input-group input-group-sm">
-                        <input type="number" name="nfe-[index]" id="nfe-[index]" class="form-control">
+                </div>
+                <div class="d-flex flex-column flex-grow-1">
+                    <div class="d-flex flex-grow-1">
+                        <!-- NFe -->
+                        <div class="item w-10">
+                            <div class="item-name">NFe</div>
+                            <div class="input-group input-group-sm">
+                                <input type="number" name="nfeInput" id="nfeInput" class="form-control">
+                            </div>
+                        </div>
+                        <!-- Emissão -->
+                        <div class="item w-13">
+                            <div class="item-name">Emissão</div>
+                            <div class="input-group input-group-sm">
+                                <input type="date" name="emissaoInput" id="emissaoInput" class="form-control">
+                            </div>
+                        </div>
+                        <!-- Cliente -->
+                        <div class="item w-50">
+                            <div class="item-name">Cliente</div>
+                            <div class="d-flex input-group input-group-sm">
+                                <input type="number" name="codClienteInput" id="codClienteInput" placeholder="Cod." class="form-control text-center cod-cliente-input w-25">
+                                <div class="cliente-view w-75" id="nomeClienteView"></div>
+                            </div>
+                        </div>
+                        <!-- Vendedor -->
+                        <div class="item w-10">
+                            <div class="item-name">Vendedor</div>
+                            <div class="input-group input-group-sm">
+                                <input type="text" name="vendedorInput" id="vendedorInput" class="form-control">
+                            </div>
+                        </div>
+                        <!-- Filiais -->
+                        <div class="item w-20">
+                            <div class="item-name">Filial</div>
+                            <div class="input-group input-group-sm">
+                                <select name="forEmpresa" id="forEmpresa" class="form-control">
+                                    <option id="filial-[index]" value="0">Escolha a Filial</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
-                </td>
-                <!-- Emissão -->
-                <td>
-                    <div class="input-group input-group-sm">
-                        <input type="date" name="emissao-[index]" id="emissao-[index]" class="form-control">
+                    <div class="d-flex flex-grow-1 resizable-container">
+                        <!-- Motivo -->
+                        <div class="item">
+                            <div class="item-name">Motivo</div>
+                            <div class="align-items-center input-group input-group-sm motivo-tr">
+                                <input type="number" name="codMotivoInput" id="codMotivoInput" placeholder="Cod. Motivo" class="form-control text-center">
+                            </div>
+                        </div>
+                        <!-- MOTIVOS -->
+                        <div class="d-none item" id="dataDeParaView">
+                            <div id="dataDeParaViewHeader" class="item-name">Periodo</div>
+                            <div class="input-group input-group-sm">
+                                <input type="date" name="dataRetornoDeInput" id="dataRetornoDeInput" class="form-control">
+                                <input type="date" name="dataRetornoParaInput" id="dataRetornoParaInput" class="form-control">
+                            </div>
+                        </div>
+                        <div class="d-none item" id="horaDeParaView">
+                            <div id="horaDeParaViewHeader" class="item-name">Periodo</div>
+                            <div class="input-group input-group-sm">
+                                <input type="time" name="horaRetornoDeInput" id="horaRetornoDeInput" class="form-control">
+                                <input type="time" name="horaRetornoParaInput" id="horaRetornoParaInput" class="form-control">
+                            </div>
+                        </div>
+                        <div class="d-none item flex-grow-1" id="liberadoPorView">
+                            <div id="liberadoPorViewHeader" class="item-name">Liberado por</div>
+                            <div class="input-group input-group-sm">
+                                <input type="text" name="liberadoPorInput" id="liberadoPorInput" class="form-control">
+                            </div>
+                        </div>
+                        <div class="d-none item" id="nfesRetornadasView">
+                            <div id="nfesRetornadasViewHeader" class="item-name">Qtd NFe</div>
+                            <div class="input-group input-group-sm">
+                                <input type="number" name="nfesRetornadasInput" id="nfesRetornadasInput" class="form-control">
+                            </div>
+                        </div>
+                        <div class="d-none item flex-grow-1" id="descontoView">
+                            <div id="descontoViewHeader" class="d-none item-name">Desconto</div>
+                            <div class="input-group input-group-sm">
+                                <input type="text" name="descontoInput" id="descontoInput" disabled="" class="form-control" value="R$ 0,00">
+                            </div>
+                        </div>
                     </div>
-                </td>
-                <!-- Cliente -->
-                <td>
-                    <div class="input-group input-group-sm">
-                        <input type="number" name="codCliente-[index]" id="clienteInput" placeholder="Cod. Cliente" class="form-control nf-informa text-center">
-                        <div class="d-none border-0 container-vv cliente-view-[index]" id="clienteView"></div>
-                        <input type="hidden" name="cliente-nome-[index]" id="cliente-nome-[index]">
+                    <div class="d-none">
+                        <div class="item-name w-16">
+                            Descrição do motivo
+                        </div>
+                        <div class="description-view w-84" id="motivoDescView">Motivo</div>
+                        <div class="item flex-grow-1">
+                            <div id="avariasViewHeader" class="d-none view-avarias"></div>
+                            <div class="d-none view-avarias">
+                                <button class="btn btn-secondary btn-view-avarias">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                </td>
-                <!-- Vendedor -->
-                <td>
-                    <div class="input-group input-group-sm"><input type="text" name="vendedor-[index]" id="vendedor-[index]" class="form-control"></div>
-                </td>
-                <!-- Filiais -->
-                <td class="select-filial-td">
-                    <div class="input-group input-group-sm">
-                        <select name="forEmpresa" id="forEmpresa" class="form-control">
-                            <option id="filial-[index]" value="0">Escolha a Filial</option>
-                        </select>
-                    </div>
-                </td>
-                <!-- Motivo -->
-                <td style="vertical-align: middle">
-                    <div class="input-group align-items-center input-group-sm form-control" id="motivoContainer">
-                        <input type="number" name="motivo-input" id="motivoInput" placeholder="Cod. Motivo" class="form-control text-center">
-                        <div class="d-none border-0 container-vv" id="motivoView">Motivo</div>
-                        <input type="hidden" name="motivoName" id="motivoName">
-                    </div>
-                </td>
-                <!-- MOTIVOS -->
-                <td class="d-none table_line_oculta" id="liberadoPor">
-                    <div class="input-group input-group-sm">
-                        <input type="text" name="liberadoPor-[index]" id="liberadoPor-[index]" class="form-control">
-                    </div>
-                </td>
-                <!--
-                <td class="d-none table_line_oculta" id="data_de_para" style="width: 16rem;">
-                    <div class="input-group input-group-sm">
-                        <input type="date" name="dataRetornoDe-[index]" id="dataRetornoDe-[index]" class="form-control">
-                        <input type="date" name="dataRetornoPara-[index]" id="dataRetornoPara-[index]" class="form-control">
-                    </div>
-                </td>
-                <td class="d-none table_line_oculta" id="hora_de_para" style="width: 11rem;">
-                    <div class="input-group input-group-sm">
-                        <input type="time" name="horaRetornoDe-[index]" id="horaRetornoDe-[index]" class="form-control">
-                        <input type="time" name="horaRetornoPara-[index]" id="horaRetornoPara-[index]" class="form-control">
-                    </div>
-                </td>
-                <td class="d-none table_line_oculta" id="qtd_retorno">
-                    <div class="input-group input-group-sm">
-                        <input type="number" name="nfeRetornadas-[index]" id="nfeRetornadas-[index]" class="form-control">
-                    </div>
-                </td>
-                <td class="d-none">
-                    <div class="input-group input-group-sm">
-                        <input type="text" name="desconto-[index]" id="desconto-[index]" disabled="" class="form-control" value="R$ 0,00">
-                    </div>
-                </td>
-                -->
-                <td class="d-none view-avarias"><button class="btn btn-secondary btn-view-avarias"><i class="fas fa-ellipsis-v"></i></button></td>
-            </tr>
-        </tbody>
-    </table>
+                </div>
+            </div>
+            <!-- Avarias Container Placer -->
+            <div id="avariasContainerPlacer" class="d-none"></div>
+        </div>
+    </div>
 </div>
 <script src="cnt-files/cnt-modules/search-module/js/create-select-list-js.js" defer></script>
 <script src="cnt-files/cnt-modules/logistica-module/js/cadastro-retorno-nfes-js.js" defer></script>

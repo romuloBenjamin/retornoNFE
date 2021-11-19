@@ -7,67 +7,113 @@ function setNovoRegistroNFEs() {
     return pattern_details;
 }
 
-const init = () => {
-    // Init the starting register nfe table line
-    addNewNfe();
+const AVARIAS_CONTAINER_PLACER_ID = "avariasContainerPlacer";
+// Buttons
+const ADD_NFE_BUTTON_ID = "addNFEButton";
+const DELETE_NFE_BUTTON_ID = "deleteNFEButton";
+// Views
+const NOME_CLIENTE_VIEW_ID = "nomeClienteView";
+const MOTIVO_DESC_VIEW_ID = "motivoDescView";
+// Hidden views
+const DATA_DE_PARA_VIEW_ID = "dataDeParaView";
+const HORA_DE_PARA_VIEW_ID = "horaDeParaView";
+const LIBERADO_POR_VIEW_ID = "liberadoPorView";
+const NFES_RETORNADAS_VIEW_ID = "nfesRetornadasView";
+const DESCONTO_VIEW_ID = "descontoView";
+// Inputs
+const NFE_INPUT_ID = "nfeInput";
+const EMISSAO_INPUT_ID = "emissaoInput";
+const COD_CLIENTE_INPUT_ID = "codClienteInput";
+const COD_MOTIVO_INPUT_ID = "codMotivoInput";
+const VENDEDOR_INPUT_ID = "vendedorInput";
+// Hidden Inputs
+const DATA_RETORNO_DE_INPUT_ID = "dataRetornoDeInput";
+const DATA_RETORNO_PARA_INPUT_ID = "dataRetornoParaInput";
+const HORA_RETORNO_DE_INPUT_ID = "horaRetornoDeInput";
+const HORA_RETORNO_PARA_INPUT_ID = "horaRetornoParaInput";
+const LIBERADO_POR_INPUT_ID = "liberadoPorInput";
+const NFES_RETORNADAS_INPUT_ID = "nfesRetornadasInput";
+const DESCONTO_INPUT_ID = "descontoInput";
+
+// Append the passed suffix to the element id
+function appendSuffixToElementId(elementId, container, suffix) {
+    const element = container.querySelector("#" + elementId);
+    element.id += suffix;
 }
 
-init();
-
-/* Return the current number of NFes tables */
-function getNumberOfNFes() {
-    return document.getElementsByClassName("table-new-registro").length - 1;
-}
-
-function setMotivoIdsAndListeners(tableClone, id) {
-    const motivoContainer = tableClone.querySelector("#motivoContainer");
-    motivoContainer.id = motivoContainer.id + id;
-    // Add on key up event on motivo input
-    motivoContainer.querySelector("#motivoInput").addEventListener('keyup', (e) => setMotivo(e.currentTarget));
+// Append the passed suffix to the input id and name
+function appendSuffixToInput(elementId, container, suffix) {
+    const input = container.querySelector("#" + elementId);
+    input.id += suffix;
+    input.name += suffix;
 }
 
 /* Add new nfe register line */
 function addNewNfe() {
-    const originalTable =  document.querySelector("table", "#tableNewRegistroCloneNode");
+    const originalContainer =  document.querySelector("#newRegistroNFEContainerCloneNode");
     // Deeply clone the table
-    const tableClone = originalTable.cloneNode(true);
+    const containerClone = originalContainer.cloneNode(true);
     // Hide the original table
-    originalTable.classList.add("d-none");
-    const index = getNumberOfNFes();
-    tableClone.id = "table-" + index;
+    originalContainer.classList.add("d-none");
 
-    // Add on click event listeners on add/remove nfe table buttons
-    tableClone.querySelector("#addNFETable").addEventListener('click', addNewNfe);
-    tableClone.querySelector("#deleteNFETable").addEventListener('click', (e) => deleteNfe(e.currentTarget));
+    const containers = document.getElementsByClassName("new-registro-nfe-container");
+    const amount = containers.length;
+    let index = 0;
 
-    setMotivoIdsAndListeners(tableClone, index);
-
-    // Add on key up event on cliente input
-    tableClone.querySelector("#clienteInput").addEventListener('keyup', (e) => setCliente(e.currentTarget));
-
-    // Put the on click event listener on the filial select element
-    tableClone.getElementsByTagName("select")[0].addEventListener('click', onEmpresaSelectClick);
-
-    // Get all the tables
-    const tables = document.getElementsByClassName("table-new-registro");
     // If there's more than one, select the previous table
-    if(tables.length > 1) {
-        const previousTable = tables[tables.length-1];
+    if(amount > 1) {
+        const previous = containers[amount - 1];
+        // Set index as next integer
+        index = parseInt(previous.id.split("-")[1]) + 1;
         // Hide add button and show remove button
-        previousTable.querySelector("#addNFETable").classList.add("d-none");
-        previousTable.querySelector("#deleteNFETable").classList.remove("d-none");
+        previous.querySelector(".add-nfe-btn").classList.add("d-none");
+        previous.querySelector(".delete-nfe-btn").classList.remove("d-none");
     }
+
+    // Add the id to the elements
+    const idSuffix = "-" + index;
+    containerClone.id = containerClone.id.replace("CloneNode", "") + idSuffix;
+    appendSuffixToInput(DATA_RETORNO_DE_INPUT_ID, containerClone, idSuffix);
+    appendSuffixToInput(DATA_RETORNO_PARA_INPUT_ID, containerClone, idSuffix);
+    appendSuffixToInput(HORA_RETORNO_DE_INPUT_ID, containerClone, idSuffix);
+    appendSuffixToInput(HORA_RETORNO_PARA_INPUT_ID, containerClone, idSuffix);
+    appendSuffixToInput(LIBERADO_POR_INPUT_ID, containerClone, idSuffix);
+    appendSuffixToInput(NFES_RETORNADAS_INPUT_ID, containerClone, idSuffix);
+    appendSuffixToInput(DESCONTO_INPUT_ID, containerClone, idSuffix);
+    appendSuffixToInput(NFE_INPUT_ID, containerClone, idSuffix);
+    appendSuffixToInput(EMISSAO_INPUT_ID, containerClone, idSuffix);
+    appendSuffixToInput(COD_CLIENTE_INPUT_ID, containerClone, idSuffix);
+    appendSuffixToInput(COD_MOTIVO_INPUT_ID, containerClone, idSuffix);
+    appendSuffixToInput(VENDEDOR_INPUT_ID, containerClone, idSuffix);
+    appendSuffixToElementId(AVARIAS_CONTAINER_PLACER_ID, containerClone, idSuffix);
+    appendSuffixToElementId(ADD_NFE_BUTTON_ID, containerClone, idSuffix);
+    appendSuffixToElementId(DELETE_NFE_BUTTON_ID, containerClone, idSuffix);
+    appendSuffixToElementId(NOME_CLIENTE_VIEW_ID, containerClone, idSuffix);
+    appendSuffixToElementId(MOTIVO_DESC_VIEW_ID, containerClone, idSuffix);
+    appendSuffixToElementId(DATA_DE_PARA_VIEW_ID, containerClone, idSuffix);
+    appendSuffixToElementId(HORA_DE_PARA_VIEW_ID, containerClone, idSuffix);
+    appendSuffixToElementId(LIBERADO_POR_VIEW_ID, containerClone, idSuffix);   
+    appendSuffixToElementId(NFES_RETORNADAS_VIEW_ID, containerClone, idSuffix);
+    appendSuffixToElementId(DESCONTO_VIEW_ID, containerClone, idSuffix);
+
+    // Add event listeners
+    containerClone.querySelector("#" + ADD_NFE_BUTTON_ID + idSuffix).addEventListener('click', addNewNfe, false);
+    containerClone.querySelector("#" + DELETE_NFE_BUTTON_ID + idSuffix).addEventListener('click', deleteNfe, false);
+    containerClone.querySelector("#" + COD_MOTIVO_INPUT_ID + idSuffix).addEventListener('input', (e) => setMotivo(e.currentTarget), false);
+    containerClone.querySelector("#" + COD_CLIENTE_INPUT_ID + idSuffix).addEventListener('input', (e) => setCliente(e.currentTarget), false);
+    containerClone.getElementsByTagName("select")[0].addEventListener('click', onEmpresaSelectClick, false);
     
     // Adds the clone to the table container
-    document.getElementById("table-container-cadastro-nfe").appendChild(tableClone);
+    document.getElementById("newRegistroNFEsContainer").appendChild(containerClone);
     // Show the new table
-    tableClone.classList.remove("d-none");
+    containerClone.classList.remove("d-none");
+    containerClone.scrollIntoView();
 }
 
 /* Remove nfe register line table */
 function deleteNfe(element) {
-    // element (button) > td > tr > tbody > table
-    element.parentNode.parentNode.parentNode.parentNode.remove();
+    const index = element.currentTarget.id.split("-")[1];
+    document.querySelector("#newRegistroNFEContainer-" + index).remove();
 }
 
 // Receives a module and a file and returns its data
@@ -91,42 +137,72 @@ async function getJsonData(module, file) {
     return null;
 }
 
+// Show the table column with the passed id
+function showTableColumn(name, index) {
+    const element = document.querySelector("#" + name + "-" + index);
+    element.classList.remove("d-none");
+}
+
+// Hide the table column with the passed id
+function hideTableColumn(name, index) {
+    const element = document.querySelector("#" + name + "-" + index);
+    element.classList.add("d-none");
+}
+
 // Set the motivo that matches the selected code
 async function setMotivo(element) {
-    console.log(element)
+    const index = element.id.split("-")[1];
     // Get the motivo view
-    const motivoView = element.parentNode.querySelector("#motivoView");
-    if(motivoView) {
-        // Get the motivos from json data
-        const motivos = await getJsonData("logistica", "motivos-retorno-nfe");
-        motivos?.forEach(motivo => {
-            // If it matches the code, set it
-            if(motivo.ids === element.value) motivoView.innerText = motivo.motivo;
-        });
-        // Show the motivos view
-        motivoView.classList.remove("d-none");
-        if(parseInt(element.value) === 3) {
-            const liberadoPor = motivoView.parentNode.parentNode.parentNode.querySelector("#liberadoPor");
-            liberadoPor.classList.remove("d-none");
-            console.log(liberadoPor);
+    const motivoDescView = document.querySelector("#" + MOTIVO_DESC_VIEW_ID + "-" + index);
+    // Get the motivos from json data
+    const motivos = await getJsonData("logistica", "motivos-retorno-nfe");
+    motivos?.some(motivo => {
+        // If it matches the code, set it
+        if(motivo.ids === element.value){
+            motivoDescView.innerText = motivo.motivo;
+            return true; // stop loop
         }
-    }
+        return false;
+    });
+    // Show the motivos view
+    motivoDescView.parentNode.classList.remove("d-none");
+    motivoDescView.parentNode.classList.add("d-flex");
+    const value = parseInt(element.value);
+    // Hide currently displayed views
+    hideAvariaOptions(index);
+    hideTableColumn(LIBERADO_POR_VIEW_ID, index);
+    hideTableColumn(HORA_DE_PARA_VIEW_ID, index);
+    hideTableColumn(DATA_DE_PARA_VIEW_ID, index);
+    hideTableColumn(NFES_RETORNADAS_VIEW_ID, index);
+    // Show the views according to the code of the motivo
+    if(value === 3 || value === 6 || value === 10 || value === 14 || value === 18 || value === 19) showTableColumn(LIBERADO_POR_VIEW_ID, index);
+    if(value === 6 || value === 7 || value === 8) showTableColumn(HORA_DE_PARA_VIEW_ID, index);
+    if(value === 12 || value === 13) showTableColumn(NFES_RETORNADAS_VIEW_ID, index);
+    if(value === 17 || value === 20) showAvariaOptions(index);
+    if(value === 19) showTableColumn(DATA_DE_PARA_VIEW_ID, index);
 }
 
 async function setCliente(element) {
+    const index = element.id.split("-")[1];
     // Get the motivo view
-    const clienteView = element.parentNode.querySelector("#clienteView");
-    if(clienteView) {
-        console.log("setCliente")
-        // Get the motivos from json data
-        /*
-        const clientes = await getJsonData("logistica", "motivos-retorno-nfe");
-        clientes?.forEach(motivo => {
-            // If it matches the code, set it
-            if(clientes.ids === element.value) clienteView.innerText = clientes.motivo;
-        });
-        // Show the motivos view
-        clienteView.classList.remove("d-none");
-        */
-    }
+    const nomeClienteView = element.parentNode.querySelector("#" + NOME_CLIENTE_VIEW_ID + "-" + index);
+    console.log("setCliente")
+    nomeClienteView.innerText = "Nome do cliente";
+    // Get the motivos from json data
+    /*
+    const clientes = await getJsonData("logistica", "");
+    clientes?.forEach(motivo => {
+        // If it matches the code, set it
+        if(clientes.ids === element.value) clienteView.innerText = clientes.motivo;
+    });
+    */
+    // Show the motivos view
+    nomeClienteView.classList.remove("d-none");
 }
+
+const initCadastroNFEs = () => {
+    // Init the starting register nfe table line
+    addNewNfe();
+}
+
+initCadastroNFEs();

@@ -69,6 +69,21 @@
             "module": "search",
             "folder":"class",
             "file": "pesquisar-loopdata"
+        },
+        {
+            "module": "clientes",
+            "folder":"class",
+            "file": "clientes-compound"
+        },
+        {
+            "module": "clientes",
+            "folder":"class",
+            "file": "clientes-patterns"
+        },
+        {
+            "module": "clientes",
+            "folder":"class",
+            "file": "clientes-loopdata"
         }
     ]
 }

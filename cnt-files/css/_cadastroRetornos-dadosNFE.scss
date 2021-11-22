@@ -4,16 +4,15 @@
 }
 .table-container-cadastro-nfe {
   width: $fullWidth;
+  .new-registro-nfe-container {
+    background-color: #e9ecef;
+    margin-bottom: 1rem;
+    border: 4px double #606a78;
+  }
   .new-registro {
-    .new-registro-container {
-      background-color: #e9ecef;
-    }
-    div {
-      //border: 1px solid black;
-    }
     .item-name {
-      padding: 0.25rem 0.75rem;
-      background-color: #cacdd1;
+      padding: 0.25rem 0.35rem;
+      background-color: #d7dbe1;
     }
     .resizable-container {
       width: fit-content;
@@ -26,16 +25,31 @@
     }
     .description-view {
       padding-left: 1rem;
-      margin: auto 0;
+      margin: auto;
+    }
+    .avarias-container-placer {
+      padding-left: 5px;
+    }
+    .avarias-title {
+      margin: 0.25rem !important;
+    }
+    .show-avarias-button-container {
+      height: 100%;
+      button {
+        margin: 0 0.25rem;
+      }
     }
   }
 }
 .table-container-retorno-avarias {
-  background-color: rgb(182, 206, 211);
+  margin-top: 0.1rem;
+  border: 4px ridge #d5d6e4;
+  box-shadow: -5px 5px 5px rgb(190, 190, 190);
+  background-color: #dbdde9;
   table {
     margin: 0;
     .container-header {
-      background-color: rgba(201, 168, 201, 0.288);
+      background-color: #d3d6e3;
     }
     .item-name-avarias {
       padding: 0.25rem 0.75rem;
@@ -66,6 +80,7 @@
     }
   }
 }
+
 div.inner-container-data-columns {
   div.flex-column {
     div.input-group {

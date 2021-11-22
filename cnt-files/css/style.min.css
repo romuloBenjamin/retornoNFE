@@ -32,6 +32,46 @@ a:hover {
   text-transform: capitalize !important;
 }
 
+.w-10 {
+  width: 10% !important;
+}
+
+.w-13 {
+  width: 13% !important;
+}
+
+.w-15 {
+  width: 15% !important;
+}
+
+.w-16 {
+  width: 16% !important;
+}
+
+.w-20 {
+  width: 20% !important;
+}
+
+.w-27 {
+  width: 27% !important;
+}
+
+.w-30 {
+  width: 30% !important;
+}
+
+.w-40 {
+  width: 40% !important;
+}
+
+.w-50 {
+  width: 50% !important;
+}
+
+.w-84 {
+  width: 84% !important;
+}
+
 div.modal-container-fixed {
   position: fixed;
   width: 100vw;
@@ -724,60 +764,105 @@ section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro hr 
   padding: 0.3rem 0 0.3rem 0;
 }
 
-.container-novo-registro .table-container-cadastro-nfe {
-  width: 100%;
-  background-color: blue;
-}
-
-.container-novo-registro .table-container-cadastro-nfe .new-registro-nfe-container {
+.table-container-cadastro-nfe {
   width: 100%;
 }
 
-.container-novo-registro .table-container-cadastro-nfe .new-registro-nfe-container .table-new-registro {
-  background-color: red;
+.table-container-cadastro-nfe .new-registro-nfe-container {
+  background-color: #e9ecef;
+  margin-bottom: 1rem;
+  border: 4px double #cacdd1;
 }
 
-.container-novo-registro .table-container-cadastro-nfe .new-registro-nfe-container .table-new-registro thead tr th {
-  padding: 0.25rem 0.25rem 0.25rem 0.25rem;
-  vertical-align: middle;
+.table-container-cadastro-nfe .new-registro .item-name {
+  padding: 0.25rem 0.35rem;
+  background-color: #cacdd1;
 }
 
-.container-novo-registro .table-container-cadastro-nfe .new-registro-nfe-container .table-new-registro tbody tr td {
-  padding: 0.25rem 0.25rem 0.25rem 0.25rem;
-  vertical-align: middle;
-  background-color: blueviolet;
+.table-container-cadastro-nfe .new-registro .resizable-container {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
 }
 
-.container-novo-registro .table-container-cadastro-nfe .new-registro-nfe-container .table-new-registro tbody tr td button {
+.table-container-cadastro-nfe .new-registro button {
   padding: 0;
 }
 
-.container-novo-registro .table-container-cadastro-nfe .new-registro-nfe-container .table-new-registro tbody tr td .container-motivos {
+.table-container-cadastro-nfe .new-registro .cliente-name-view {
+  margin: auto;
+}
+
+.table-container-cadastro-nfe .new-registro .description-view {
+  padding-left: 1rem;
+  margin: auto;
+}
+
+.table-container-cadastro-nfe .new-registro .avarias-container-placer {
+  padding-left: 5px;
+}
+
+.table-container-cadastro-nfe .new-registro .avarias-title {
+  margin: 0.25rem !important;
+}
+
+.table-container-cadastro-nfe .new-registro .show-avarias-button-container {
+  height: 100%;
+}
+
+.table-container-cadastro-nfe .new-registro .show-avarias-button-container button {
+  margin: 0 0.25rem;
+}
+
+.table-container-retorno-avarias {
+  margin-top: 0.1rem;
+  border: 4px ridge rgba(201, 168, 201, 0.288);
+  -webkit-box-shadow: -5px 5px 5px gray;
+          box-shadow: -5px 5px 5px gray;
+  background-color: #b6ced3;
+}
+
+.table-container-retorno-avarias table {
+  margin: 0;
+}
+
+.table-container-retorno-avarias table .container-header {
+  background-color: rgba(201, 168, 201, 0.288);
+}
+
+.table-container-retorno-avarias table .item-name-avarias {
+  padding: 0.25rem 0.75rem;
+}
+
+.table-container-retorno-avarias table .button-container {
+  vertical-align: middle;
   padding: 0;
 }
 
-.container-novo-registro .table-container-cadastro-nfe .new-registro-nfe-container .table-new-registro tbody tr td .hora-de-para-view {
-  width: 11rem;
+.table-container-retorno-avarias table .table-container {
+  border: 0;
+  padding: 0 !important;
 }
 
-.container-novo-registro .table-container-cadastro-nfe .new-registro-nfe-container .table-new-registro tbody tr td .container-motivos-avaria {
-  background-color: aqua;
+.table-container-retorno-avarias table input::-webkit-outer-spin-button,
+.table-container-retorno-avarias table input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
 }
 
-.container-novo-registro .table-container-cadastro-nfe .new-registro-nfe-container .table-new-registro tbody tr td .container-motivos-avaria ul {
-  padding-left: initial;
-  background-color: red;
+.table-container-retorno-avarias table input[type="number"] {
+  -moz-appearance: textfield;
 }
 
-.container-novo-registro .table-container-cadastro-nfe .new-registro-nfe-container .table-new-registro tbody tr .select-filial-td {
-  width: 19%;
+.table-container-retorno-avarias table input {
+  text-align: right;
 }
 
-.container-novo-registro .table-container-cadastro-nfe .new-registro-nfe-container .table-new-registro .table-container-retorno-avarias {
-  background-color: yellow;
-  height: -webkit-max-content;
-  height: -moz-max-content;
-  height: max-content;
+.table-container-retorno-avarias table ul {
+  margin: auto;
+}
+
+.table-container-retorno-avarias table .input-group-prepend {
+  margin: 0;
 }
 
 div.inner-container-data-columns div.flex-column div.input-group {

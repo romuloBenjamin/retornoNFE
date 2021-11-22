@@ -1,8 +1,8 @@
 <div class="d-none">
     <div class="ml-auto flex-column table-container-retorno-avarias" id="avariasContainerCloneNode">
         <!-- Avarias Title -->
-        <div id="avariasTitleContainer">
-            <h2 class="text-center">Ocorrência de Retorno de Material com Avaria</h2>
+        <div id="avariasTitleContainer" class="d-flex justify-content-center">
+            <h6 class="text-center avarias-title">Ocorrência de Retorno de Materiais com Avaria</h6>
         </div>
 
         <!-- Avarias Table -->
@@ -40,7 +40,7 @@
                                     <input type="number" class="form-control" name="produtoInput" id="produtoInput">
                                 </div>
                             </td>
-                            <td rowspan="2">
+                            <td rowspan="2" class="border border-right-0">
                                 <div class="d-flex container-motivos-avaria border">
                                     <ul class="list-group list-group-horizontal">
                                         <li class="d-flex flex-column align-content-center">
@@ -60,7 +60,7 @@
                                     </ul>
                                 </div>
                             </td>
-                            <td rowspan="2">
+                            <td rowspan="2" class="border border-left-0">
                                 <div class="d-flex container-motivos-avaria border">
                                     <ul class="list-group list-group-horizontal">
                                         <li class="d-flex flex-column">

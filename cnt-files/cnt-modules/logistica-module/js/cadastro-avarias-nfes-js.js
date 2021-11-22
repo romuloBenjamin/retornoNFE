@@ -29,6 +29,13 @@ function createAvariasContainer(index) {
     avariasContainerPlacer.classList.remove("d-none");
 }
 
+function onShowAvariasButtonClick(element) {
+    const index = element.currentTarget.id.split("-")[1];
+    const avariasContainer = document.querySelector("#avariasContainer-" + index);
+    if(!avariasContainer.classList.contains("d-none")) avariasContainer.classList.add("d-none");
+    else avariasContainer.classList.remove("d-none");
+}
+
 // Shows the avaria options container if it exists or creates a new one if not
 function showAvariaOptions(index) {
     const avariasContainer = document.querySelector("#avariasContainer-" + index);
@@ -91,6 +98,8 @@ function addAvaria(element, containerIndex) {
     // Add event listeners to the buttons
     cloneNode.querySelector("#" + ADD_AVARIA_BUTTON_ID + idSuffix).addEventListener('click', addAvaria, false);
     cloneNode.querySelector("#" + DELETE_AVARIA_BUTTON_ID + idSuffix).addEventListener('click', deleteAvaria, false);
+    const container = document.querySelector("#newRegistroNFEContainer-" + containerIndex);
+    container.querySelector("#" + SHOW_AVARIAS_BUTTON_ID + "-" + containerIndex).addEventListener('click', onShowAvariasButtonClick, false);
 
     avariasDataRowPlacer.appendChild(cloneNode);
     cloneNode.scrollIntoView();

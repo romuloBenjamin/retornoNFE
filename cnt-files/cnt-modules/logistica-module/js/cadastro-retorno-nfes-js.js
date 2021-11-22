@@ -1,8 +1,7 @@
 /* New NFes register */
 
 /*OBJ PATTERNS OF MODULE*/
-var pattern_details = setNovoRegistroNFEs();
-function setNovoRegistroNFEs() {
+function patternNovoRegistro() {
     const pattern_details = {};
     return pattern_details;
 }
@@ -11,6 +10,7 @@ const AVARIAS_CONTAINER_PLACER_ID = "avariasContainerPlacer";
 // Buttons
 const ADD_NFE_BUTTON_ID = "addNFEButton";
 const DELETE_NFE_BUTTON_ID = "deleteNFEButton";
+const SHOW_AVARIAS_BUTTON_ID = "showAvariasButton";
 // Views
 const NOME_CLIENTE_VIEW_ID = "nomeClienteView";
 const MOTIVO_DESC_VIEW_ID = "motivoDescView";
@@ -88,6 +88,7 @@ function addNewNfe() {
     appendSuffixToElementId(AVARIAS_CONTAINER_PLACER_ID, containerClone, idSuffix);
     appendSuffixToElementId(ADD_NFE_BUTTON_ID, containerClone, idSuffix);
     appendSuffixToElementId(DELETE_NFE_BUTTON_ID, containerClone, idSuffix);
+    appendSuffixToElementId(SHOW_AVARIAS_BUTTON_ID, containerClone, idSuffix);
     appendSuffixToElementId(NOME_CLIENTE_VIEW_ID, containerClone, idSuffix);
     appendSuffixToElementId(MOTIVO_DESC_VIEW_ID, containerClone, idSuffix);
     appendSuffixToElementId(DATA_DE_PARA_VIEW_ID, containerClone, idSuffix);
@@ -138,13 +139,13 @@ async function getJsonData(module, file) {
 }
 
 // Show the table column with the passed id
-function showTableColumn(name, index) {
+function showElement(name, index) {
     const element = document.querySelector("#" + name + "-" + index);
     element.classList.remove("d-none");
 }
 
 // Hide the table column with the passed id
-function hideTableColumn(name, index) {
+function hideElement(name, index) {
     const element = document.querySelector("#" + name + "-" + index);
     element.classList.add("d-none");
 }
@@ -169,17 +170,21 @@ async function setMotivo(element) {
     motivoDescView.parentNode.classList.add("d-flex");
     const value = parseInt(element.value);
     // Hide currently displayed views
+    hideElement(SHOW_AVARIAS_BUTTON_ID, index);
     hideAvariaOptions(index);
-    hideTableColumn(LIBERADO_POR_VIEW_ID, index);
-    hideTableColumn(HORA_DE_PARA_VIEW_ID, index);
-    hideTableColumn(DATA_DE_PARA_VIEW_ID, index);
-    hideTableColumn(NFES_RETORNADAS_VIEW_ID, index);
+    hideElement(LIBERADO_POR_VIEW_ID, index);
+    hideElement(HORA_DE_PARA_VIEW_ID, index);
+    hideElement(DATA_DE_PARA_VIEW_ID, index);
+    hideElement(NFES_RETORNADAS_VIEW_ID, index);
     // Show the views according to the code of the motivo
-    if(value === 3 || value === 6 || value === 10 || value === 14 || value === 18 || value === 19) showTableColumn(LIBERADO_POR_VIEW_ID, index);
-    if(value === 6 || value === 7 || value === 8) showTableColumn(HORA_DE_PARA_VIEW_ID, index);
-    if(value === 12 || value === 13) showTableColumn(NFES_RETORNADAS_VIEW_ID, index);
-    if(value === 17 || value === 20) showAvariaOptions(index);
-    if(value === 19) showTableColumn(DATA_DE_PARA_VIEW_ID, index);
+    if(value === 3 || value === 6 || value === 10 || value === 14 || value === 18 || value === 19) showElement(LIBERADO_POR_VIEW_ID, index);
+    if(value === 6 || value === 7 || value === 8) showElement(HORA_DE_PARA_VIEW_ID, index);
+    if(value === 12 || value === 13) showElement(NFES_RETORNADAS_VIEW_ID, index);
+    if(value === 17 || value === 20) {
+        showElement(SHOW_AVARIAS_BUTTON_ID, index);
+        showAvariaOptions(index);
+    }
+    if(value === 19) showElement(DATA_DE_PARA_VIEW_ID, index);
 }
 
 async function setCliente(element) {
@@ -189,6 +194,27 @@ async function setCliente(element) {
     console.log("setCliente")
     nomeClienteView.innerText = "Nome do cliente";
     // Get the motivos from json data
+    const patterns = patternNovoRegistro();
+    patterns.module = "clientes";
+    patterns.folder = "core";
+    patterns.file = "clientes";
+    patterns.extensions = "php";
+    patterns.swit = "listar-clientes";
+    patterns.path = createRequestPath(patterns);
+    /*FORM DATA*/
+    var data = new FormData();
+    data.append("swit", patterns.swit);
+    data.append("entry", element.value);
+    /*SET REQUEST*/    
+    var config = {method: 'post', body: data};
+    var loadRequest = loudRequest(patterns);
+    try {
+        const response = await fetch(loadRequest, config);
+        const result = await response.json();
+        console.log(result);
+    } catch(error) {
+
+    }
     /*
     const clientes = await getJsonData("logistica", "");
     clientes?.forEach(motivo => {

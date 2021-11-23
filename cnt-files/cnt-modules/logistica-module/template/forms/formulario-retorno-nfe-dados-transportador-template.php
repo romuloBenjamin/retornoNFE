@@ -132,3 +132,4 @@
 </div>
 <hr>
 <!-- DADOS TRANSPORTADOR -->
+<script src="<?= DIR_PATH; ?>cnt-modules/logistica-module/js/salvar-retorno-nfe-js.js"></script>

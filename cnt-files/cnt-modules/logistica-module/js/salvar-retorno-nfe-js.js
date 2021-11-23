@@ -78,7 +78,7 @@ function gerarFormData(params) {
 /*GET DADOS ROMANEIOS*/
 async function gerarDadosRomaneios(params) {
     var nMap = new Map();
-    var nArray = ["romaneios","motorista","saida","qtdnotas","setor"];
+    var nArray = ["romaneios","motorista","saida","qtdnotas","setor","setorid","motoristaid","diaria"];
     var data_cadastro = document.querySelector("li#dataCadastro").textContent;
     var hora_cadastro = document.querySelector("li#horaCadastro").textContent;
     Object.keys(params).forEach(data=>{

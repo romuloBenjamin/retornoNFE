@@ -34,6 +34,7 @@ async function sendRequest(params) {
         if(params.swit === "listar-retornos-nfe-search") await receiveRequest(results, params, true);
         if(params.swit === "listar-retronos-nfe-paginations") await prepare_paginations_object(results, params.paginations);
         if(params.swit === "pesquisar-romaneios") await receiveRequest(results, params);
+        if(params.swit === "salvar-retornos-nfe") await receiveRequest(results, params);
     } catch (error) {
         console.log("erro ao gerar REQUEST Principal");
     }
@@ -75,6 +76,8 @@ function localStorageNoOverride() {
     var nArray = [];
     nArray.push("searchdata");
     nArray.push("listar");
+    nArray.push("cadastro_dados_romaneios");
+    //nArray.push("listar");
     return nArray;
 }
 /* Capitalize the first letter of each word */

@@ -2,13 +2,13 @@
 const ADD_AVARIA_BUTTON_ID = "addAvariaButton";
 const DELETE_AVARIA_BUTTON_ID = "deleteAvariaButton";
 // Inputs
-const PRODUTO_INPUT_ID = "produtoInput";
-const N_AVARIAS_FURADO_INPUT_ID = "nAvariasFuradoInput";
-const N_AVARIAS_VAZANDO_INPUT_ID = "nAvariasVazandoInput";
-const N_AVARIAS_VAZIO_INPUT_ID = "nAvariasVazioInput";
-const N_AVARIAS_MOLHADO_INPUT_ID = "nAvariasMolhadoInput";
-const N_AVARIAS_RASGADO_INPUT_ID = "nAvariasRasgadoInput";
-const N_AVARIAS_FALTANTE_INPUT_ID = "nAvariasFaltanteInput";
+const PRODUTO_INPUT_ID = "produto";
+const N_AVARIAS_FURADO_INPUT_ID = "nAvariasFurado";
+const N_AVARIAS_VAZANDO_INPUT_ID = "nAvariasVazando";
+const N_AVARIAS_VAZIO_INPUT_ID = "nAvariasVazio";
+const N_AVARIAS_MOLHADO_INPUT_ID = "nAvariasMolhado";
+const N_AVARIAS_RASGADO_INPUT_ID = "nAvariasRasgado";
+const N_AVARIAS_FALTANTE_INPUT_ID = "nAvariasFaltante";
 // Text area
 const OBS_TEXTAREA_ID = "obsTextarea";
 

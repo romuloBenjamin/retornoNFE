@@ -35,8 +35,8 @@ class Clientes_loopdata
     public function loopdata_clientes_listar_sql()
     {
         $sql = "SELECT * FROM uni_intra_clientes";
-        $sql = " WHERE ";
-        $sql = "";
+        $sql .= " WHERE ";
+        $sql .= "uic_id = '" . trim($this->entry) . "'";
         return $sql;
     }
     /*SQL*/

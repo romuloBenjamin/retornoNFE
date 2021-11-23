@@ -1,7 +1,4 @@
 /*PAGE RETORNO NFE -> CADASTRO NFE*/
-#painel-novo-registro-nfes {
-  @include paddings($top: 0.3rem, $left: 0);
-}
 .table-container-cadastro-nfe {
   width: $fullWidth;
   .new-registro-nfe-container {
@@ -10,34 +7,73 @@
     border: 4px double #606a78;
   }
   .new-registro {
+    button {
+      padding: 0;
+    }
     .item-name {
       padding: 0.25rem 0.35rem;
       background-color: #d7dbe1;
     }
-    .resizable-container {
-      width: fit-content;
+    .nfe-container {
+      flex: 1;
     }
-    button {
-      padding: 0;
+    .emissao-container {
+      flex: 1;
+    }
+    .cliente-container {
+      flex: 4;
     }
     .cliente-name-view {
-      margin: auto;
+      &:disabled {
+        background-color: white;
+      }
     }
-    .description-view {
-      padding-left: 1rem;
-      margin: auto;
+    .vendedor-container {
+      flex: 1;
     }
-    .avarias-container-placer {
-      padding-left: 5px;
+    .filiais-container {
+      flex: 2;
     }
-    .avarias-title {
-      margin: 0.25rem !important;
+    .motivo-container {
+      flex: 1;
+    }
+    .motivo-data-container {
+      flex: 9;
+    }
+    .resizable-container {
+      width: fit-content;
+      flex-grow: 1;
+      .data-container {
+        flex: 2;
+        max-width: 20%;
+      }
+      .hora-container {
+        flex: 2;
+        max-width: 20%;
+      }
+      .liberado-por-container {
+        flex: 4;
+        max-width: 40%;
+      }
+      .nfes-retornadas-container {
+        flex: 1;
+        max-width: 10%;
+      }
+    }
+    .motivo-desc-view {
+      flex: 1;
+      &:disabled {
+        background-color: white;
+      }
     }
     .show-avarias-button-container {
       height: 100%;
       button {
         margin: 0 0.25rem;
       }
+    }
+    .avarias-container-placer {
+      padding-left: 5px;
     }
   }
 }
@@ -46,6 +82,9 @@
   border: 4px ridge #d5d6e4;
   box-shadow: -5px 5px 5px rgb(190, 190, 190);
   background-color: #dbdde9;
+  .avarias-title {
+    margin: 0.25rem !important;
+  }
   table {
     margin: 0;
     .container-header {
@@ -78,47 +117,11 @@
     .input-group-prepend {
       margin: 0;
     }
-  }
-}
-
-div.inner-container-data-columns {
-  div.flex-column {
-    div.input-group {
-      @include margins($top: 0.12rem, $left: auto, $right: auto, $bottom: 0.12rem);
+    .motivos-avaria-td {
+      vertical-align: middle;
     }
-  }
-}
-td {
-  button.btn-view-avarias {
-    @include paddings($top: 0.15rem, $left: 0.5rem);
-  }
-}
-/*PAGE RETORNO NFE -> CADASTRO AVARIAS*/
-#tableAvarias {
-  tbody {
-    tr {
-      td {
-        @include paddings($top: 0.25rem, $left: 0.25rem);
-        button {
-          padding: 0;
-        }
-      }
-      td#textarea {
-        textarea {
-          min-width: 20vw;
-          max-width: 20vw;
-        }
-      }
-    }
-  }
-}
-div.container-motivos-avaria {
-  ul {
-    li {
-      @include paddings($top: 0.25rem, $left: 0.25rem);
-      div {
-        @include margins($top: 0.25rem, $left: 0.25rem, $right: 0.25rem, $bottom: 0.25rem);
-      }
+    textarea::placeholder {
+      text-align: end;
     }
   }
 }

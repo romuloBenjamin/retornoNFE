@@ -1,11 +1,20 @@
 <section class="d-flex justify-content-center container-retornos">
+    <div class="gerador-relatorios-container">
+        <?php
+        $controls_actions = new Pagebuilder();
+        $controls_actions->module = "logistica";
+        $controls_actions->folder = "template/views";
+        $controls_actions->file = "";
+        //$controls_actions->gerador_defaults();
+        ?>
+    </div>
     <div class="d-flex flex-column container-page">
         <h1 class="text-center">Retorno de Notas Fiscais</h1>
         <hr>
         <!-- MODULE CONTROLS -->
-        <div class="d-flex flex-rows justify-content-start menu-principal">
+        <div class="d-flex justify-content-between align-items-center menu-principal">
             <!-- CONTROLS -->
-            <div class="d-flex flex-rows module-controls">
+            <div class="d-flex module-controls">
                 <?php
                 $controls_actions = new Pagebuilder();
                 $controls_actions->module = "public";
@@ -16,7 +25,7 @@
             </div>
             <!-- CONTROLS -->
             <!-- PAGINATIONS -->
-            <div class="d-flex flex-rows paginations-controls">
+            <div class="d-flex flex-grow-1 flex-column align-items-end paginations-controls">
                 <?php
                 $paginations = new Pagebuilder();
                 $paginations->module = "public";
@@ -30,7 +39,7 @@
         <!-- MODULE CONTROLS -->
         <hr>
         <!-- FILTROS DE PESQUISA -->
-        <div class="d-flex filtros-pesquisa">
+        <div class="d-flex search-filters-container">
             <?php
             $loudSearch = new Pagebuilder();
             $loudSearch->module = "search";
@@ -96,14 +105,16 @@
             </div>
             <!-- TABLES -->
             <!-- PAGINATIONS -->
-            <div class="d-flex flex-rows paginations-controls">
-                <?php
-                $paginations = new Pagebuilder();
-                $paginations->module = "public";
-                $paginations->folder = "template/defaults";
-                $paginations->file = "container-paginations";
-                $paginations->gerador_defaults();
-                ?>
+            <div class="pagination-footer">
+                <div class="d-flex flex-grow-1 flex-column align-items-end justify-content-center paginations-controls">
+                    <?php
+                    $paginations = new Pagebuilder();
+                    $paginations->module = "public";
+                    $paginations->folder = "template/defaults";
+                    $paginations->file = "container-paginations";
+                    $paginations->gerador_defaults();
+                    ?>
+                </div>
             </div>
             <!-- PAGINATIONS -->
         </div>

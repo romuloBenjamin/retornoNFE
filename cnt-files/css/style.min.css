@@ -606,6 +606,14 @@ section.section-module h1 {
   text-align: center;
 }
 
+section.section-module section.container-retornos {
+  width: 100%;
+}
+
+section.section-module section.container-retornos div.container-page {
+  width: 80%;
+}
+
 section.container-dados-nfe-retornadas {
   width: 100%;
 }
@@ -771,12 +779,12 @@ section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro hr 
 .table-container-cadastro-nfe .new-registro-nfe-container {
   background-color: #e9ecef;
   margin-bottom: 1rem;
-  border: 4px double #cacdd1;
+  border: 4px double #606a78;
 }
 
 .table-container-cadastro-nfe .new-registro .item-name {
   padding: 0.25rem 0.35rem;
-  background-color: #cacdd1;
+  background-color: #d7dbe1;
 }
 
 .table-container-cadastro-nfe .new-registro .resizable-container {
@@ -793,9 +801,17 @@ section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro hr 
   margin: auto;
 }
 
+.table-container-cadastro-nfe .new-registro .cliente-name-view:disabled {
+  background-color: white;
+}
+
 .table-container-cadastro-nfe .new-registro .description-view {
   padding-left: 1rem;
   margin: auto;
+}
+
+.table-container-cadastro-nfe .new-registro .description-view:disabled {
+  background-color: white;
 }
 
 .table-container-cadastro-nfe .new-registro .avarias-container-placer {
@@ -816,10 +832,10 @@ section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro hr 
 
 .table-container-retorno-avarias {
   margin-top: 0.1rem;
-  border: 4px ridge rgba(201, 168, 201, 0.288);
-  -webkit-box-shadow: -5px 5px 5px gray;
-          box-shadow: -5px 5px 5px gray;
-  background-color: #b6ced3;
+  border: 4px ridge #d5d6e4;
+  -webkit-box-shadow: -5px 5px 5px #bebebe;
+          box-shadow: -5px 5px 5px #bebebe;
+  background-color: #dbdde9;
 }
 
 .table-container-retorno-avarias table {
@@ -827,7 +843,7 @@ section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro hr 
 }
 
 .table-container-retorno-avarias table .container-header {
-  background-color: rgba(201, 168, 201, 0.288);
+  background-color: #d3d6e3;
 }
 
 .table-container-retorno-avarias table .item-name-avarias {

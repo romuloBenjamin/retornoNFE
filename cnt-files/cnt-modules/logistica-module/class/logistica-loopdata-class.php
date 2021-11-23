@@ -77,6 +77,9 @@ class Logistica_loopdata
                 $result = $loops->loopdata_exec();
                 $resultSet = $result->num_rows;
                 break;
+            case 'salvar-retornos-nfe':
+                $sql = $loops->loopdata_insert_registros_nfe();
+                break;
                 /*default:break; */
         }
         return $resultSet;
@@ -127,6 +130,28 @@ class Logistica_loopdata
         }
         $sql .= " LIMIT " . trim($patterns->ini) . ", " . trim($patterns->max);
         return $sql;
+    }
+    /*SQL*/
+    public function loopdata_insert_registros_nfe()
+    {
+        $patterns = json_decode($this->entry);
+        var_dump($patterns->entry);
+
+        /*SQL*/
+        $sql = "INSERT INTO uni_intra_retorno_nfes SET ";
+        $sql .= "(";
+        $sql .= "NULL,";
+        $sql .= "'" . trim($patterns->entry->dataCadastro) . "',";
+        $sql .= "'" . trim($patterns->entry->horaCadastro) . "',";
+        $sql .= "uirn_agregado_id,";
+        $sql .= "'" . trim($patterns->entry->qtdnotas) . "',";
+        $sql .= "uirn_notas_retorno,";
+        $sql .= "uirn_notas_cliente,";
+        $sql .= "'" . trim($patterns->entry->saida) . "',";
+        $sql .= "'" . trim($patterns->entry->romaneios) . "',";
+        $sql .= "uirn_setor,";
+        $sql .= "uirn_vlr_diaria_bruto";
+        $sql .= ")";
     }
     /*SQL*/
     public function loopdata_sql_regioes_transportadas()

@@ -37,44 +37,44 @@
                             <td>Cód. do Produto</td>
                             <td>
                                 <div class="input-group input-group-sm">
-                                    <input type="number" class="form-control" name="produtoInput" id="produtoInput">
+                                    <input type="number" class="d-flex form-control" name="produto" id="produto" placeholder="Cód. Produto" min="0">
                                 </div>
                             </td>
-                            <td rowspan="2" class="border border-right-0">
+                            <td rowspan="2" class="border border-right-0 motivos-avaria-td">
                                 <div class="d-flex container-motivos-avaria border">
                                     <ul class="list-group list-group-horizontal">
                                         <li class="d-flex flex-column align-content-center">
                                             <div class="d-flex flex-rows input-group input-group-sm">
                                                 <div class="input-group-prepend"> <span class="input-group-text">Furado</span> </div>
-                                                <input type="number" class="form-control" placeholder="QTD" name="nAvariasFuradoInput" id="nAvariasFuradoInput">
+                                                <input type="number" class="form-control" placeholder="QTD" name="nAvariasFurado" id="nAvariasFurado" min="0">
                                             </div>
                                             <div class="d-flex flex-rows input-group input-group-sm">
                                                 <div class="input-group-prepend"> <span class="input-group-text">Vazando</span> </div>
-                                                <input type="number" class="form-control" placeholder="QTD" name="nAvariasVazandoInput" id="nAvariasVazandoInput">
+                                                <input type="number" class="form-control" placeholder="QTD" name="nAvariasVazando" id="nAvariasVazando" min="0">
                                             </div>
                                             <div class="d-flex flex-rows input-group input-group-sm">
                                                 <div class="input-group-prepend"> <span class="input-group-text">Vazio</span> </div>
-                                                <input type="number" class="form-control" placeholder="QTD" name="nAvariasVazioInput" id="nAvariasVazioInput">
+                                                <input type="number" class="form-control" placeholder="QTD" name="nAvariasVazio" id="nAvariasVazio" min="0">
                                             </div>
                                         </li>
                                     </ul>
                                 </div>
                             </td>
-                            <td rowspan="2" class="border border-left-0">
+                            <td rowspan="2" class="border border-left-0 motivos-avaria-td">
                                 <div class="d-flex container-motivos-avaria border">
                                     <ul class="list-group list-group-horizontal">
                                         <li class="d-flex flex-column">
                                             <div class="d-flex flex-rows input-group input-group-sm input-group-container">
                                                 <div class="input-group-prepend"> <span class="input-group-text">Molhado</span> </div>
-                                                <input type="number" class="form-control" placeholder="QTD" name="nAvariasMolhadoInput" id="nAvariasMolhadoInput">
+                                                <input type="number" class="form-control" placeholder="QTD" name="nAvariasMolhado" id="nAvariasMolhado" min="0">
                                             </div>
                                             <div class="d-flex flex-rows input-group input-group-sm">
                                                 <div class="input-group-prepend"> <span class="input-group-text">Rasgado</span> </div>
-                                                <input type="number" class="form-control" placeholder="QTD" name="nAvariasRasgadoInput" id="nAvariasRasgadoInput">
+                                                <input type="number" class="form-control" placeholder="QTD" name="nAvariasRasgado" id="nAvariasRasgado" min="0">
                                             </div>
                                             <div class="d-flex flex-rows input-group input-group-sm">
                                                 <div class="input-group-prepend"> <span class="input-group-text">Faltante</span> </div>
-                                                <input type="number" class="form-control" placeholder="QTD" name="nAvariasFaltanteInput" id="nAvariasFaltanteInput">
+                                                <input type="number" class="form-control" placeholder="QTD" name="nAvariasFaltante" id="nAvariasFaltante" min="0">
                                             </div>
                                         </li>
                                     </ul>
@@ -84,7 +84,7 @@
                         <tr>
                             <td>Observações</td>
                             <td>
-                                <textarea name="obsTextarea" id="obsTextarea" class="d-flex form-control" placeholder="Digite as Observações..."></textarea>
+                                <textarea name="obsTextarea" id="obsTextarea" class="form-control" placeholder="Digite as Observações"></textarea>
                             </td>
                         </tr>
                     </tbody>

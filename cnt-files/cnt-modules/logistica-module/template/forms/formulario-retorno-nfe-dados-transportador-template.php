@@ -64,6 +64,7 @@
                                 </span>
                             </div>
                             <input type="text" id="forMotorista" name="forMotorista" placeholder="Qual Motorista?" class="form-control">
+                            <input type="hidden" id="forMotoristaId" name="forMotoristaId">
                         </div>
                     </li>
                 </ul>
@@ -99,7 +100,7 @@
                     </li>
                 </ul>
                 <!-- REGIOES -->
-                <ul class="list-group">
+                <ul class="list-group list-group-horizontal">
                     <li class="list-group-item border-0">
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -109,6 +110,19 @@
                                 </span>
                             </div>
                             <input type="text" id="forSetor" name="forSetor" class="form-control">
+                            <input type="hidden" id="forSetorId" name="forSetorId">
+                        </div>
+                    </li>
+                    <li class="list-group-item border-0 spacer"></li>
+                    <li class="d-none list-group-item border-0">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="far fa-calendar-alt"></i>
+                                    Valor Diária:
+                                </span>
+                            </div>
+                            <input type="text" id="forDiaria" name="forDiaria" class="form-control">
                         </div>
                     </li>
                 </ul>

@@ -1,11 +1,17 @@
-div.paginations-containers {
-    width: $fullWidth;
-    ul {
-        @include margins($left: 0.15rem);
-        li.louder-paginations {
-            div.spinner-border {
-                width: 15px;
-                height: 15px;
+.paginations-controls {
+    .qtd-registros {
+        text-align: center;
+        margin-bottom: 0.75rem;
+    }
+    .paginations-container {
+        padding-left: 0.7rem;
+        ul {
+            @include margins($left: 0.15rem);
+            .louder-paginations {
+                .spinner-border {
+                    width: 15px;
+                    height: 15px;
+                }
             }
         }
     }

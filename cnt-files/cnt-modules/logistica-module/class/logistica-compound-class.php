@@ -54,6 +54,12 @@ class Logistica_compound
                 $compound->build = $this->build;
                 $resultSet = $compound->loopdata_logistica();
                 break;
+            case 'salvar-retornos-nfe':
+                $compound->swit = $this->swit;
+                $compound->entry = $this->entry;
+                $compound->build = $this->build;
+                $resultSet = $compound->loopdata_logistica();
+                break;
                 /*default:break;*/
         }
         return $resultSet;

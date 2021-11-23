@@ -1,0 +1,20 @@
+.geradorRelatoriosPanel {
+    background: rgba(0, 0, 0, 0.8) none repeat scroll 0% 0%;
+    height: 100vh;
+    .geradorRelatoriosForm {
+        background: rgb(255, 255, 255) none repeat scroll 0% 0%;
+        width: 32rem;
+        height: 29rem;
+        padding: 0.9rem 0.75rem;
+        margin: 1.5rem auto;
+        .optionsColumn1,
+        .optionsColumn2,
+        .searchGroup,
+        .searchType {
+            width: 15rem;
+        }
+        .loading-text {
+            margin-left: 0.75rem;
+        }
+    }
+}

@@ -1,0 +1,34 @@
+$menuWidth: $fullWidth - 42%;
+
+.menu-principal {
+    width: $menuWidth;
+    .module-controls {
+        li {
+            padding: 0.25rem;
+        }
+    }
+}
+.search-filters-container {
+    .search-filters-form {
+        margin: {
+            bottom: 0.5rem;
+            left: 0.5rem;
+            right: 0.5rem;
+        }
+        width: $fullWidth - 43%;
+        .filter-container {
+            margin-right: 0.5rem;
+            flex: 5;
+            .filter-label {
+                margin-bottom: 0.05rem;
+            }
+        }
+        .search-button-container {
+            flex: 1;
+        }
+    }
+}
+.pagination-footer {
+    width: $menuWidth;
+    padding: 1rem 0;
+}

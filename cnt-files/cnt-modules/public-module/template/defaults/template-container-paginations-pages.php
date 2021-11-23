@@ -1,5 +1,5 @@
-<small class="qtdRegistros" id="qtdRegistros"></small>
-<div class="d-flex paginations-containers">
+<small class="d-flex flex-column justify-content-center align-content-center qtd-registros" id="qtdRegistros"></small>
+<div class="d-flex justify-content-end align-items-center paginations-container">
     <!-- PAGINATIONS CONTROL -> PREV -->
     <ul class="d-none list-group prev-controls list-group-horizontal">
         <li id="pageFST" class="list-group-item firstHref"><a href="#"><i class="fas fa-angle-double-left"></i></a></li>

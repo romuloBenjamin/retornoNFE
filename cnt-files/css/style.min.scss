@@ -8,6 +8,8 @@
 @import "bodyPage";
 @import "cadastroRetornos-dadosSaida";
 @import "cadastroRetornos-dadosNFE";
+@import "listarRetornos-NFE-menu";
+@import "painelGeradorRelatorios";
 //@import "aniversariantes";
 //@import "listarTelefones";
 //@import "intranet-home";
@@ -15,5 +17,5 @@
 //@import "funcionarios";
 //@import "funcionarios-cadastros";
 //@import "funcionarios-aniversariantes";
-//@import "paginations";
+@import "paginations";
 @import "footer";

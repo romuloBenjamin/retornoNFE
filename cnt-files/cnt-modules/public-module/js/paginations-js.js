@@ -76,7 +76,7 @@ function placeSmalls(params) {
     if(regsitro_ini_pagina < 0) regsitro_ini_pagina = 1;
     /*PLACE DATA IN SMALL -> DETALHES DA PAGINATIONS*/
     min_titulos.forEach(placers => {
-        placers.innerHTML = "<span>"+regsitro_ini_pagina+" de "+params.registrosTotais+" registros</span><br>";
+        placers.innerHTML = "<span>"+regsitro_ini_pagina+" de "+params.registrosTotais+" registros</span>";
         placers.innerHTML += "<span><i>Total de <b>"+params.paginasDisponiveis+" páginas!</b></i></span>";
     });
     return null;
@@ -181,7 +181,7 @@ function activePageControls(params, mode = "next") {
     /*PLACE PAGE IN FIRST PAGINATIONS*/
     if(mode === "first") {
         var placers = document.querySelectorAll("ul.prev-controls > li#pageFST > a");
-        var href = location.origin+"/"+location.pathname;
+        var href = location.origin + location.pathname;
         placers.forEach(frst => {
             frst.setAttribute("href", href);
         });

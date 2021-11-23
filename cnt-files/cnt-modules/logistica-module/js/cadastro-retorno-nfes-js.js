@@ -12,8 +12,8 @@ const ADD_NFE_BUTTON_ID = "addNFEButton";
 const DELETE_NFE_BUTTON_ID = "deleteNFEButton";
 const SHOW_AVARIAS_BUTTON_ID = "showAvariasButton";
 // Views
-const NOME_CLIENTE_VIEW_ID = "nomeClienteView";
-const MOTIVO_DESC_VIEW_ID = "motivoDescView";
+const NOME_CLIENTE_VIEW_ID = "nomeCliente";
+const MOTIVO_DESC_VIEW_ID = "motivoDesc";
 // Hidden views
 const DATA_DE_PARA_VIEW_ID = "dataDeParaView";
 const HORA_DE_PARA_VIEW_ID = "horaDeParaView";
@@ -21,19 +21,21 @@ const LIBERADO_POR_VIEW_ID = "liberadoPorView";
 const NFES_RETORNADAS_VIEW_ID = "nfesRetornadasView";
 const DESCONTO_VIEW_ID = "descontoView";
 // Inputs
-const NFE_INPUT_ID = "nfeInput";
-const EMISSAO_INPUT_ID = "emissaoInput";
-const COD_CLIENTE_INPUT_ID = "codClienteInput";
-const COD_MOTIVO_INPUT_ID = "codMotivoInput";
-const VENDEDOR_INPUT_ID = "vendedorInput";
+const NFE_INPUT_ID = "nfe";
+const EMISSAO_INPUT_ID = "emissao";
+const COD_CLIENTE_INPUT_ID = "codCliente";
+const COD_MOTIVO_INPUT_ID = "codMotivo";
+const VENDEDOR_INPUT_ID = "vendedor";
 // Hidden Inputs
-const DATA_RETORNO_DE_INPUT_ID = "dataRetornoDeInput";
-const DATA_RETORNO_PARA_INPUT_ID = "dataRetornoParaInput";
-const HORA_RETORNO_DE_INPUT_ID = "horaRetornoDeInput";
-const HORA_RETORNO_PARA_INPUT_ID = "horaRetornoParaInput";
-const LIBERADO_POR_INPUT_ID = "liberadoPorInput";
-const NFES_RETORNADAS_INPUT_ID = "nfesRetornadasInput";
-const DESCONTO_INPUT_ID = "descontoInput";
+const DATA_RETORNO_DE_INPUT_ID = "dataRetornoDe";
+const DATA_RETORNO_PARA_INPUT_ID = "dataRetornoPara";
+const HORA_RETORNO_DE_INPUT_ID = "horaRetornoDe";
+const HORA_RETORNO_PARA_INPUT_ID = "horaRetornoPara";
+const LIBERADO_POR_INPUT_ID = "liberadoPor";
+const NFES_RETORNADAS_INPUT_ID = "nfesRetornadas";
+const DESCONTO_INPUT_ID = "desconto";
+// Select
+const FILIAL_SELECT_ID = "forEmpresa";
 
 // Append the passed suffix to the element id
 function appendSuffixToElementId(elementId, container, suffix) {
@@ -83,19 +85,20 @@ function addNewNfe() {
     appendSuffixToInput(NFE_INPUT_ID, containerClone, idSuffix);
     appendSuffixToInput(EMISSAO_INPUT_ID, containerClone, idSuffix);
     appendSuffixToInput(COD_CLIENTE_INPUT_ID, containerClone, idSuffix);
+    appendSuffixToInput(NOME_CLIENTE_VIEW_ID, containerClone, idSuffix);
     appendSuffixToInput(COD_MOTIVO_INPUT_ID, containerClone, idSuffix);
+    appendSuffixToInput(MOTIVO_DESC_VIEW_ID, containerClone, idSuffix);
     appendSuffixToInput(VENDEDOR_INPUT_ID, containerClone, idSuffix);
     appendSuffixToElementId(AVARIAS_CONTAINER_PLACER_ID, containerClone, idSuffix);
     appendSuffixToElementId(ADD_NFE_BUTTON_ID, containerClone, idSuffix);
     appendSuffixToElementId(DELETE_NFE_BUTTON_ID, containerClone, idSuffix);
     appendSuffixToElementId(SHOW_AVARIAS_BUTTON_ID, containerClone, idSuffix);
-    appendSuffixToElementId(NOME_CLIENTE_VIEW_ID, containerClone, idSuffix);
-    appendSuffixToElementId(MOTIVO_DESC_VIEW_ID, containerClone, idSuffix);
     appendSuffixToElementId(DATA_DE_PARA_VIEW_ID, containerClone, idSuffix);
     appendSuffixToElementId(HORA_DE_PARA_VIEW_ID, containerClone, idSuffix);
     appendSuffixToElementId(LIBERADO_POR_VIEW_ID, containerClone, idSuffix);   
     appendSuffixToElementId(NFES_RETORNADAS_VIEW_ID, containerClone, idSuffix);
     appendSuffixToElementId(DESCONTO_VIEW_ID, containerClone, idSuffix);
+    appendSuffixToInput(FILIAL_SELECT_ID, containerClone, idSuffix);
 
     // Add event listeners
     containerClone.querySelector("#" + ADD_NFE_BUTTON_ID + idSuffix).addEventListener('click', addNewNfe, false);
@@ -157,14 +160,19 @@ async function setMotivo(element) {
     const motivoDescView = document.querySelector("#" + MOTIVO_DESC_VIEW_ID + "-" + index);
     // Get the motivos from json data
     const motivos = await getJsonData("logistica", "motivos-retorno-nfe");
-    motivos?.some(motivo => {
+    const motivoFound = motivos?.some(motivo => {
         // If it matches the code, set it
         if(motivo.ids === element.value){
-            motivoDescView.innerText = motivo.motivo;
+            motivoDescView.value = motivo.motivo;
             return true; // stop loop
         }
         return false;
     });
+    if(!motivoFound) {
+        motivoDescView.value = "";
+        return;
+    }
+    element.max = motivos.length;
     // Show the motivos view
     motivoDescView.parentNode.classList.remove("d-none");
     motivoDescView.parentNode.classList.add("d-flex");
@@ -187,12 +195,8 @@ async function setMotivo(element) {
     if(value === 19) showElement(DATA_DE_PARA_VIEW_ID, index);
 }
 
-async function setCliente(element) {
-    const index = element.id.split("-")[1];
-    // Get the motivo view
-    const nomeClienteView = element.parentNode.querySelector("#" + NOME_CLIENTE_VIEW_ID + "-" + index);
-    console.log("setCliente")
-    nomeClienteView.innerText = "Nome do cliente";
+// Get cliente data
+async function getCliente(id) {
     // Get the motivos from json data
     const patterns = patternNovoRegistro();
     patterns.module = "clientes";
@@ -204,24 +208,45 @@ async function setCliente(element) {
     /*FORM DATA*/
     var data = new FormData();
     data.append("swit", patterns.swit);
-    data.append("entry", element.value);
+    data.append("entry", id);
     /*SET REQUEST*/    
     var config = {method: 'post', body: data};
     var loadRequest = loudRequest(patterns);
     try {
         const response = await fetch(loadRequest, config);
         const result = await response.json();
-        console.log(result);
+        return result.data[0];
     } catch(error) {
-
+        console.log("Falha ao buscar dados de clientes -> " + patterns.file);
     }
-    /*
-    const clientes = await getJsonData("logistica", "");
-    clientes?.forEach(motivo => {
-        // If it matches the code, set it
-        if(clientes.ids === element.value) clienteView.innerText = clientes.motivo;
-    });
-    */
+    return null;
+}
+
+// Check if the string is a positive integer
+function isPositiveInteger(string) {
+    const number = Math.floor(Number(string));
+    return number !== Infinity && String(number) === string && number > 0;
+}
+
+async function setCliente(element) {
+    const index = element.id.split("-")[1];
+    // Get the motivo view
+    const nomeClienteView = element.parentNode.querySelector("#" + NOME_CLIENTE_VIEW_ID + "-" + index);
+    const clienteId = element.value;
+    // If the field is empty
+    if(clienteId === "") {
+        nomeClienteView.value = "";
+        return;
+    }
+    // If it isn't a valid input for this field
+    if(!isPositiveInteger(clienteId)) {
+        nomeClienteView.value = "Entrada inválida";
+        return;
+    }
+    // Get cliente data
+    const clienteData = await getCliente(clienteId);
+    if(clienteData) nomeClienteView.value = clienteData.cliente;
+    else nomeClienteView.value = "Cliente não encontrado";
     // Show the motivos view
     nomeClienteView.classList.remove("d-none");
 }

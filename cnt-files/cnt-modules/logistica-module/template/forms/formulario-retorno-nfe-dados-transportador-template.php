@@ -5,8 +5,8 @@
         <small>Data e Hora Cadastro:</small>
         <div id="dataCadastro" class="d-flex form-control">
             <ul class="list-group list-group-horizontal">
-                <li class="list-group-item border-0"><i class="far fa-calendar-alt"></i> <?= date('d/m/Y'); ?></li>
-                <li class="list-group-item border-0"><i class="far fa-clock"></i> <?= date('H:i:s'); ?></li>
+                <li id="dataCadastro" class="list-group-item border-0"><i class="far fa-calendar-alt"></i> <?= date('d/m/Y'); ?></li>
+                <li id="horaCadastro" class="list-group-item border-0"><i class="far fa-clock"></i> <?= date('H:i:s'); ?></li>
             </ul>
         </div>
     </div>

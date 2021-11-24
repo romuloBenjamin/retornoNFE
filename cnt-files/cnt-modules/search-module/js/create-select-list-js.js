@@ -135,20 +135,23 @@ selectMotoristas.addEventListener('click', function(){
 });
 }
 /*SET CHILDREN -> MOTIVOS*/
-var selectMotivos = document.querySelector("select#forMotivos");
-if(selectMotivos != null) {
-selectMotivos.addEventListener('click', function(){
-    if(this.children.length <= 1){
-        var sentdata = setPatternsCreateList();
-        sentdata.file = "motivos-retorno-nfe"; sentdata.module = "logistica";
-        sentdata.path = createRequestPath(sentdata);
-        var nView = new Map();
-        nView.set("ids", "ids");
-        nView.set("names", "motivo");
-        handleChildren(nView, sentdata, this);
+var selectMotivos = document.querySelectorAll("select#forMotivos");
+selectMotivos.forEach(select => {
+    if(select != null && select.onclick === null) {
+        select.addEventListener('click', function() {
+            if(this.children.length <= 1) {
+                var sentdata = setPatternsCreateList();
+                sentdata.file = "motivos-retorno-nfe"; sentdata.module = "logistica";
+                sentdata.path = createRequestPath(sentdata);
+                var nView = new Map();
+                nView.set("ids", "ids");
+                nView.set("names", "motivo");
+                handleChildren(nView, sentdata, this);
+            }
+        });
     }
 });
-}
+
 /*HANDLE CHILDREN ELEMENTS*/
 function handleChildren(e, data, placer, prefixId = false) {
     /*CREATE MAPS*/

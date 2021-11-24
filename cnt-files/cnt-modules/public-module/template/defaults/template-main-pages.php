@@ -41,6 +41,11 @@
         //$gModal->folder = "template/view";
         //$gModal->file = "modal-generic";
         //include $gModal->loudPAGEParts();
+        $modalRelatorioGen = new Pagebuilder();
+        $modalRelatorioGen->module = "logistica";
+        $modalRelatorioGen->folder = "template/view";
+        $modalRelatorioGen->file = "retorno-nfe-gerar-relatorio";
+        include $modalRelatorioGen->loudTemplatePHP_parts();
         ?>
     </div>
 </main>

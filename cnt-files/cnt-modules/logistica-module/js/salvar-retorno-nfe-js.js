@@ -38,23 +38,10 @@ async function gerar_obj_salvar(params) {
     object.nfe_retornadas = xplode_dados_retornos;
     salvar_patterns.paginations.entry = object;
     salvar_patterns.swit = "salvar-retornos-nfe";
-    /*FORM DATA*/
-    var data = new FormData();
-    data.append("swit", salvar_patterns.swit);
-    data.append("entry", JSON.stringify(salvar_patterns.paginations));
-    /*SET REQUEST*/    
-    var config = {method: 'post', body: data};
-    var louds = loudRequest(salvar_patterns);
-    var results = await fetch(louds, config);
-    try {
-        results = await results?.text();
-        console.log(results);
-    } catch (error) {
-        
-    }
+    sendRequest(salvar_patterns);
 }
 /*RECEIVE REQUEST*/
-function receiveRequest(params, patterns) {
+function receiveRequest_popup(params, patterns) {
     console.log(params);
 }
 /*-------------------------------------------------->FORMDATA<--------------------------------------------------*/

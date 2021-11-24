@@ -26,17 +26,21 @@ async function sendRequest(params) {
     /*SET REQUEST*/    
     var config = {method: 'post', body: data};
     var louds = loudRequest(params);
-    var results = await fetch(louds, config);
     try {
+        var results = await fetch(louds, config);
         results = await results?.json();
+        console.log(results);
         if(params.swit === "listar-funcionarios-short") await receiveRequest(results, params);
         if(params.swit === "listar-retornos-nfe") await receiveRequest(results, params);
         if(params.swit === "listar-retornos-nfe-search") await receiveRequest(results, params, true);
         if(params.swit === "listar-retronos-nfe-paginations") await prepare_paginations_object(results, params.paginations);
         if(params.swit === "pesquisar-romaneios") await receiveRequest(results, params);
-        if(params.swit === "salvar-retornos-nfe") await receiveRequest(results, params);
+        if(params.swit === "salvar-retornos-nfe") await receiveRequest_popup(results, params);
     } catch (error) {
         console.log("erro ao gerar REQUEST Principal");
+        setTimeout(()=>{
+            //location.reload();
+        }, 600);
     }
 }
 /*GET N REQUEST*/

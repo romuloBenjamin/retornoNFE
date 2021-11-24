@@ -17,19 +17,22 @@ document.querySelector("input#forRomaneios").addEventListener("keyup", createObj
 /*------------------------------->CREATE OBJECT SEARCH<-------------------------------*/
 var area_pesquisa = document.querySelector("div.cadastro-pesquisa-retorno > div.pesquisa-cadastro-romaneios > div.container-results");
 /*CREATE OBJ*/
-function createObj_search() {
+async function createObj_search() {
+    var digitar = this.value;
+    if(digitar === ""){
+        await empty_search_lines();
+        hide_search_area();
+        digitar = "";
+    }
     /*GET PATTERNS*/
     var patternsCadastrar = patternsCadastrarDados();
-    patternsCadastrar.paginations.search = this.value;
-    patternsCadastrar.swit = "pesquisar-romaneios"
-    if(this?.value === "") {
-        console.log("empty");
-        empty_search_lines();
-        hide_search_area();
-        return;
-    }
+    patternsCadastrar.paginations.search = digitar;
+    patternsCadastrar.swit = "pesquisar-romaneios";
     /*SEND DATA*/
-    if(this?.value != "") sendRequest(patternsCadastrar);
+    if(digitar != "") { await getRequest(patternsCadastrar); }
+}
+async function getRequest(params) {
+    sendRequest(params);
 }
 /*------------------------------->RECEIVE OBJECT SEARCH<-------------------------------*/
 /*RECEIVE OBJ*/
@@ -38,29 +41,29 @@ async function receiveRequest(params, patterns) {
     view_search_area();
     /*dados vazios*/
     if(parseInt(params.status) === 0) {
-        await receive_no_data(params);
-        return;
+        receive_no_data(params);
     }
     /*LIMPAR CAMPOS para RECEBER DATA*/
     await empty_search_lines();
     /*listar dados recebidos*/
-    await listar_receivedRequest(params);
+    listar_receivedRequest(params);
 }
 /*RECEIVE NO DATA*/
-async function receive_no_data(params) {
+function receive_no_data(params) {
     var placers = area_pesquisa.querySelector("ul");
     const clone = placers.querySelector("li#cloneNode");
     clone.innerHTML = params.msn.toString();
     placers.appendChild(clone);
+    return false;
 }
-/*LISTAR SEARCH DATA*/
-async function listar_receivedRequest(params) {
-    const dataLI = params?.data;
-    var placers = area_pesquisa.querySelector("ul");
-    /*VALUE RETURNED*/
-    dataLI.forEach(data => {
+/*RECEIVE DATA*/
+function receive_data(params) {
+    /*CONFIG*/
+    var placers = document.querySelector("div#container-results > ul");
+    /*PLACE CLONE INTO PLACERS*/
+    params.forEach(data => {
+        const clone = placers.querySelector("li#cloneNode").cloneNode(true);
         const dados = ["<b>Motorista:</b>", data.transportador, "<b>Romaneio:</b>", data.romaneio, "<b>Saída:</b>", data["data-saida"].split("-").reverse().join("/").toString()];
-        const clone = area_pesquisa.querySelector("li#cloneNode").cloneNode(true);
         if(clone.classList.contains("d-none")) clone.classList.remove("d-none");
         clone.removeAttribute("id");
         clone.innerHTML = dados.join(" ");
@@ -73,31 +76,43 @@ async function listar_receivedRequest(params) {
         placers.appendChild(clone);
     });
     /*OCULTA O CLONE*/
-    if(area_pesquisa.querySelector("li#cloneNode").classList.contains("d-none") === false){
-        area_pesquisa.querySelector("li#cloneNode").classList.add("d-none");
+    if(placers.querySelector("li#cloneNode").classList.contains("d-none") === false){
+        placers.querySelector("li#cloneNode").classList.add("d-none");
     }
-    return;
+
+}
+/*LISTAR SEARCH DATA*/
+function listar_receivedRequest(params) {
+    const array_pesquisa = params?.data;
+    if(array_pesquisa === undefined) receive_no_data(params);
+    if(array_pesquisa != undefined) receive_data(array_pesquisa);
 }
 /*--------------------------------------->INTERAÇÂO PAGINA<---------------------------------------*/
 /*LIMPAR LINHAS*/
 async function empty_search_lines() {
-    var a_pesquisa = area_pesquisa.querySelectorAll("ul > li");
-    if(a_pesquisa.length > 1) {
-        a_pesquisa.forEach((data, index) => { if(index != 0) data.remove(); })
+    var placers = document.querySelector("div#container-results > ul");
+    var area_pesquisa = placers.querySelectorAll("li");
+    if(area_pesquisa.length != 1) {
+        area_pesquisa.forEach(data => {data.remove();});
     }
-    return;
+    await place_clone_again();
+}
+async function place_clone_again() {
+    var placers = document.querySelector("div#container-results > ul");
+    if(placers.querySelectorAll("li").length === 0){
+        placers.appendChild(document.createElement("li")).id = "cloneNode";
+        placers.querySelector("li#cloneNode").classList.add("list-group-item");
+    }
 }
 /*HIDE AREA DE PESQUISA*/
-async function hide_search_area() {
+function hide_search_area() {
     var a_pesquisa = area_pesquisa.parentElement.parentElement;
     if(!a_pesquisa.classList.contains("d-none")) return a_pesquisa.classList.add("d-none");
-    return;
 }
 /*VISUALIZAR AREA DE PESQUISA*/
-async function view_search_area() {
+function view_search_area() {
     var a_pesquisa = area_pesquisa.parentElement.parentElement;
     if(a_pesquisa.classList.contains("d-none")) return a_pesquisa.classList.remove("d-none");
-    return;
 }
 /*PREENCHER DADOS PESQUISA INICIAL*/
 async function select_this_one(params) {
@@ -125,7 +140,7 @@ async function select_this_one(params) {
         document.querySelector("input#forMotorista").value = nome_transportador;
     }
     /*APAGAR DADOS DE PESQUISA*/
-    empty_search_lines();
+    await empty_search_lines();
     /*OCULTAR CAMPO DE PESQUISA*/    
     hide_search_area();
 }

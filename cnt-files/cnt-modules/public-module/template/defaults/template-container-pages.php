@@ -1,13 +1,4 @@
 <section class="d-flex justify-content-center container-retornos">
-    <div class="gerador-relatorios-container">
-        <?php
-        $controls_actions = new Pagebuilder();
-        $controls_actions->module = "logistica";
-        $controls_actions->folder = "template/views";
-        $controls_actions->file = "";
-        //$controls_actions->gerador_defaults();
-        ?>
-    </div>
     <div class="d-flex flex-column container-page">
         <h1 class="text-center">Retorno de Notas Fiscais</h1>
         <hr>

@@ -78,7 +78,16 @@ class Logistica_loopdata
                 $resultSet = $result->num_rows;
                 break;
             case 'salvar-retornos-nfe':
-                $sql = $loops->loopdata_insert_registros_nfe();
+                $verifica = json_decode($loops->verifica_if_returns());
+                if ($verifica->status == "1") {
+                    $sql = $loops->loopdata_insert_registros_nfe();
+                    $loops->entry = $sql;
+                    $inserts = $loops->loopdata_exec();
+                    if ($inserts == "") $resultSet = $inserts;
+                    if ($inserts != "") $resultSet = json_encode(array("status" => "0", "msn" => "Desculpe. Não foi possível cadastrar."));
+                }
+                if ($verifica->status == "0") $result = json_encode($verifica);
+                $resultSet = $result;
                 break;
                 /*default:break; */
         }
@@ -135,23 +144,22 @@ class Logistica_loopdata
     public function loopdata_insert_registros_nfe()
     {
         $patterns = json_decode($this->entry);
-        var_dump($patterns->entry);
-
         /*SQL*/
-        $sql = "INSERT INTO uni_intra_retorno_nfes SET ";
+        $sql = "INSERT INTO uni_intra_retorno_nfes VALUES ";
         $sql .= "(";
-        $sql .= "NULL,";
-        $sql .= "'" . trim($patterns->entry->dataCadastro) . "',";
-        $sql .= "'" . trim($patterns->entry->horaCadastro) . "',";
-        $sql .= "uirn_agregado_id,";
-        $sql .= "'" . trim($patterns->entry->qtdnotas) . "',";
-        $sql .= "uirn_notas_retorno,";
-        $sql .= "uirn_notas_cliente,";
-        $sql .= "'" . trim($patterns->entry->saida) . "',";
-        $sql .= "'" . trim($patterns->entry->romaneios) . "',";
-        $sql .= "uirn_setor,";
-        $sql .= "uirn_vlr_diaria_bruto";
+        $sql .= "'NULL',";
+        $sql .= "'" . trim($patterns->entry->dados_romaneios->dataCadastro) . "',";
+        $sql .= "'" . trim($patterns->entry->dados_romaneios->horaCadastro) . "',";
+        $sql .= "'" . trim($patterns->entry->dados_romaneios->motoristaid) . "',";
+        $sql .= "'" . trim($patterns->entry->dados_romaneios->qtdnotas) . "',";
+        $sql .= "'uirn_notas_retorno',";
+        $sql .= "'uirn_notas_cliente',";
+        $sql .= "'" . trim($patterns->entry->dados_romaneios->saida) . "',";
+        $sql .= "'" . trim($patterns->entry->dados_romaneios->romaneios) . "',";
+        $sql .= "'" . trim($patterns->entry->dados_romaneios->setorid) . "',";
+        $sql .= "'" . trim($patterns->entry->dados_romaneios->diaria) . "'";
         $sql .= ")";
+        return $sql;
     }
     /*SQL*/
     public function loopdata_sql_regioes_transportadas()
@@ -223,5 +231,16 @@ class Logistica_loopdata
         $array_combine["data"] = array();
         $array_combine["msn"] = "Desculpe, não foi possível localizar os dados solicitados! -> " . $this->swit . "";
         return json_encode($array_combine);
+    }
+    /*FACTORY*/
+    public function verifica_if_returns()
+    {
+        $patterns = json_decode($this->entry);
+        /*RETURN SE VAZIO*/
+        $retorno_ate = json_decode(json_encode($patterns->entry->dados_romaneios), true);
+        foreach ($retorno_ate as $tags => $content) {
+            if ($content == "") return json_encode(array("status" => "0", "msn" => "Desculpe, para inserir não pode haver campos vazios!"));
+        }
+        return json_encode(array("status" => "1", "msn" => "Sucesso! pode Cadastrar."));
     }
 }

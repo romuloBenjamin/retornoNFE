@@ -62,14 +62,16 @@ function receive_data(params) {
     var placers = document.querySelector("div#container-results > ul");
     /*PLACE CLONE INTO PLACERS*/
     params.forEach(data => {
+        console.log(data);
         const clone = placers.querySelector("li#cloneNode").cloneNode(true);
-        const dados = ["<b>Motorista:</b>", data.transportador, "<b>Romaneio:</b>", data.romaneio, "<b>Saída:</b>", data["data-saida"].split("-").reverse().join("/").toString()];
+        const dados = ["<b>Motorista:</b>", data.transportador, " <b>Romaneio:</b>", data.romaneio, "<b>Saída:</b>", data["data-saida"].split("-").reverse().join("/").toString()];
         if(clone.classList.contains("d-none")) clone.classList.remove("d-none");
         clone.removeAttribute("id");
         clone.innerHTML = dados.join(" ");
         clone.dataset.romaneio = data.romaneio;
         clone.dataset.transportador = data.transportador;
         clone.dataset.nfesqtd = data.qtd;
+        clone.dataset.vlrbruto = data.diaria;
         clone.dataset.setor = data.setor;
         clone.dataset.saida = data["data-saida"].split("-").reverse().join("/").toString();
         clone.setAttribute("onClick", "select_this_one(this);");
@@ -133,11 +135,17 @@ async function select_this_one(params) {
     if(getDataset?.setor != null){
         const nome_setor = await getExtented_data(getDataset?.setor, "regioes-transportadas");
         document.querySelector("input#forSetor").value = nome_setor;
+        document.querySelector("input#forSetorId").value = getDataset?.setor;
+    }
+    /*PLACE DIARIA CAMINHAO*/
+    if(getDataset?.vlrbruto != null){
+        document.querySelector("input#forDiaria").value = getDataset.vlrbruto;
     }
     /*PLACE NOME DO TRANSPORTADOR*/
     if(getDataset?.transportador != null){
         const nome_transportador = await getExtented_data(getDataset?.transportador, "transportadores");
         document.querySelector("input#forMotorista").value = nome_transportador;
+        document.querySelector("input#forMotoristaId").value = getDataset?.transportador;
     }
     /*APAGAR DADOS DE PESQUISA*/
     await empty_search_lines();

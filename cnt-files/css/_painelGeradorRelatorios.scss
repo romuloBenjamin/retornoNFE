@@ -1,25 +1,54 @@
 #geradorRelatoriosPanel {
-    background: rgba(0, 0, 0, 0.8) none repeat scroll 0% 0%;
-    height: 100%;
+    width: $fullWidth;
+    height: $fullHeight;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 100;
+    #backdrop {
+        width: $fullWidth;
+        height: $fullHeight;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 101;
+    }
     #geradorRelatoriosForm {
-        background: rgb(255, 255, 255) none repeat scroll 0% 0%;
+        background: rgb(255, 255, 255);
         width: 32rem;
-        height: 29rem;
         padding: 0.9rem 0.75rem;
         margin: 1.5rem auto;
+        z-index: 102;
+        h2 {
+            text-transform: uppercase;
+        }
+        hr {
+            width: $fullWidth;
+            margin: 0.5rem auto;
+        }
+        span {
+            width: 6rem;
+        }
+        .close-button {
+            align-self: center;
+            height: min-content;
+        }
         #optionsColumn1,
         #optionsColumn2,
         #searchGroup,
         #searchType {
             width: 15rem;
         }
-        #loading-text {
+        #optionsColumn1 {
+            margin-right: 0.5rem;
+        }
+        .loading-text {
             margin-left: 0.75rem;
+        }
+        #avariasOptionContainer,
+        #empresasContainer {
+            margin: 0 0 0.5rem 0;
         }
     }
 }

@@ -1017,22 +1017,54 @@ section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro hr 
 }
 
 #geradorRelatoriosPanel {
-  background: rgba(0, 0, 0, 0.8) none repeat scroll 0% 0%;
+  width: 100%;
   height: 100%;
   position: absolute;
   top: 50%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
-  z-index: 100;
+}
+
+#geradorRelatoriosPanel #backdrop {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  z-index: 101;
 }
 
 #geradorRelatoriosPanel #geradorRelatoriosForm {
-  background: white none repeat scroll 0% 0%;
+  background: white;
   width: 32rem;
-  height: 29rem;
   padding: 0.9rem 0.75rem;
   margin: 1.5rem auto;
+  z-index: 102;
+}
+
+#geradorRelatoriosPanel #geradorRelatoriosForm h2 {
+  text-transform: uppercase;
+}
+
+#geradorRelatoriosPanel #geradorRelatoriosForm hr {
+  width: 100%;
+  margin: 0.5rem auto;
+}
+
+#geradorRelatoriosPanel #geradorRelatoriosForm span {
+  width: 6rem;
+}
+
+#geradorRelatoriosPanel #geradorRelatoriosForm .close-button {
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  height: -webkit-min-content;
+  height: -moz-min-content;
+  height: min-content;
 }
 
 #geradorRelatoriosPanel #geradorRelatoriosForm #optionsColumn1,
@@ -1042,8 +1074,17 @@ section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro hr 
   width: 15rem;
 }
 
-#geradorRelatoriosPanel #geradorRelatoriosForm #loading-text {
+#geradorRelatoriosPanel #geradorRelatoriosForm #optionsColumn1 {
+  margin-right: 0.5rem;
+}
+
+#geradorRelatoriosPanel #geradorRelatoriosForm .loading-text {
   margin-left: 0.75rem;
+}
+
+#geradorRelatoriosPanel #geradorRelatoriosForm #avariasOptionContainer,
+#geradorRelatoriosPanel #geradorRelatoriosForm #empresasContainer {
+  margin: 0 0 0.5rem 0;
 }
 
 .paginations-controls .qtd-registros {

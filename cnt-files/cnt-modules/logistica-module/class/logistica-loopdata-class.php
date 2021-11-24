@@ -79,14 +79,14 @@ class Logistica_loopdata
                 break;
             case 'salvar-retornos-nfe':
                 $verifica = json_decode($loops->verifica_if_returns());
+                if ($verifica->status == "0") $result = json_encode($verifica);
                 if ($verifica->status == "1") {
                     $sql = $loops->loopdata_insert_registros_nfe();
                     $loops->entry = $sql;
                     $inserts = $loops->loopdata_exec();
-                    if ($inserts == "") $resultSet = $inserts;
-                    if ($inserts != "") $resultSet = json_encode(array("status" => "0", "msn" => "Desculpe. Não foi possível cadastrar."));
+                    if ($inserts == 1) $result = json_encode(array("status" => "1", "msn" => "Sucesso! Retorno Cadastrado."));
+                    if ($inserts != 1) $result = json_encode(array("status" => "0", "msn" => "Desculpe. Não foi possível cadastrar."));
                 }
-                if ($verifica->status == "0") $result = json_encode($verifica);
                 $resultSet = $result;
                 break;
                 /*default:break; */
@@ -144,17 +144,30 @@ class Logistica_loopdata
     public function loopdata_insert_registros_nfe()
     {
         $patterns = json_decode($this->entry);
+        /*GET FACTORY DATA CADASTRO E SAIDA*/
+        $setFactory = new Logistica_loopdata();
+        $setFactory->entry = $patterns->entry->dados_romaneios->dataCadastro;
+        $dataCadastro = $setFactory->ajustar_data();
+        $setFactory->entry = $patterns->entry->dados_romaneios->saida;
+        $dataSaida = $setFactory->ajustar_data();
+        /*GET FACTORY DADOS CLIENTE*/
+        $setFactory_dadosCli = new Logistica_loopdata();
+        $setFactory_dadosCli->entry = $patterns->entry;
+        $dadosCli = $setFactory_dadosCli->gerar_dados_cliente();
+        $dadosRetornos = $setFactory_dadosCli->gerar_dados_retornos();
+        /*GET FACTORY DADOS NFE*/
+
         /*SQL*/
         $sql = "INSERT INTO uni_intra_retorno_nfes VALUES ";
         $sql .= "(";
-        $sql .= "'NULL',";
-        $sql .= "'" . trim($patterns->entry->dados_romaneios->dataCadastro) . "',";
+        $sql .= "NULL,";
+        $sql .= "'" . trim($dataCadastro) . "',";
         $sql .= "'" . trim($patterns->entry->dados_romaneios->horaCadastro) . "',";
         $sql .= "'" . trim($patterns->entry->dados_romaneios->motoristaid) . "',";
         $sql .= "'" . trim($patterns->entry->dados_romaneios->qtdnotas) . "',";
-        $sql .= "'uirn_notas_retorno',";
-        $sql .= "'uirn_notas_cliente',";
-        $sql .= "'" . trim($patterns->entry->dados_romaneios->saida) . "',";
+        $sql .= "'" . trim($dadosRetornos) . "',";
+        $sql .= "'" . trim($dadosCli) . "',";
+        $sql .= "'" . trim($dataSaida) . "',";
         $sql .= "'" . trim($patterns->entry->dados_romaneios->romaneios) . "',";
         $sql .= "'" . trim($patterns->entry->dados_romaneios->setorid) . "',";
         $sql .= "'" . trim($patterns->entry->dados_romaneios->diaria) . "'";
@@ -242,5 +255,54 @@ class Logistica_loopdata
             if ($content == "") return json_encode(array("status" => "0", "msn" => "Desculpe, para inserir não pode haver campos vazios!"));
         }
         return json_encode(array("status" => "1", "msn" => "Sucesso! pode Cadastrar."));
+    }
+    public function ajustar_data()
+    {
+        $data = $this->entry;
+        $data_xplod_reverse = array_reverse(explode("/", $data));
+        $data_implode = str_replace(" ", "", implode("-", $data_xplod_reverse));
+        return $data_implode;
+    }
+    public function gerar_dados_cliente()
+    {
+        /*DADOS CLIENTE*/
+        $dados_cli = array("codcliente", "nomecliente", "vendedor");
+        /*CONFIG*/
+        $nArray = array();
+        $array_final = array();
+        /*PATTERNS*/
+        $patterns = json_decode(json_encode($this->entry->nfe_retornadas), true);
+        for ($i = 0; $i < count($patterns); $i++) {
+            foreach ($patterns[$i] as $tags => $content) {
+                if (in_array($tags, $dados_cli)) {
+                    if ($tags == "codcliente") $tags = "cod_cliente";
+                    if ($tags == "nomecliente") $tags = "nome_cliente";
+                    $nArray[$tags] = $content;
+                }
+            }
+            $array_final[] = $nArray;
+        }
+        $results = $array_final;
+        return serialize($results);
+    }
+    public function gerar_dados_retornos()
+    {
+        /*DADOS CLIENTE*/
+        $dados_nfe = array("codcliente", "nomecliente", "vendedor");
+        /*CONFIG*/
+        $nArray = array();
+        $array_final = array();
+        /*PATTERNS*/
+        $patterns = json_decode(json_encode($this->entry->nfe_retornadas), true);
+        for ($i = 0; $i < count($patterns); $i++) {
+            foreach ($patterns[$i] as $tags => $content) {
+                if (!in_array($tags, $dados_nfe)) {
+                    $nArray[$tags] = $content;
+                }
+            }
+            $array_final[] = $nArray;
+        }
+        $results = $array_final;
+        return serialize($results);
     }
 }

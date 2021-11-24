@@ -1,25 +1,29 @@
-<div id="geradorRelatoriosPanel" class="position-absolute w-100">
+<div id="geradorRelatoriosPanel" class="d-flex justify-content-start align-items-center">
+    <div id="backdrop"></div>
     <form id="geradorRelatoriosForm" class="d-flex flex-column" action="javascript: void(0);" method="post">
-        <div id="periodoContainer" class="d-flex w-100">
-            <h2>Definir Período</h2>
+        <div id="periodoContainer" class="d-flex-column">
+            <div class="d-flex justify-content-between">
+                <h2>Definir Período</h2>
+                <button type="button" class="btn btn-secondary close-button"><strong>X</strong></button>
+            </div>
             <hr>
             <div id="dataDeAContainer" class="d-flex">
                 <div class="d-flex input-group input-template input-group-sm justify-content-start align-items-center">
                     <div class="d-flex input-group-prepend">
                         <span class="input-group-text">De</span>
                     </div>
-                    <input id="dataDe" class="form-control form-control-sm" type="date" name="dataDe">
+                    <input id="dataDe" class="form-control form-control-sm" type="date" name="dataDe" required>
                 </div>
                 <div class="d-flex input-group input-template input-group-sm justify-content-start align-items-center">
                     <div class="d-flex input-group-prepend">
-                        <span class="input-group-text">à</span>
+                        <span class="input-group-text">a</span>
                     </div>
-                    <input id="DataA" class="form-control form-control-sm" type="date" name="DataA">
+                    <input id="dataA" class="form-control form-control-sm" type="date" name="DataA" required>
                 </div>
             </div>
             <hr>
         </div>
-        <div id="modeContainer" class="d-flex w-100">
+        <div id="modeContainer" class="d-flex">
             <div id="searchType" class="d-flex flex-column">
                 <h2>Modo:</h2>
                 <hr>
@@ -42,27 +46,30 @@
                 <div class="d-flex input-group input-template input-group-sm justify-content-start align-items-center">
                     <div class="d-flex input-group-prepend">
                         <span class="input-group-text">Motorista</span>
-                    </div> <input id="groupByMotorista" class="form-control" type="radio" name="groupBy">
+                    </div>
+                    <input id="motorista" class="form-control" type="radio" name="groupBy">
                 </div>
                 <div class="d-flex input-group input-template input-group-sm justify-content-start align-items-center">
                     <div class="d-flex input-group-prepend">
                         <span class="input-group-text">Equipes</span>
-                    </div> <input id="groupByEquipe" class="form-control" type="radio" name="groupBy">
+                    </div>
+                    <input id="equipe" class="form-control" type="radio" name="groupBy">
                 </div>
                 <div class="d-flex input-group input-template input-group-sm justify-content-start align-items-center">
                     <div class="d-flex input-group-prepend">
                         <span class="input-group-text">Motivos</span>
-                    </div> <input id="groupByMotivo" class="form-control" type="radio" checked="true" name="groupBy">
+                    </div>
+                    <input id="motivo" class="form-control" type="radio" checked="true" name="groupBy">
                 </div>
             </div>
         </div>
         <hr>
-        <div id="searchOptions" class="d-flex w-100">
-            <h2>Restringir relatorio em:</h2>
+        <div id="searchOptions" class="d-flex flex-column">
+            <h2>Restringir relatório em:</h2>
             <hr>
-            <div id="optionsContainer" class="d-flex flex-rows">
+            <div id="optionsContainer" class="d-flex">
                 <div id="optionsColumn1" class="d-flex flex-column">
-                    <div id="container-empresas" class="d-flex flex-column">
+                    <div id="empresasContainer" class="d-flex">
                         <div class="d-flex input-group input-template input-group-sm justify-content-start align-items-center">
                             <div class="d-flex input-group-prepend">
                                 <span class="input-group-text">Empresa</span>
@@ -72,7 +79,7 @@
                             </select>
                         </div>
                     </div>
-                    <div id="motivosContainer" class="d-flex flex-column">
+                    <div id="motivosContainer" class="d-flex">
                         <div class="d-flex input-group input-template input-group-sm justify-content-start align-items-center">
                             <div class="d-flex input-group-prepend">
                                 <span class="input-group-text">Motivos</span>
@@ -85,7 +92,7 @@
                     <div id="extraOptionsContainer" class="d-flex flex-column"></div>
                 </div>
                 <div id="optionsColumn2" class="d-flex flex-column">
-                    <div id="avariasOptionContainer" class="d-flex flex-column">
+                    <div id="avariasOptionContainer" class="d-flex">
                         <div class="d-flex input-group input-template input-group-sm justify-content-start align-items-center">
                             <div class="d-flex input-group-prepend">
                                 <span class="input-group-text">Avarias</span>
@@ -112,14 +119,15 @@
                 </div>
             </div>
         </div>
-        <div id="generateGraphButtonContainer" class="d-flex w-100">
+        <div id="generateGraphButtonContainer" class="d-flex flex-column">
             <hr>
-            <div>
+            <div class="d-none loading-container">
                 <div class="d-flex justify-content-start align-items-center">
                     <div class="spinner-border" role="status"><span class="visually-hidden"></span></div>
                     <span class="loading-text">Carregando...</span>
                 </div>
             </div>
+            <button id="gerarRelatorioButton" class="btn btn-secondary">Gerar Relatório</button>
         </div>
     </form>
 </div>

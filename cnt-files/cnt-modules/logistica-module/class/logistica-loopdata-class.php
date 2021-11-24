@@ -297,6 +297,11 @@ class Logistica_loopdata
         for ($i = 0; $i < count($patterns); $i++) {
             foreach ($patterns[$i] as $tags => $content) {
                 if (!in_array($tags, $dados_nfe)) {
+                    if ($tags == "motivodesc") $tags = "motivo_descricao";
+                    if ($tags == "liberadopor") $tags = "liberado_por";
+                    if ($tags == "motivonome") $tags = "motivo_nome";
+                    if ($tags == "codmotivo") $tags = "cod_motivo";
+                    if ($tags == "nfe") $tags = "NF";
                     $nArray[$tags] = $content;
                 }
             }

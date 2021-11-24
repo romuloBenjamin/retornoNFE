@@ -16,11 +16,11 @@ class Logistica_patterns
         $lista_keys->swit = $this->swit;
         switch ($this->swit) {
             case 'listar-retornos-nfe':
-                $lista_keys->entry = "id,cadastro_data,cadastro_hora,agregado_id,qtd_nfe,data_nfe,data_cli,romaneio_saida,romaneio_registro,setor_id,vlr_bruto,descontos,vlr_liquido";
+                $lista_keys->entry = "id,cadastro_data,cadastro_hora,agregado_id,qtd_nfe,data_nfe,data_cli,romaneio_saida,romaneio_registro,setor_id,vlr_bruto";
                 $resultSet = $lista_keys->patterns_build();
                 break;
             case 'listar-retornos-nfe-search':
-                $lista_keys->entry = "id,cadastro_data,cadastro_hora,agregado_id,qtd_nfe,data_nfe,data_cli,romaneio_saida,romaneio_registro,setor_id,vlr_bruto,descontos,vlr_liquido";
+                $lista_keys->entry = "id,cadastro_data,cadastro_hora,agregado_id,qtd_nfe,data_nfe,data_cli,romaneio_saida,romaneio_registro,setor_id,vlr_bruto";
                 $resultSet = $lista_keys->patterns_build();
                 break;
             case 'listar-transportadores':

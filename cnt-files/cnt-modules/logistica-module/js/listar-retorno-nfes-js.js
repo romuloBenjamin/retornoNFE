@@ -37,14 +37,13 @@ async function receiveRequest(params, patterns, search = false) {
         var loops = params.data;
         /*SET PLACERS*/
         var placers = document.querySelector("table#table-retorno-nfe > tbody");
-        //console.log(params);
         /*BUILD VIEWER*/
         if(search === false) var build_loopdata = build_loopRequest(loops, placers);
         if(search === true) {
             var build_loopdata = build_loopRequest(loops, placers);
             return false;
         }
-    } 
+    }
 }
 /*VIEW RECEIVE REQUEST IN FOREACH LOOP*/
 function build_loopRequest(params, placers) {

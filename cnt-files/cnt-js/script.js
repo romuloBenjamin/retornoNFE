@@ -12,6 +12,16 @@ function emptyLocalStorage_f5(params) {
 function pushPage(params) {
     location.href = params;
 }
+/*PUSH PAGE -> HISTORY BACK*/
+function voltarPaginaAnterior() {
+    var nArray = [];
+    var location_path = location.pathname.split("/");
+    for (let index = 0; index < (location_path.length - 1); index++) {
+        const element = location_path[index];
+        nArray.push(element);
+    }
+    location.href = location.origin+nArray.join("/");
+}
 /*LOUD REQUEST*/
 function loudRequest(params) {
     return new Request(params.path.toString());

@@ -1,6 +1,8 @@
 document.onkeydown = emptyLocalStorage_f5;
 document.onkeyup = emptyLocalStorage_f5;
 
+var popups_path = "http://127.0.0.1:8080/2.0/retorno-nfes/";
+
 /*IDENTIFICAR F5*/
 function emptyLocalStorage_f5(params) {
     if(params.keyCode === 116){
@@ -39,13 +41,13 @@ async function sendRequest(params) {
     try {
         var results = await fetch(louds, config);
         results = await results?.json();
-        console.log(results);
         if(params.swit === "listar-funcionarios-short") await receiveRequest(results, params);
         if(params.swit === "listar-retornos-nfe") await receiveRequest(results, params);
         if(params.swit === "listar-retornos-nfe-search") await receiveRequest(results, params, true);
-        if(params.swit === "listar-retronos-nfe-paginations") await prepare_paginations_object(results, params.paginations);
+        if(params.swit === "listar-retronos-nfe-paginations") prepare_paginations_object(results, params.paginations);
         if(params.swit === "pesquisar-romaneios") await receiveRequest(results, params);
         if(params.swit === "salvar-retornos-nfe") await receiveRequest_popup(results, params);
+        if(params.swit === "listar-relatorio-sintetico") await receiveRequest_relatorios(results, params);
     } catch (error) {
         console.log("erro ao gerar REQUEST Principal");
         setTimeout(()=>{
@@ -95,12 +97,12 @@ function localStorageNoOverride() {
     return nArray;
 }
 /* Capitalize the first letter of each word */
-function capitalize(string) {
+function capitalize(string, ignoreParticles = false) {
     let pieces = string.split(" ");
     var noCaps = ["da", "das", "de", "o", "a"];
     var n_map = [];
     pieces.forEach(piece => {
-        if(noCaps.includes(piece) === true) n_map.push(piece.toString());
+        if(!ignoreParticles && noCaps.includes(piece) === true) n_map.push(piece.toString());
         if(noCaps.includes(piece) === false) n_map.push(piece.charAt(0).toString().toUpperCase() + piece.slice(1));
     });
     return n_map.join(" ");
@@ -116,4 +118,25 @@ function camel_case(params) {
         nArray.push(data);
     });
     return nArray.join("");
+}
+
+// Receives a module and a file and returns its data
+async function getJsonData(module, file) {
+    /* Request config */
+    const requestData = {};
+    requestData.module = module;
+    requestData.folder = "jsons";
+    requestData.extensions = "json";
+    requestData.file = file;
+    requestData.path = createRequestPath(requestData);
+    const request = loudRequest(requestData);
+    try {
+        /* Request the data */
+        const response = await fetch(request);
+        const json = await response?.json();
+        return json?.dataset[0]?.data;
+    } catch (e) {
+        console.log("Falha ao buscar dados de filiais -> " + requestData.file);
+    }
+    return null;
 }

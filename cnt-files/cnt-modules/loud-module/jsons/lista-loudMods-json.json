@@ -84,6 +84,16 @@
             "module": "clientes",
             "folder":"class",
             "file": "clientes-loopdata"
+        },
+        {
+            "module": "relatorios",
+            "folder":"class",
+            "file": "relatorios-compound"
+        },
+        {
+            "module": "relatorios",
+            "folder":"class",
+            "file": "relatorios-loopdata"
         }
     ]
 }

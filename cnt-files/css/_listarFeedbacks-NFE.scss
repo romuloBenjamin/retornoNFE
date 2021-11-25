@@ -1,0 +1,46 @@
+.feedbacks-container {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    #table-feedbacks-nfe {
+        margin-top: 1rem !important;
+        width: $fullWidth;
+        .nfe-col {
+            width: 5%;
+        }
+        .vendedor-col {
+            width: 15%;
+        }
+        .cliente-col {
+            width: 15%;
+        }
+        .filial-col {
+            width: 10%;
+        }
+        .motivos-col {
+            width: 10%;
+        }
+        .feedback-col {
+            width: 45%;
+        }
+        .textarea-container {
+            width: 100%;
+            .feedback-textarea {
+                min-height: 5rem;
+                &:not(:last-child) {
+                    margin-bottom: 0.5rem;
+                }
+            }
+        }
+        .button-container {
+            background-color: transparent;
+            padding: 0 !important;
+            padding-left: 0.7rem !important;
+            .feedback-button {
+                background-color: white;
+                &:not(:last-child) {
+                    margin-bottom: 0.5rem;
+                }
+            }
+        }
+    }
+}

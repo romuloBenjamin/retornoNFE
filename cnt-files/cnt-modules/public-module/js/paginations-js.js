@@ -48,7 +48,7 @@ function paginationsLouderCarrousel(mode = "put") {
 }
 /*---------------------->INIT PAGINATIONS<----------------------*/
 /*PREPARE PAGINATIONS*/
-async function prepare_paginations_object(params, paginations, autoloud = false) {
+function prepare_paginations_object(params, paginations, autoloud = false) {
     /*PATTERNS PAGINATIONS*/
     var paginations = setPaginationsPatterns();
     /*CREATE OBJ PAGINATIONS*/
@@ -59,12 +59,15 @@ async function prepare_paginations_object(params, paginations, autoloud = false)
     obj_paginations.registroAtual = paginations.paginations.current;
     /*CALCULAR QTD DE PAGINAS*/
     let qtd = params/paginations.paginations.max;
+    console.log("pag", paginations)
     if(qtd % 1 != 0) qtd = Math.ceil(qtd);
     /*PLACE QTD DE PAGINAS*/
     obj_paginations.paginasDisponiveis = qtd;
     //if(params.swit != false) paginations.swit = params.swit;
-    if(autoloud === false) await setDefaultPaginations(obj_paginations);
-    //if(autoloud === true) setInfinitePaginations(paginations);
+    if(autoloud === true) {
+        setInfinitePaginations(obj_paginations);
+        return;
+    } else setDefaultPaginations(obj_paginations);
 }
 function placeSmalls(params) {
     //console.log(params);
@@ -83,8 +86,7 @@ function placeSmalls(params) {
 }
 /*------------------->DEFAULT PAGINATIONS DATA<-------------------*/
 /*DEFAULT PAGINATIONS*/
-async function setDefaultPaginations(params) {
-    console.log(params);
+function setDefaultPaginations(params) {
     /*PLACE SMALL DATA*/
     var place_smalls = placeSmalls(params);
     /*PLACE PAGE CARROSSEL*/
@@ -190,5 +192,11 @@ function activePageControls(params, mode = "next") {
 /*------------------->INFINITE PAGINATIONS DATA<-------------------*/
 /*INFINITE PAGINATIONS*/
 function setInfinitePaginations(params) {
-    console.log("not implemented");
+    console.log(params);
+    placeSmalls(params);
+    placePageCarrousel(params);
+    //activePageControls(params, "next");
+    //activePageControls(params, "last");
+    //activePageControls(params, "prev");
+    //activePageControls(params, "first");
 }

@@ -37,18 +37,20 @@ async function receiveRequest(params, patterns, search = false) {
         var loops = params.data;
         /*SET PLACERS*/
         var placers = document.querySelector("table#table-retorno-nfe > tbody");
+        //console.log(params);
         /*BUILD VIEWER*/
         if(search === false) var build_loopdata = build_loopRequest(loops, placers);
         if(search === true) {
             var build_loopdata = build_loopRequest(loops, placers);
             return false;
         }
-    }
+    } 
 }
+
 /*VIEW RECEIVE REQUEST IN FOREACH LOOP*/
-function build_loopRequest(params, placers) {
+async function build_loopRequest(params, placers) {
     i = 1;
-    Object.values(params).forEach(data => {
+    for(let data of Object.values(params)) {
         /*SET CLONE*/
         const clone = placers.querySelector("tr#cloneNode").cloneNode(true);
         /*REMOVE ID FROM CLONE*/
@@ -60,7 +62,9 @@ function build_loopRequest(params, placers) {
         }
         clone.querySelectorAll("td")[0].innerHTML = "#"+i.toString().padStart(2,"0");
         clone.querySelectorAll("td")[1].innerHTML = data.cadastro_data;
-        clone.querySelectorAll("td")[2].innerHTML = data.agregado_id;
+        let motoristaName = await getExtented_data(data.agregado_id, "transportadores");
+        if(!motoristaName) motoristaName = "Motorista não encontrado";
+        clone.querySelectorAll("td")[2].innerHTML = motoristaName;
         clone.querySelectorAll("td")[3].innerHTML = data.romaneio_registro;
         clone.querySelectorAll("td")[4].innerHTML = data.romaneio_saida;
         listar_regiao(data.setor_id, clone.querySelectorAll("td")[5]);
@@ -75,17 +79,22 @@ function build_loopRequest(params, placers) {
             items[j].addEventListener('click', () => show_details(data, j));
         }
         i++;
-    });
+    }
     /*REMOVE CLONE*/
     if(!placers.querySelector("tr#cloneNode").classList.contains("d-none")) placers.querySelector("tr#cloneNode").classList.add("d-none");
 }
-
 /*LISTAR RETORNOS DE NFE*/
 function listar_retornos(params) {
     var retornos = [];
     for (let index = 0; index < params.length; index++) {
         const element = params[index];
-        retornos.push("<ul class=\"list-group\"><li class=\"list-group-item\"><strong>NF:</strong>"+element.NF+" <strong>MOTIVO:</strong> "+element.motivo+"</li></ul>")
+        retornos.push(
+            "<ul class=\"list-group\">"
+                + "<li class=\"list-group-item\">"
+                    + "<strong>NF: </strong>" + element.NF + "<strong> MOTIVO:</strong> " + parseInt(element.motivo) + "<br>"
+                    + "<small>" + element.motivo_nome + "</small>"
+                + "</li>"
+            + "</ul>");
     }
     return retornos.join("");
 }

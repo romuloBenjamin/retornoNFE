@@ -120,27 +120,6 @@ function deleteNfe(element) {
     document.querySelector("#newRegistroNFEContainer-" + index).remove();
 }
 
-// Receives a module and a file and returns its data
-async function getJsonData(module, file) {
-    /* Request config */
-    const requestData = {};
-    requestData.module = module;
-    requestData.folder = "jsons";
-    requestData.extensions = "json";
-    requestData.file = file;
-    requestData.path = createRequestPath(requestData);
-    const request = loudRequest(requestData);
-    try {
-        /* Request the data */
-        const response = await fetch(request);
-        const json = await response?.json();
-        return json?.dataset[0]?.data;
-    } catch (e) {
-        console.log("Falha ao buscar dados de filiais -> " + requestData.file);
-    }
-    return null;
-}
-
 // Show the table column with the passed id
 function showElement(name, index) {
     const element = document.querySelector("#" + name + "-" + index);
@@ -162,7 +141,7 @@ async function setMotivo(element) {
     const motivos = await getJsonData("logistica", "motivos-retorno-nfe");
     const motivoFound = motivos?.some(motivo => {
         // If it matches the code, set it
-        if(motivo.ids === element.value){
+        if(motivo.ids === element.value) {
             motivoDescView.value = motivo.motivo;
             return true; // stop loop
         }

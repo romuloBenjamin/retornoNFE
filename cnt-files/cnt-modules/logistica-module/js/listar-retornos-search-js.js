@@ -13,7 +13,7 @@ function patternsCadastrarDados() {
     return patterns;
 }
 /*---------------------------->SET PATTERNS NFE CADASTRAR<----------------------------*/
-document.querySelector("input#forRomaneios").addEventListener("keyup", createObj_search);
+document.querySelector("input#forRomaneios")?.addEventListener("keyup", createObj_search);
 /*------------------------------->CREATE OBJECT SEARCH<-------------------------------*/
 var area_pesquisa = document.querySelector("div.cadastro-pesquisa-retorno > div.pesquisa-cadastro-romaneios > div.container-results");
 /*CREATE OBJ*/
@@ -168,11 +168,16 @@ async function getExtented_data(params, files) {
         registros.forEach(data => {
             if(data.ids === params){
                 if(files === "regioes-transportadas") nome_extended = data.regioes;
-                if(files === "transportadores") nome_extended = capitalize(data.transportador);
+                if(files === "transportadores") {
+                    const splitName = capitalize(data.transportador, true).split(" ");
+                    // // use splitName[splitName.length-1] instead for last name
+                    if(splitName.length > 1) nome_extended = `${splitName[0]} ${splitName[1]}`;
+                    else nome_extended = splitName[0];
+                }
             }            
         });
         return nome_extended;
     } catch (error) {
         console.log("ERRO AO IDENTIFICAR TRANSPORTADOR/ REGIãO");
-    }   
+    }
 }

@@ -29,13 +29,13 @@
                 <hr>
                 <div class="d-flex input-group input-template input-group-sm justify-content-start align-items-center">
                     <div class="d-flex input-group-prepend">
-                        <span class="input-group-text">Analitico</span>
+                        <span class="input-group-text">Analítico</span>
                     </div>
                     <input id="analitico" class="form-control" type="radio" name="searchType">
                 </div>
                 <div class="d-flex input-group input-template input-group-sm justify-content-start align-items-center">
                     <div class="d-flex input-group-prepend">
-                        <span class="input-group-text">Sintetico</span>
+                        <span class="input-group-text">Sintético</span>
                     </div>
                     <input id="sintetico" class="form-control" type="radio" checked="true" name="searchType">
                 </div>
@@ -99,12 +99,12 @@
                             </div>
                             <select id="forAvarias" class="form-control form-control-sm" name="forAvarias">
                                 <option selected="true" value="0">Escolha...</option>
-                                <option value="furado">Furado</option>
-                                <option value="vazando">Vazando</option>
-                                <option value="vazio">Vazio</option>
-                                <option value="molhado">Molhado</option>
-                                <option value="rasgado">Rasgado</option>
-                                <option value="faltante">Faltante</option>
+                                <option value="0">Furado</option>
+                                <option value="1">Vazando</option>
+                                <option value="2">Vazio</option>
+                                <option value="3">Molhado</option>
+                                <option value="4">Rasgado</option>
+                                <option value="5">Faltante</option>
                             </select>
                         </div>
                     </div>
@@ -118,11 +118,12 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div id="generateGraphButtonContainer" class="d-flex flex-column">
             <hr>
+        </div>
+        <div id="generateGraphButtonContainer" class="d-flex flex-column flex-grow-1 justify-content-center">
+
             <div class="d-none loading-container">
-                <div class="d-flex justify-content-start align-items-center">
+                <div class="d-flex justify-content-center align-items-center">
                     <div class="spinner-border" role="status"><span class="visually-hidden"></span></div>
                     <span class="loading-text">Carregando...</span>
                 </div>

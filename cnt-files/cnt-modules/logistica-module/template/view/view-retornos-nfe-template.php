@@ -28,4 +28,6 @@
         </tr>
     </tbody>
 </table>
+<script src="<?= DIR_PATH; ?>cnt-modules/search-module/js/create-search-obj-js.js" defer></script>
+<script src="<?= DIR_PATH; ?>cnt-modules/logistica-module/js/listar-retornos-search-js.js" defer></script>
 <script src="<?= DIR_PATH; ?>cnt-modules/logistica-module/js/listar-retorno-nfes-js.js" defer></script>

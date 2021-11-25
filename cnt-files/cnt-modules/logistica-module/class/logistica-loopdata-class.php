@@ -93,8 +93,7 @@ class Logistica_loopdata
         }
         return $resultSet;
     }
-
-    /*SQL*/
+    /*SQL -> retorno sql*/
     public function loopdata_sql_retorno_nfes()
     {
         $patterns = json_decode($this->entry);

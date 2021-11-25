@@ -51,7 +51,7 @@ async function show_details(data, item_index) {
     document.getElementById("contact_nfe").innerHTML = nfe_data.NF;
     document.getElementById("contact_nfe_emissao").innerHTML = nfe_data.emissao;
     document.getElementById("contact_cliente").innerHTML = cli_data.cod_cliente + " " + cli_data.nome_cliente;
-    document.getElementById("contact_motivo").innerHTML = nfe_data.motivo;
+    document.getElementById("contact_motivo").innerHTML = nfe_data.motivoDescription;
     document.getElementById("contact_ocorrenciaData").innerHTML = data.romaneio_saida;
 }
 

@@ -9,9 +9,6 @@
             "file":"container"
         },
         {
-            "file":"container-cadastro"
-        },
-        {
             "file":"container-actions"
         },
         {
@@ -21,10 +18,16 @@
             "file":"container-dados-retorno"
         },
         {
+            "file":"container-cadastro"
+        },
+        {
             "file":"container-retorno-nfe"
         },
         {
             "file":"container-avarias-nfe"
+        },
+        {
+            "file":"container-feedback-nfe"
         }
     ]
 }

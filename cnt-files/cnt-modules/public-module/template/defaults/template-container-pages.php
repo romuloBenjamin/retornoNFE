@@ -75,7 +75,7 @@
                         $details = new Pagebuilder();
                         $details->module = "logistica";
                         $details->folder = "template/view";
-                        $details->file = "retorno-nfe-feedback";
+                        $details->file = "retorno-nfe-feedback-preview";
                         include $details->loudTemplatePHP_parts();
                         ?>
                     </div>

@@ -7,27 +7,62 @@ function openGerarRelatorioPanel() {
     document.querySelector(".close-button").addEventListener('click', closeGerarRelatorioPanel, false);
     document.querySelector("#gerarRelatorioButton").addEventListener('click', gerarRelatorio, false);
     document.querySelector("#dataDe").addEventListener('change', updateDataAMinDate, false);
+    document.querySelector("#dataA").addEventListener('change', updateDataDeMaxDate, false);
     document.querySelector("#setModal").classList.remove("d-none");
 }
 
 // Hide the panel
 function closeGerarRelatorioPanel(e) {
-    e.stopPropagation();
+    e?.stopPropagation();
     document.querySelector("#setModal").classList.add("d-none");
 }
 
+// Update data a min date
 function updateDataAMinDate(e) {
     const target = e.target;
     document.querySelector("#dataA").min = target.value;
 }
 
-// Build object which will be used to generate the relatorio
-function gerarRelatorio() {
-    const formData = getFormData();
-    console.log(formData);
+// Update data de max date
+function updateDataDeMaxDate(e) {
+    const target = e.target;
+    document.querySelector("#dataDe").max = target.value;
 }
 
-function getFormData () {
+// Build object which will be used to generate the relatorio
+function gerarRelatorio() {
+    const form = getFormData();
+    if(form) {
+        /*CRAETE POPUP WINDOWS to push data*/
+        var windows_pop = createWindons(form);
+        showLoading();
+        setTimeout(() => {
+            hideLoading();
+            closeGerarRelatorioPanel();
+        }, 3000);
+    }
+}
+
+/*CREATE WINDONS*/
+function createWindons(params) {
+    localStorage.setItem("popup_windows", JSON.stringify(params));
+    window.open(popups_path+"cnt-files/cnt-modules/relatorios-module/template/popups/relatorio.php", "_blank", 'location=yes,height=400,width=800,scrollbars=yes,status=no');
+}
+
+// Show the loading spinner
+function showLoading() {
+    document.querySelector("#gerarRelatorioButton").classList.add("d-none");
+    document.querySelector(".loading-container").classList.remove("d-none");
+}
+
+// Hide the loading spinner
+function hideLoading() {
+    document.querySelector(".loading-container").classList.add("d-none");
+    document.querySelector("#gerarRelatorioButton").classList.remove("d-none");
+}
+
+// Build the form data object that'll be used to generate the graph
+function getFormData() {
     const form = document.querySelector("#geradorRelatoriosForm");
     const formElements = form.elements;
     const formData = {};
@@ -36,12 +71,13 @@ function getFormData () {
         if(element.tagName === "INPUT") {
             // If it's a radio input, add only the checked value
             if(element.type === "radio") {
-                if(element.checked) formData[element.name] = element.id;
+                if(element.checked) formData[element.name.toLowerCase()] = element.id;
             } else if(element.type === "checkbox") {
                 formData[property] = element.checked;
             } else {
-                // If the element is required and it's not filled, throw an error
-                if(!element.reportValidity()) throw new Error("Preencha o período");
+                // If the input is required and it's not filled, throw an error
+                // Date
+                if(!element.reportValidity()) return;
                 formData[property] = element.value;
             } 
             // If it's a select, remove the for and the last letter (s) from the name
@@ -50,11 +86,19 @@ function getFormData () {
                 property = property.replace("for", "").slice(0, -1);
                 let optionText = element.options[element.selectedIndex].text;
                 if(optionText.includes(" - ")) optionText = optionText.split(" - ")[1];
-                formData[property] = element.value + "," + optionText;
-            } else {
-                formData[property] = element.value;
+                formData[property] = {
+                    id: element.value,
+                    desc: optionText
+                }
             }
         }
+    }
+    // Check if the date is valid
+    const dataDe = new Date(formData["datade"]);
+    const dataA = new Date(formData["dataa"]);
+    if(dataDe > dataA) {
+        console.log("Data inicial maior que data final");
+        return;
     }
     return formData;
 }

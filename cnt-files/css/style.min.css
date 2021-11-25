@@ -1040,6 +1040,7 @@ section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro hr 
 #geradorRelatoriosPanel #geradorRelatoriosForm {
   background: white;
   width: 32rem;
+  height: 32rem;
   padding: 0.9rem 0.75rem;
   margin: 1.5rem auto;
   z-index: 102;
@@ -1085,6 +1086,72 @@ section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro hr 
 #geradorRelatoriosPanel #geradorRelatoriosForm #avariasOptionContainer,
 #geradorRelatoriosPanel #geradorRelatoriosForm #empresasContainer {
   margin: 0 0 0.5rem 0;
+}
+
+.container-nfes-data small {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.feedbacks-container {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.feedbacks-container #table-feedbacks-nfe {
+  margin-top: 1rem !important;
+  width: 100%;
+}
+
+.feedbacks-container #table-feedbacks-nfe .nfe-col {
+  width: 5%;
+}
+
+.feedbacks-container #table-feedbacks-nfe .vendedor-col {
+  width: 15%;
+}
+
+.feedbacks-container #table-feedbacks-nfe .cliente-col {
+  width: 15%;
+}
+
+.feedbacks-container #table-feedbacks-nfe .filial-col {
+  width: 10%;
+}
+
+.feedbacks-container #table-feedbacks-nfe .motivos-col {
+  width: 10%;
+}
+
+.feedbacks-container #table-feedbacks-nfe .feedback-col {
+  width: 45%;
+}
+
+.feedbacks-container #table-feedbacks-nfe .textarea-container {
+  width: 100%;
+}
+
+.feedbacks-container #table-feedbacks-nfe .textarea-container .feedback-textarea {
+  min-height: 5rem;
+}
+
+.feedbacks-container #table-feedbacks-nfe .textarea-container .feedback-textarea:not(:last-child) {
+  margin-bottom: 0.5rem;
+}
+
+.feedbacks-container #table-feedbacks-nfe .button-container {
+  background-color: transparent;
+  padding: 0 !important;
+  padding-left: 0.7rem !important;
+}
+
+.feedbacks-container #table-feedbacks-nfe .button-container .feedback-button {
+  background-color: white;
+}
+
+.feedbacks-container #table-feedbacks-nfe .button-container .feedback-button:not(:last-child) {
+  margin-bottom: 0.5rem;
 }
 
 .paginations-controls .qtd-registros {

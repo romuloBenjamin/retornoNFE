@@ -1,7 +1,7 @@
 document.onkeydown = emptyLocalStorage_f5;
 document.onkeyup = emptyLocalStorage_f5;
 
-var popups_path = "http://127.0.0.1/2.0/retorno-nfes/";
+var popups_path = "http://127.0.0.1:8080/2.0/retorno-nfes/";
 
 /*IDENTIFICAR F5*/
 function emptyLocalStorage_f5(params) {
@@ -46,7 +46,7 @@ async function sendRequest(params) {
         if(params.swit === "listar-retornos-nfe-search") await receiveRequest(results, params, true);
         if(params.swit === "listar-retronos-nfe-paginations") prepare_paginations_object(results, params.paginations);
         if(params.swit === "listar-feedbacks-nfe") await receiveRequest(results, params);
-        if(params.swit === "listar-feedbacks-nfe-paginations") prepare_paginations_object(results, params.paginations, true);
+        if(params.swit === "listar-feedbacks-nfe-paginations") setTotalEntries(results);
         if(params.swit === "pesquisar-romaneios") await receiveRequest(results, params);
         if(params.swit === "salvar-retornos-nfe") await receiveRequest_popup(results, params);
         if(params.swit === "listar-relatorio-sintetico") await receiveRequest_relatorios(results, params);
@@ -100,7 +100,6 @@ function localStorageNoOverride() {
 }
 /* Capitalize the first letter of each word */
 function capitalize(string, ignoreParticles = false) {
-    if(!string) return;
     let pieces = string.split(" ");
     var noCaps = ["da", "das", "de", "o", "a"];
     var n_map = [];
@@ -146,7 +145,6 @@ async function getJsonData(module, file) {
 
 /*AJUSTAR PARA ENTRADAS UNICAS EM ARRAY*/
 function create_array_uniques(params) {
-    console.log(params)
     const nArray = [];
     let merge = {};
     if(params) {

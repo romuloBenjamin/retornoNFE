@@ -47,7 +47,7 @@ class Usuarios_patterns
                 $resultSet = json_encode(array("ids", "ramais", "setor"));
                 break;
             case 'listar-get-equipes-setor':
-                $resultSet = json_encode(array("ids", "nomevendedor", "equipeid", "setorvendasid", "equipenome"));
+                $resultSet = json_encode(array("ids", "nomevendedor", "equipeid", "setorvendasid", "equipenome", "departamentoid", "departamento"));
                 break;
             case 'listar-usuario-vendedor':
                 $resultSet = json_encode(array("ids", "vendedor"));

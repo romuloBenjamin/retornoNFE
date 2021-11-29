@@ -3,7 +3,6 @@ function openGerarRelatorioPanel() {
     // Add event listeners
     const backdrop = document.querySelector("#backdrop");
     backdrop.addEventListener('click', closeGerarRelatorioPanel, false);
-    document.querySelector("#geradorRelatoriosPanel").querySelector("#forEmpresas").addEventListener('click', onEmpresaSelectClick, false);
     document.querySelector(".close-button").addEventListener('click', closeGerarRelatorioPanel, false);
     document.querySelector("#gerarRelatorioButton").addEventListener('click', gerarRelatorio, false);
     document.querySelector("#dataDe").addEventListener('change', updateDataAMinDate, false);
@@ -80,10 +79,11 @@ function getFormData() {
                 if(!element.reportValidity()) return;
                 formData[property] = element.value;
             } 
-            // If it's a select, remove the for and the last letter (s) from the name
+            // If it's a select, remove the for and the last letter (s) from the name (when it has one)
         } else if(element.tagName === "SELECT") {
             if(element.value !== "0") {
-                property = property.replace("for", "").slice(0, -1);
+                property = property.replace("for", "");
+                if(property[property.length - 1] === "s") property = property.slice(0, -1);
                 let optionText = element.options[element.selectedIndex].text;
                 if(optionText.includes(" - ")) optionText = optionText.split(" - ")[1];
                 formData[property] = {
@@ -100,5 +100,6 @@ function getFormData() {
         console.log("Data inicial maior que data final");
         return;
     }
+    console.log(formData)
     return formData;
 }

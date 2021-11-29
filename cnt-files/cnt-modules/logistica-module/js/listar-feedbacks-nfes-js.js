@@ -7,7 +7,7 @@ function getFeedbacksPattern() {
     pattern.file = "retornos-nfe";
     pattern.extensions = "php";
     pattern.swit = "listar-feedbacks-nfe";
-    pattern.paginations = setPaginations(0, true);
+    pattern.paginations = initialLoadMorePaginationValues;
     pattern.path = createRequestPath(pattern);
     return pattern;
 }
@@ -15,20 +15,21 @@ function getFeedbacksPattern() {
 // Send a request with the passed data
 sendRequest(feedbackPattern);
 
-// Send pagination request
-const paginationPattern = getFeedbacksPattern();
-paginationPattern.swit = "listar-feedbacks-nfe-paginations";
-sendRequest(paginationPattern);
-
 // Receive the request that was sent
 function receiveRequest(params) {
     if(params) listarFeedbacks(params.data);
 }
 
+// Retrieve the total number of entries
+const feedbackPaginationsPattern = getFeedbacksPattern();
+feedbackPaginationsPattern.swit = "listar-feedbacks-nfe-paginations";
+sendRequest(feedbackPaginationsPattern);
+
+// Pass the pattern to the load more script
+initLoadMoreButton(feedbackPattern);
+
 // Build the feedbacks list
 async function listarFeedbacks(data) {
-    //const actualData = create_array_uniques(data);
-    //console.log(actualData)
     const placer = document.querySelector("#feedbackPlacer");
     for(const [index, dataItem] of data.entries()) {
         for(const [nfeIndex, nfeData] of dataItem.data_nfe.entries()) {
@@ -37,7 +38,7 @@ async function listarFeedbacks(data) {
             // Clone the original node
             const originalFeedbackLine = document.querySelector("#feedbackCloneNode");
             const feedbackClone = originalFeedbackLine.cloneNode(true);
-            const idSuffix = `-${index}`;
+            const idSuffix = `-${(index + loadedEntries)}_${nfeIndex}`;
             // Set clone id
             feedbackClone.id = feedbackClone.id.replace("CloneNode", "") + idSuffix;
             const dataCells = feedbackClone.querySelectorAll("td");
@@ -47,7 +48,9 @@ async function listarFeedbacks(data) {
             // Vendedor
             dataCells[1].innerHTML = clienteData.vendedor + " - " + await getVendedorName(clienteData.vendedor);
             // Cliente
-            dataCells[2].innerHTML = clienteData.cod_cliente + " - " + clienteData.nome_cliente;
+            let clienteName = clienteData.nome_cliente;
+            if(clienteName === "") clienteName = "Não encontrado";
+            dataCells[2].innerHTML = clienteData.cod_cliente + " - " + clienteName;
             // Filial
             const filialId = parseInt(nfeData.filial);
             dataCells[3].innerHTML = filialId + " - " + await getFilialName(filialId);
@@ -78,6 +81,8 @@ async function listarFeedbacks(data) {
             placer.appendChild(feedbackClone);
         }
     }
+    addToLoadedEntries(data.length);
+    hideLoadMoreLoading();
 }
 
 // Add a new feedback textarea element
@@ -133,7 +138,7 @@ async function getFilialName(id) {
 async function getVendedorName(id) {
     let name = "Não encontrado";
     const data = await getVendedorData(id);
-    if(data) name = capitalize(data.nome);
+    if(data) name = capitalize(data.nomevendedor);
     return name;
 }
 

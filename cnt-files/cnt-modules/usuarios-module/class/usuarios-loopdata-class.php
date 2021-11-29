@@ -200,11 +200,15 @@ class Usuarios_loopdata
     {
         $patterns = json_decode($this->entry);
         /*SQL*/
-        $sql = "SELECT ui_funcionarios_id, ui_funcionarios_apelido, uie_id, uie_setor_id, uie_nome FROM uni_intra_funcionarios";
+        $sql = "SELECT ui_funcionarios_id, ui_funcionarios_apelido, uie_id, uie_setor_id, uie_nome, uid_id, uid_name FROM uni_intra_funcionarios";
         $sql .= " INNER JOIN ";
         $sql .= "uni_intra_equipes";
         $sql .= " ON ";
         $sql .= "uni_intra_funcionarios.ui_funcionarios_equipe_id = uni_intra_equipes.uie_id";
+        $sql .= " INNER JOIN ";
+        $sql .= "uni_intra_departamentos";
+        $sql .= " ON ";
+        $sql .= "uni_intra_funcionarios.ui_funcionarios_departamento_id = uni_intra_departamentos.uid_id";
         $sql .= " WHERE ";
         $sql .= "uni_intra_funcionarios.ui_funcionarios_id = '" . trim($patterns->query) . "'";
         $sql .= " AND ";

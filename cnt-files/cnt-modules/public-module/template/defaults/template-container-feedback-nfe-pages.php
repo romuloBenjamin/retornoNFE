@@ -15,8 +15,18 @@
             </ul>
         </div>
         <hr>
-        <!-- Pagination Script -->
-        <script src="<?= DIR_PATH; ?>cnt-modules/public-module/js/paginations-js.js" defer></script>
+        <!-- Search Filters -->
+        <div class="d-flex justify-content-center align-items-center search-filters-container">
+            <?php
+            $loudSearch = new Pagebuilder();
+            $loudSearch->module = "search";
+            $loudSearch->folder = "template/forms";
+            $loudSearch->file = "pesquisa-filtros-feedback";
+            include $loudSearch->loudTemplatePHP_parts();
+            ?>
+        </div>
+        <!-- Load More Script -->
+        <script src="<?= DIR_PATH; ?>cnt-modules/public-module/js/load-more-js.js" defer></script>
         <!-- Feedbacks -->
         <?php
         $novo_registro = new Pagebuilder();
@@ -25,15 +35,13 @@
         $novo_registro->file = "retorno-nfe-feedback";
         include $novo_registro->loudTemplatePHP_parts();
         ?>
-        <!-- Pagination Controls -->
-        <div class="d-flex flex-grow-1 flex-column align-items-end paginations-controls">
-            <?php
-            $paginations = new Pagebuilder();
-            $paginations->module = "public";
-            $paginations->folder = "template/defaults";
-            $paginations->file = "container-paginations";
-            $paginations->gerador_defaults();
-            ?>
-        </div>
+        <!-- Load More Controls -->
+        <?php
+        $paginations = new Pagebuilder();
+        $paginations->module = "public";
+        $paginations->folder = "template/defaults";
+        $paginations->file = "container-load-more";
+        $paginations->gerador_defaults();
+        ?>
     </div>
 </section>

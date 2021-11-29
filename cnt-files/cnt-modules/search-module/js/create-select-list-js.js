@@ -21,8 +21,9 @@ selectFilial.addEventListener('click', function(){
 });
 }
 
-// The function to run on select empresa click
+// Set Children -> Filiais
 function onEmpresaSelectClick() {
+    console.log("on click")
     if(this.children.length <= 1){
         var sentdata = setPatternsCreateList();
         sentdata.module = "public";
@@ -34,6 +35,12 @@ function onEmpresaSelectClick() {
         handleChildren(nView, sentdata, this, true);
     }
 }
+// Set it on the available selects
+function setOnEmpresaSelects() {
+    const onEmpresaSelects = document.querySelectorAll("#forEmpresa");
+    for(let select of onEmpresaSelects) select.addEventListener("click", onEmpresaSelectClick, false);
+}
+setOnEmpresaSelects();
 
 /*SET CHILDREN -> DEPARTAMENTOS*/
 var selectDepto = document.querySelector("select#forDepto");

@@ -19,14 +19,17 @@
     <hr>
     <!-- CONTEUDO RELATORIO SINTETICO -->
     <section id="conteudoRelatorio" class="d-flex flex-column">
-        <div id="cloneNode1" class="d-flex flex-column conteudo-interno-relatorios">
+        <div id="louder-container" class="d-flex">
+            <div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div> Gerando Relatório...
+        </div>
+        <div id="cloneNode1" class="d-none flex-column conteudo-interno-relatorios">
             <ul class="list-group flex-column list-group-horizontal relatorio-departamentos">
                 <li class="list-group-item border-0">
                     <strong>DEPARTAMENTO:</strong>
                     <span></span>
                 </li>
             </ul>
-            <div class="d-flex flex-column container-relatorio-sintetico-sort">
+            <div id="cloneNode3" class="d-none flex-column container-relatorio-sintetico-sort">
                 <ul class="list-group flex-column list-group-horizontal">
                     <li class="list-group-item border-0">
                         <strong id="sortLabels">MOTIVOS:</strong>
@@ -48,7 +51,14 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr id="cloneNode2">
+                                    <tr class="d-none" id="cloneNode2">
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
                                         <td></td>
                                     </tr>
                                 </tbody>

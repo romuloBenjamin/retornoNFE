@@ -15,6 +15,9 @@
             "file":"container-paginations"
         },
         {
+            "file":"container-load-more"
+        },
+        {
             "file":"container-dados-retorno"
         },
         {

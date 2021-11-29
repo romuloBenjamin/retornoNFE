@@ -74,7 +74,7 @@
                             <div class="d-flex input-group-prepend">
                                 <span class="input-group-text">Empresa</span>
                             </div>
-                            <select id="forEmpresas" class="form-control form-control-sm" name="forEmpresas">
+                            <select id="forEmpresa" class="form-control form-control-sm" name="forEmpresa">
                                 <option value="0">Escolha...</option>
                             </select>
                         </div>

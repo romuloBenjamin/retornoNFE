@@ -22,6 +22,18 @@ class Logistica_compound
                 $compound->build = $this->build;
                 $resultSet = $compound->loopdata_logistica();
                 break;
+            case 'listar-feedbacks-nfe':
+                $compound->swit = 'listar-retornos-nfe';
+                $this->build["patterns"] = $compound->patterns_logistica();
+                $compound->build = $this->build;
+                $resultSet = $compound->loopdata_logistica();
+                break;
+            case 'listar-feedbacks-nfe-paginations':
+                $compound->swit = 'listar-retronos-nfe-paginations';
+                $compound->entry = $this->entry;
+                $compound->build = $this->build;
+                $resultSet = $compound->loopdata_logistica();
+                break;
             case 'listar-retornos-nfe-search':
                 $this->build["patterns"] = $compound->patterns_logistica();
                 $compound->build = $this->build;

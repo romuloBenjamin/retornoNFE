@@ -22,13 +22,9 @@
             <!-- Feedback table line to clone -->
             <tr id="feedbackCloneNode">
                 <td></td>
-                <td>
-                    <div class="d-flex"></div>
-                </td>
                 <td></td>
-                <td>
-                    <div class="d-flex"></div>
-                </td>
+                <td></td>
+                <td></td>
                 <td></td>
                 <td>
                     <div class="d-flex justify-content-between">

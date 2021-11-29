@@ -42,6 +42,13 @@ class Usuarios_module
                 $compound->build = $this->build;
                 $resultSet = $compound->compound_loopdata();
                 break;
+            case 'listar-get-equipes-setor':
+                $compound->swit = $this->swit;
+                $this->build["patterns"] = $compound->compound_patterns();
+                $compound->entry = $this->entry;
+                $compound->build = $this->build;
+                $resultSet = $compound->compound_loopdata();
+                break;
             case 'listar-aniversariantes':
                 $compound->swit = $this->swit;
                 $this->build["patterns"] = $compound->compound_patterns();

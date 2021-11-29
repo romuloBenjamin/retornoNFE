@@ -24,7 +24,8 @@ class Relatorios_loopdata
                 if ($results->num_rows == 0) $resultset = json_encode(array("status" => "0", "msn" => "Desculpe, não foi possível localizar os dados. -> " . trim($this->swit) . ""));
                 if ($results->num_rows != 0) {
                     $loops->entry = $results;
-                    $resultset = $loops->loopdata_build(false);
+                    $loops->build = $this->build;
+                    $resultset = $loops->loopdata_build();
                 }
                 break;
                 /*default:break;*/

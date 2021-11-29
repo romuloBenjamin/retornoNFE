@@ -6,7 +6,7 @@ function getFeedbacksPattern() {
     pattern.folder = "core";
     pattern.file = "retornos-nfe";
     pattern.extensions = "php";
-    pattern.swit = "listar-retornos-nfe";
+    pattern.swit = "listar-feedbacks-nfe";
     pattern.paginations = setPaginations(0, true);
     pattern.path = createRequestPath(pattern);
     return pattern;
@@ -15,8 +15,10 @@ function getFeedbacksPattern() {
 // Send a request with the passed data
 sendRequest(feedbackPattern);
 
-// Prepare pagination
-prepare_paginations_object(null, feedbackPattern.paginations, true);
+// Send pagination request
+const paginationPattern = getFeedbacksPattern();
+paginationPattern.swit = "listar-feedbacks-nfe-paginations";
+sendRequest(paginationPattern);
 
 // Receive the request that was sent
 function receiveRequest(params) {
@@ -25,6 +27,8 @@ function receiveRequest(params) {
 
 // Build the feedbacks list
 async function listarFeedbacks(data) {
+    //const actualData = create_array_uniques(data);
+    //console.log(actualData)
     const placer = document.querySelector("#feedbackPlacer");
     for(const [index, dataItem] of data.entries()) {
         for(const [nfeIndex, nfeData] of dataItem.data_nfe.entries()) {
@@ -37,11 +41,11 @@ async function listarFeedbacks(data) {
             // Set clone id
             feedbackClone.id = feedbackClone.id.replace("CloneNode", "") + idSuffix;
             const dataCells = feedbackClone.querySelectorAll("td");
-            if(index === 0) console.log(dataItem);
+            //if(index === 0) console.log(dataItem);
             // NF number
             dataCells[0].innerHTML = nfeData.NF;
             // Vendedor
-            dataCells[1].innerHTML = clienteData.vendedor + " - " + "Nome Vendedor";
+            dataCells[1].innerHTML = clienteData.vendedor + " - " + await getVendedorName(clienteData.vendedor);
             // Cliente
             dataCells[2].innerHTML = clienteData.cod_cliente + " - " + clienteData.nome_cliente;
             // Filial
@@ -123,4 +127,40 @@ async function getFilialName(id) {
         return false;
     });
     return filialName;
+}
+
+// Get the vendedor name from the data
+async function getVendedorName(id) {
+    let name = "Não encontrado";
+    const data = await getVendedorData(id);
+    if(data) name = capitalize(data.nome);
+    return name;
+}
+
+// Get Vendedor data (equipe, setor, nome)
+async function getVendedorData(id) {
+    /* Request config */
+    const requestData = getFeedbacksPattern();
+    requestData.paginations.query = id;
+    requestData.file = "usuarios";
+    requestData.module = "usuarios";
+    requestData.swit = "listar-get-equipes-setor";
+    requestData.path = createRequestPath(requestData);
+    const loadRequest = loudRequest(requestData);
+    const formData = new FormData();
+    formData.append("entry", JSON.stringify(requestData.paginations));
+    formData.append("swit", requestData.swit);
+    const config = {
+        method: "POST",
+        body: formData
+    }
+    try {
+        /* Request the data */
+        const response = await fetch(loadRequest, config);
+        const result = await response.json();
+        /* If the request succeeded and there's at least one result, return it */
+        return result.data[0];
+    } catch (e) {
+        console.log("Erro ao buscar usuário/equipe");
+    }
 }

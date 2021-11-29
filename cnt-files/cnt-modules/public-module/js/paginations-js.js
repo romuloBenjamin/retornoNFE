@@ -59,7 +59,6 @@ function prepare_paginations_object(params, paginations, autoloud = false) {
     obj_paginations.registroAtual = paginations.paginations.current;
     /*CALCULAR QTD DE PAGINAS*/
     let qtd = params/paginations.paginations.max;
-    console.log("pag", paginations)
     if(qtd % 1 != 0) qtd = Math.ceil(qtd);
     /*PLACE QTD DE PAGINAS*/
     obj_paginations.paginasDisponiveis = qtd;
@@ -73,14 +72,16 @@ function placeSmalls(params) {
     //console.log(params);
     if(params.registroAtual === undefined) params.registroAtual = 1;
     /*PLACERS*/
-    var min_titulos = document.querySelectorAll("small#qtdRegistros");
+    var min_titulos = document.querySelectorAll("#qtdRegistros");
     /*CALCULOS*/
     let regsitro_ini_pagina = (params.registroAtual*params.registrosPorPagina) - (params.registrosPorPagina - 1);
     if(regsitro_ini_pagina < 0) regsitro_ini_pagina = 1;
     /*PLACE DATA IN SMALL -> DETALHES DA PAGINATIONS*/
     min_titulos.forEach(placers => {
-        placers.innerHTML = "<span>"+regsitro_ini_pagina+" de "+params.registrosTotais+" registros</span>";
-        placers.innerHTML += "<span><i>Total de <b>"+params.paginasDisponiveis+" páginas!</b></i></span>";
+        placers.innerHTML = "<span><small>"+regsitro_ini_pagina+" de "+params.registrosTotais+" registros</small></span>";
+        placers.innerHTML += "<span><small><i>Total de <b>"+params.paginasDisponiveis+" páginas!</b></i></small></span>";
+        placers.classList.add("d-flex");
+        placers.classList.remove("d-none");
     });
     return null;
 }
@@ -136,27 +137,60 @@ function placePageCarrousel(params) {
 /*ACTIVE PAGE CONTROLS*/
 function activePageControls(params, mode = "next") {
     /*VISUALIZAR NEXT AND LAST*/
-    if((params.registroAtual + 2) <= params.paginasDisponiveis) {
+    if(!params.paginasDisponiveis || (params.registroAtual + 3) <= params.paginasDisponiveis) {
         var placers = document.querySelectorAll("ul.next-controls");
         placers.forEach(data => { 
             if(data.classList.contains("d-none") === true) data.classList.remove("d-none"); 
         });
-    }else{
+    } else {
         var placers = document.querySelectorAll("ul.next-controls");
         placers.forEach(data => { 
             if(data.classList.contains("d-none") === false) data.classList.add("d-none"); 
         });
     }
-    /*VISUALIZAR PREV AND FIRST*/
+    if(mode === "last") {
+        if(!params.paginasDisponiveis) {
+            var placers = document.querySelectorAll("ul.next-controls > li#pageLST");
+            console.log(placers)
+            placers.forEach(data => {
+                if(!data.classList.contains("d-none")) data.classList.add("d-none");
+            });
+        } else {
+            /*PLACE PAGE IN LAST PAGINATIONS*/
+            var placers = document.querySelectorAll("ul.next-controls > li#pageLST > a");
+            placers.forEach(lst => {
+                lst.setAttribute("href", "?page="+params.paginasDisponiveis+"");
+            });
+        }
+    }
+    
+    let isFirstActive = false;
+    /*VISUALIZAR FIRST */
     if((params.registroAtual - 2) <= params.registroInit) {
-        var placers = document.querySelectorAll("ul.prev-controls");
+        var placers = document.querySelectorAll("ul.prev-controls > li#pageFST");
         placers.forEach(data => {
-            if(data.classList.contains("d-none") === false) data.classList.add("d-none");
+            if(!data.classList.contains("d-none")) data.classList.add("d-none");
         });
-    }else{
-        var placers = document.querySelectorAll("ul.prev-controls");
+    } else {
+        console.log(isFirstActive)
+        isFirstActive = true;
+        var placers = document.querySelectorAll("ul.prev-controls > li#pageFST");
         placers.forEach(data => {
-            if(data.classList.contains("d-none") === true) data.classList.remove("d-none");
+            if(data.classList.contains("d-none")) data.classList.remove("d-none");
+        });
+    }
+    /*VISUALIZAR PREV*/
+    if((params.registroAtual - 1) <= params.registroInit) {
+        var placers = document.querySelectorAll("ul.prev-controls > li#pagePRV");
+        placers.forEach(data => {
+            if(!data.classList.contains("d-none")) data.classList.add("d-none");
+        });
+    } else {
+        var placers = document.querySelectorAll("ul.prev-controls > li#pagePRV");
+        placers.forEach(data => {
+            if(isFirstActive) data.classList.remove("single-item");
+            else data.classList.add("single-item");
+            if(data.classList.contains("d-none")) data.classList.remove("d-none");
         });
     }
     /*PLACE PAGE IN NEXT PAGINATIONS*/
@@ -164,13 +198,6 @@ function activePageControls(params, mode = "next") {
         var placers = document.querySelectorAll("ul.next-controls > li#pageNXT > a");
         placers.forEach(nxt => {
             nxt.setAttribute("href", "?page="+(params.registroAtual+1)+"");
-        });
-    }
-    /*PLACE PAGE IN LAST PAGINATIONS*/
-    if(mode === "last") {
-        var placers = document.querySelectorAll("ul.next-controls > li#pageLST > a");
-        placers.forEach(lst => {
-            lst.setAttribute("href", "?page="+params.paginasDisponiveis+"");
         });
     }
     /*PLACE PAGE IN PREV PAGINATIONS*/
@@ -192,11 +219,9 @@ function activePageControls(params, mode = "next") {
 /*------------------->INFINITE PAGINATIONS DATA<-------------------*/
 /*INFINITE PAGINATIONS*/
 function setInfinitePaginations(params) {
-    console.log(params);
-    placeSmalls(params);
     placePageCarrousel(params);
-    //activePageControls(params, "next");
-    //activePageControls(params, "last");
-    //activePageControls(params, "prev");
-    //activePageControls(params, "first");
+    activePageControls(params, "next");
+    activePageControls(params, "last");
+    activePageControls(params, "prev");
+    activePageControls(params, "first");
 }

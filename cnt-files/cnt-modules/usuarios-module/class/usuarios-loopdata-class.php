@@ -64,6 +64,18 @@ class Usuarios_loopdata
                 $loops->swit = "listar-usuario-vendedor";
                 $resultSet = $loops->loopdata_buildset();
                 break;
+            case 'listar-get-equipes-setor':
+                $loops->entry = $this->entry;
+                $sql = $loops->usuarios_get_equipes();
+                $loops->entry = $sql;
+                $results = $loops->loopdata_execute();
+                if ($results->num_rows == 0) $resultSet = json_encode(array("status" => "0", "msn" => "Desculpe, não foi possivel identificar a equipe!"));
+                if ($results->num_rows != 0) {
+                    $loops->entry = $results;
+                    $loops->build = $this->build;
+                    $resultSet = $loops->loopdata_buildset();
+                }
+                break;
             case 'listar-aniversariantes':
                 $sql = $loops->usuarios_listar_aniversariantes();
                 $loops->entry = $sql;
@@ -181,6 +193,22 @@ class Usuarios_loopdata
         if (!isset($paginations->current)) {
             $sql .= "LIMIT " . trim($paginations->ini) . ", " . trim($paginations->max);
         }
+        return $sql;
+    }
+    /*SQL -> GET EQUIPE*/
+    public function usuarios_get_equipes()
+    {
+        $patterns = json_decode($this->entry);
+        /*SQL*/
+        $sql = "SELECT ui_funcionarios_id, ui_funcionarios_apelido, uie_id, uie_setor_id, uie_nome FROM uni_intra_funcionarios";
+        $sql .= " INNER JOIN ";
+        $sql .= "uni_intra_equipes";
+        $sql .= " ON ";
+        $sql .= "uni_intra_funcionarios.ui_funcionarios_equipe_id = uni_intra_equipes.uie_id";
+        $sql .= " WHERE ";
+        $sql .= "uni_intra_funcionarios.ui_funcionarios_id = '" . trim($patterns->query) . "'";
+        $sql .= " AND ";
+        $sql .= "uni_intra_funcionarios.ui_funcionarios_STATUS = '1'";
         return $sql;
     }
     /*SQL -> LISTAR VENDEDOR */

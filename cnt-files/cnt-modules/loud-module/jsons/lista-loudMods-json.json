@@ -93,6 +93,11 @@
         {
             "module": "relatorios",
             "folder":"class",
+            "file": "relatorios-patterns"
+        },
+        {
+            "module": "relatorios",
+            "folder":"class",
             "file": "relatorios-loopdata"
         }
     ]

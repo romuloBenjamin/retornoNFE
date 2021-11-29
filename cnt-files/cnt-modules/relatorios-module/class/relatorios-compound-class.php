@@ -18,6 +18,8 @@ class Relatorios_compound
             case 'listar-relatorio-sintetico':
                 $compound->entry = $this->entry;
                 $compound->swit = $this->swit;
+                $this->build["patterns"] = $compound->patterns_compound();
+                $compound->build = $this->build;
                 $results = $compound->loopdata_relatorios();
                 $resultSet = $results;
                 break;
@@ -26,6 +28,14 @@ class Relatorios_compound
         return $resultSet;
     }
     /*PATTERNS*/
+    public function patterns_compound()
+    {
+        $loops = new Relatorios_patterns();
+        $loops->entry = $this->entry;
+        $loops->swit = $this->swit;
+        $loops->build = $this->build;
+        return $loops->patterns_compound();
+    }
     /*LOOPDATA*/
     public function loopdata_relatorios()
     {

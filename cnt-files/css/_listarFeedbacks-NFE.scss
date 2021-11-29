@@ -1,6 +1,25 @@
 .feedbacks-container {
     margin-top: 1rem;
     margin-bottom: 1rem;
+    .actions-feedback {
+        width: $fullWidth - 75%;
+        @include paddings($left: 0.5rem);
+        ul {
+            width: $fullWidth;
+            li {
+                width: $fullWidth;
+                @include paddings($left: 0.2rem);
+                button {
+                    width: $fullWidth - 50%;
+                    @include fontFormater($size: 1rem, $colors: rgba(255, 255, 255, 1));
+                    @include textFormater($align: center, $weight: 400);
+                    i {
+                        @include margins($left: 0.3rem);
+                    }
+                }
+            }
+        }
+    }
     #table-feedbacks-nfe {
         margin-top: 1rem !important;
         width: $fullWidth;

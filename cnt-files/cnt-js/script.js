@@ -1,7 +1,7 @@
 document.onkeydown = emptyLocalStorage_f5;
 document.onkeyup = emptyLocalStorage_f5;
 
-var popups_path = "http://127.0.0.1:8080/2.0/retorno-nfes/";
+var popups_path = "http://127.0.0.1/2.0/retorno-nfes/";
 
 /*IDENTIFICAR F5*/
 function emptyLocalStorage_f5(params) {
@@ -45,6 +45,8 @@ async function sendRequest(params) {
         if(params.swit === "listar-retornos-nfe") await receiveRequest(results, params);
         if(params.swit === "listar-retornos-nfe-search") await receiveRequest(results, params, true);
         if(params.swit === "listar-retronos-nfe-paginations") prepare_paginations_object(results, params.paginations);
+        if(params.swit === "listar-feedbacks-nfe") await receiveRequest(results, params);
+        if(params.swit === "listar-feedbacks-nfe-paginations") prepare_paginations_object(results, params.paginations, true);
         if(params.swit === "pesquisar-romaneios") await receiveRequest(results, params);
         if(params.swit === "salvar-retornos-nfe") await receiveRequest_popup(results, params);
         if(params.swit === "listar-relatorio-sintetico") await receiveRequest_relatorios(results, params);
@@ -98,6 +100,7 @@ function localStorageNoOverride() {
 }
 /* Capitalize the first letter of each word */
 function capitalize(string, ignoreParticles = false) {
+    if(!string) return;
     let pieces = string.split(" ");
     var noCaps = ["da", "das", "de", "o", "a"];
     var n_map = [];
@@ -139,4 +142,26 @@ async function getJsonData(module, file) {
         console.log("Falha ao buscar dados de filiais -> " + requestData.file);
     }
     return null;
+}
+
+/*AJUSTAR PARA ENTRADAS UNICAS EM ARRAY*/
+function create_array_uniques(params) {
+    console.log(params)
+    const nArray = [];
+    let merge = {};
+    if(params) {
+        for (let index = 0; index < params.length; index++) {
+            const lines = params[index];
+            const copy_lines = {...lines};
+            delete copy_lines.data_cli;
+            delete copy_lines.data_nfe;
+            for (let index2 = 0; index2 < params[index].data_cli.length; index2++) {
+                const cli_obj = params[index].data_cli[index2];
+                const nfe_obj = params[index].data_nfe[index2];
+                merge = {...copy_lines,...cli_obj,...nfe_obj};
+                nArray.push(merge);
+            }
+        }
+    }
+    return nArray;    
 }

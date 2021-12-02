@@ -84,6 +84,10 @@ a:hover {
   width: 84% !important;
 }
 
+.current-page {
+  background-color: rgba(221, 221, 221, 0.6);
+}
+
 div.modal-container-fixed {
   position: fixed;
   width: 100vw;
@@ -1099,6 +1103,34 @@ section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro hr 
   margin-bottom: 1rem;
 }
 
+.feedbacks-container .actions-feedback {
+  width: 25%;
+  padding: 0 0.5rem 0 0.5rem;
+}
+
+.feedbacks-container .actions-feedback ul {
+  width: 100%;
+}
+
+.feedbacks-container .actions-feedback ul li {
+  width: 100%;
+  padding: 0 0.2rem 0 0.2rem;
+}
+
+.feedbacks-container .actions-feedback ul li button {
+  width: 50%;
+  font-size: 1rem;
+  color: white;
+  text-align: center;
+  font-weight: 400;
+  text-decoration: none;
+  text-transform: none;
+}
+
+.feedbacks-container .actions-feedback ul li button i {
+  margin: 0 0.3rem 0 0.3rem;
+}
+
 .feedbacks-container #table-feedbacks-nfe {
   margin-top: 1rem !important;
   width: 100%;
@@ -1170,6 +1202,11 @@ section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro hr 
 .paginations-controls .paginations-container ul .louder-paginations .spinner-border {
   width: 15px;
   height: 15px;
+}
+
+.paginations-controls .paginations-container ul .single-item {
+  border-radius: 0.25rem !important;
+  border-width: 1px !important;
 }
 
 footer {

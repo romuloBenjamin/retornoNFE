@@ -1,5 +1,4 @@
 /*------------------------------------------>PATTERNS<------------------------------------------*/
-var patterns_search = setRetornosNFESearchPatterns();
 function setRetornosNFESearchPatterns() {
     var patterns = {};
     patterns.module = "search";
@@ -7,73 +6,89 @@ function setRetornosNFESearchPatterns() {
     patterns.file = false;
     patterns.extensions = "php";
     patterns.swit = false;
-    patterns.paginations = setPaginations(0, false);
+    patterns.paginations = setPaginations();
     patterns.path = createRequestPath(patterns);
     return patterns;
 }
 /*---------------------------------------->INIT SCRIPT<----------------------------------------*/
-document.querySelector("select#forMotorista").addEventListener("change", createSearchMap);
-document.querySelector("select#forEquipe").addEventListener("change", createSearchMap);
-document.querySelector("select#forMotivos").addEventListener("change", createSearchMap);
-document.querySelector("input#search").addEventListener("keyup", createSearchMap);
-document.querySelector("button#forSearch").addEventListener("click", buscarRetornosSearch);
-/*CRAETE OBJ*/
-function createSearchMap() {
-    /*INIT PATTERNS*/
-    var patterns_search = setRetornosNFESearchPatterns();    
-    /*VALORES IDENTIFICADOS*/
-    const fieldName = this.name.replace("for", "").toString().toLowerCase();
-    const idSelect = this.value;
-    const nameSelect = this.selectedOptions[0].textContent;    
-    const values = {id:idSelect, name:nameSelect};
-    /*CREATE OBJ & GENERATE OBJ*/
-    var nObj = new Object();
-    nObj[fieldName] = values;
-    /*SET LOCALSTORAGE*/
-    if(nObj[fieldName].id === "*") var saveLocalStorage = localStorage_toSearch_removeProperty(JSON.stringify(nObj), "searchdata", fieldName);
-    if(nObj[fieldName].id != "*") var saveLocalStorage = localStorage_toSearch(JSON.stringify(nObj), "searchdata", fieldName);
-}
-/*SET LOCAL STORAGE -> SEARCHDATA*/
-async function localStorage_toSearch(params, local, property) {    
-    /*REMOVE STORAGE SQL IF EXIST'S*/
-    var localstorage_noOverride = localStorageNoOverride();
-    Object.keys(localStorage).forEach(tags => {
-        if(!localstorage_noOverride.includes(tags)) localStorage.removeItem(tags);
-    });
-    /*IF LOCAL STORAGE IS NULL OR EMPTY*/
-    if(localStorage.getItem(local) === null) return localStorage.setItem(local, params);    
-    /*IF LOCAL STORAGE IS NOT NULL AND UPDATE OBJ*/
-    if(localStorage.getItem(local) != null) {
-        /*DESTRINGFY OBJ*/
-        const nParans = JSON.parse(params);
-        /*CREATE OBJ IN LOCAL STORAGE*/
-        var storage_to_local = JSON.parse(localStorage.getItem(local));
-        var obj = new Object(storage_to_local);
-        obj[property] = nParans[property];
-        return localStorage.setItem(local, JSON.stringify(obj));
-    }
+function setSearch() {    
+    var select_inputs = ["select#forMotorista", "select#forEquipe", "select#forMotivos"];
+    var input_inputs = ["input#search"];
+    var button_inputs = ["button#forSearch"];
     
+    /*SELECT INPUTS -> on CHANGE*/
+    select_inputs.forEach(selects => {
+        document.querySelector(selects).addEventListener("change", createSearchMap);
+    });
+    /*SELECT INPUTS -> on KEYUP*/
+    input_inputs.forEach(inputs => {
+        document.querySelector(inputs).addEventListener("keyup", createSearchMap);
+    });
+    /*SELECT INPUTS -> on CLICK*/
+    button_inputs.forEach(buttons => {
+        document.querySelector(buttons).addEventListener("click", createSearchMap);
+    });
 }
-/*REMOVE LOCAL STORAGE -> SEARCHDATA*/
-async function localStorage_toSearch_removeProperty(params, local, property) {
-    /*GET LOCAL STORAGE DATA*/
-    var obj_storage = JSON.parse(localStorage[local]);
-    /*REMOVE PROPERTY IF '*'*/
-    delete obj_storage[property];
-    localStorage.setItem(local, JSON.stringify(obj_storage));
+setSearch();
+/*CRAETE OBJ*/
+async function createSearchMap() {
+    /*INIT PATTERNS*/
+    var patterns_search = setRetornosNFESearchPatterns();
+    /*VALORES IDENTIFICADOS*/
+    var tag_name = this.tagName.toString().toLowerCase();
+    var storage_positions = this.id.replace("for", "").toLowerCase();
+    if(tag_name === "select"){
+        var values = {id: this.value, name: this.selectedOptions[0].textContent};
+        if(values.id === "*") removeStorage(storage_positions);
+        if(values.id != "*") updateStorage(values, storage_positions);
+    }
+    if(tag_name != "select"){
+        if(tag_name != "button") {
+            var values = {nf: this.value, romaneio: this.value};
+            if(this.value === "") {
+                removeStorage("nf");
+                removeStorage("romaneio");
+            }
+            if(this.value !=  "") updateStorage(values, false);
+            
+        }
+        if(tag_name === "button") buscarRetornosSearch();
+    }
+}
+/*UPDATE LOCALSTORAGE SEARCHDATA*/
+function updateStorage(params, positions) {
+    var search = localStorage?.getItem("searchdata");
+    if(search === null){
+        var search = {searchdata: {}};
+        localStorage.setItem("searchdata", JSON.stringify(search));
+        updateStorage(params, positions);
+    }else{
+        var open_storage = JSON.parse(search);
+        if(positions != false) open_storage.searchdata[positions] = params;
+        if(positions === false) open_storage.searchdata = {...open_storage.searchdata, ...params};
+        return localStorage.setItem("searchdata", JSON.stringify(open_storage));
+    }
+}
+/*REMOVE LOCALSTORAGE SEARCHDATA*/
+function removeStorage(positions) {
+    var open_storage = JSON.parse(localStorage?.getItem("searchdata"));
+    delete open_storage.searchdata[positions];
+    return localStorage.setItem("searchdata", JSON.stringify(open_storage));
 }
 /*---------------------------------------->SEND RESQUEST SEARCH<----------------------------------------*/
 /*BUSCAR RETORNO NFE*/
-async function buscarRetornosSearch() {
+function buscarRetornosSearch() {
+    //console.log(localStorage.getItem("searchdata"));
     if(localStorage.getItem("searchdata") != null) {
         /*IF UNDEFINED OR STORAGE {}*/
         if(localStorage?.searchdata === undefined) location.reload();
-        if(localStorage?.searchdata === "{}") location.reload();
+        if(localStorage?.searchdata === "{\"searchdata\":{}}") location.reload();
         /*CALL PATTERNS PAGE*/
         var patterns_search = setRetornosNFESearchPatterns(); patterns_search.module = "logistica"; 
         patterns_search.file = "retornos-nfe"; patterns_search.paginations.search = JSON.parse(localStorage.getItem("searchdata"));
         patterns_search.swit = "listar-retornos-nfe-search"; patterns_search.path = createRequestPath(patterns_search);
         /*SEND REQUEST*/
-        await sendRequest(patterns_search);
+        sendRequest(patterns_search);
+        update_paginations(patterns_search);
     }
 }

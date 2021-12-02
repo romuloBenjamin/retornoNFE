@@ -1,0 +1,95 @@
+#relatorioContentPlacer {
+    li {
+        background-color: transparent !important;
+    }
+    .thead-primary {
+        background-color: rgba(0, 0, 0, 0.09) !important;
+    }
+    .vendas {
+        background-color: $vendas;
+    }
+
+    .funcionarios-desligados {
+        background-color: $funcionarios-desligados;
+    }
+    .rh {
+        background-color: $rh;
+    }
+    th,
+    td {
+        border: none;
+    }
+}
+
+#container-relatorio {
+    .conteudo-interno-relatorios {
+        border: 5px double rgb(136, 136, 136);
+    }
+    #headerRelatorio {
+        height: auto;
+    }
+    .container-relatorio-sintetico-sort {
+        background-color: rgba(156, 156, 156, 0.14);
+        border: 4px ridge rgb(173, 173, 173);
+        &:not(:first-child) {
+            margin: 0rem;
+        }
+    }
+
+    #groupDataItemStartPlacer {
+        padding: {
+            top: 0 !important;
+            bottom: 0 !important;
+        }
+    }
+
+    .table-container {
+        background-color: rgba(255, 255, 255, 0.11);
+        border: 1px solid rgb(61, 61, 61);
+        &:not(:last-child) {
+            border-bottom: 0;
+        }
+        .main-table {
+            flex: 3 !important;
+            table {
+                margin-bottom: 0 !important;
+            }
+        }
+    }
+
+    .avarias-and-feedback-placer {
+        flex: 1 !important;
+        &:last-child {
+            margin-bottom: 0;
+        }
+        .avarias-table {
+            margin-bottom: 0;
+            td {
+                border: 1px solid #dee2e6;
+            }
+            #avariasProdutoTablePlacer {
+                border: none;
+                width: $fullWidth;
+                .avarias-produto-table {
+                    width: 30%;
+                    border: none;
+                    td,
+                    th {
+                        padding: 0.5rem;
+                        border: none;
+                    }
+                    margin-bottom: 0;
+                }
+                .obs-textarea {
+                    margin: 1rem;
+                }
+            }
+        }
+        .feedback-table {
+            height: $fullHeight;
+            tbody {
+                border: 1px solid #dee2e6;
+            }
+        }
+    }
+}

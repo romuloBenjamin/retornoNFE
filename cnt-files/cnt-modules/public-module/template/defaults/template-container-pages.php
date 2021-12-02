@@ -1,3 +1,4 @@
+<script src="<?= DIR_PATH; ?>cnt-modules/public-module/js/paginations-js.js" defer></script>
 <section class="d-flex justify-content-center container-retornos">
     <div class="d-flex flex-column container-page">
         <h1 class="text-center">Retorno de Notas Fiscais</h1>

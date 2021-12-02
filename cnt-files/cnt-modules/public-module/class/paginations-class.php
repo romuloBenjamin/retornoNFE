@@ -15,42 +15,31 @@ class Paginations
     {
         $compound = new Paginations();
         switch ($this->swit) {
-            case 'listar-funcionarios-paginations':
-                $decodeEntry = json_decode($this->entry);
-                $this->build["registroInit"] = $decodeEntry->ini;
-                $this->build["registrosPagina"] = $decodeEntry->max;
-                if (!isset($decodeEntry->current)) $this->build["registroAtual"] = $decodeEntry->ini;
-                if (isset($decodeEntry->current)) $this->build["registroAtual"] = $decodeEntry->current;
-
-                $compound->entry = "";
-                $compound->swit = "listar-funcionarios-paginations-max-view";
-                $this->build["totalRegistros"] = $compound->loopdata_paginations();
-                $relacaoIntFloat = $this->build["totalRegistros"] / $this->build["registrosPagina"];
-                if (is_int($relacaoIntFloat)) $this->build["paginasDisponiveis"] = ceil($relacaoIntFloat);
-                if (is_float($relacaoIntFloat)) $this->build["paginasDisponiveis"] = floor($relacaoIntFloat) + 1;
-                $compound->build = $this->build;
-                $compound->build = $this->build;
-                return json_encode($this->build);
-                break;
             case 'listar-retronos-nfe-paginations':
-                $decodeEntry = json_decode($this->entry);
-                $this->build["registroInit"] = $decodeEntry->ini;
-                $this->build["registrosPagina"] = $decodeEntry->max;
-                if (!isset($decodeEntry->current)) $this->build["registroAtual"] = $decodeEntry->ini;
-                if (isset($decodeEntry->current)) $this->build["registroAtual"] = $decodeEntry->current;
-
-                $compound->entry = "";
-                $compound->swit = "listar-retronos-nfe-paginations-max-view";
-                $this->build["totalRegistros"] = $compound->loopdata_paginations();
-                $relacaoIntFloat = $this->build["totalRegistros"] / $this->build["registrosPagina"];
-                if (is_int($relacaoIntFloat)) $this->build["paginasDisponiveis"] = ceil($relacaoIntFloat);
-                if (is_float($relacaoIntFloat)) $this->build["paginasDisponiveis"] = floor($relacaoIntFloat) + 1;
+                $compound->entry = json_decode($this->entry);
+                $compound->swit = $this->swit;
+                $this->build["origin"] = json_decode($this->entry);
+                $factory = $compound->factory_paginations();
+                $compound->entry = $factory["paginations"];
                 $compound->build = $this->build;
-                $compound->build = $this->build;
-                return json_encode($this->build);
+                $maxRegistros = $compound->loopdata_paginations();
+                $compound->entry = $maxRegistros;
+                $compound->build = $factory;
+                $compound->swit = "place-max-registros";
+                $resultSet = $compound->factory_paginations();
                 break;
                 /*default:break;*/
         }
+        return json_encode($resultSet);
+    }
+    /*FACTORY*/
+    public function factory_paginations()
+    {
+        $factory = new Paginations_factory();
+        $factory->entry = $this->entry;
+        $factory->swit = $this->swit;
+        $factory->build = $this->build;
+        return $factory->factory_paginations();
     }
     /*LOOPDATA*/
     public function loopdata_paginations()

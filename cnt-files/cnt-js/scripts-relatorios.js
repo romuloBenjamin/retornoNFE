@@ -22,7 +22,10 @@ function setHeader() {
     place_periodos.innerHTML = place_periodos.textContent.replace("[ini]", storage_data.datade.split("-").reverse().join("/"));
     place_periodos.innerHTML = place_periodos.textContent.replace("[fin]", storage_data.dataa.split("-").reverse().join("/"));
     /*PLACE TYPE*/
-    place_type.innerHTML = capitalize(storage_data.searchtype).toUpperCase();
+    let reportType;
+    if(storage_data.searchtype === "sintetico") reportType = "SINTÉTICO";
+    else if(storage_data.searchtype === "analitico") reportType = "ANALÍTICO";
+    place_type.innerHTML = reportType;
 }
 setHeader();
 /*------------------------------------------------------->REQUEST's<-------------------------------------------------------*/
@@ -43,7 +46,7 @@ prepare_sendRequest();
 /*----------------------------------------------------->RECEIVE REQUEST<-----------------------------------------------------*/
 /*RECEIVE REQUEST*/
 async function receiveRequest_relatorios(params, patterns) {
-    console.log(params);
+    //console.log(params);
     /*NO DATA*/
     if(parseInt(params.status) === 0) noDataDisponivel(params.msn);
     /*HAS DATA*/
@@ -68,118 +71,164 @@ async function receiveRequest_relatorios(params, patterns) {
     }
 }
 /*NO DATA AVALIBLE*/
-function noDataDisponivel(params) {
-    var placers = document.querySelector("section#conteudoRelatorio");
-    var no_data = "<div class=\"d-flex justify-content-center\"><span class=\"alert alert-warning\">"+params.split(" -> ")[0]+"</span></div>";
-    placers.innerHTML = no_data;
+function noDataDisponivel(message) {
+    var relatorioContentPlacer = document.querySelector("#relatorioContentPlacer");
+    var no_data = "<div class=\"d-flex justify-content-center\"><span class=\"alert alert-warning\">"+message.split(" -> ")[0]+"</span></div>";
+    relatorioContentPlacer.innerHTML = no_data;
 }
+
+// Removes CloneNode from the element's name and add the passed suffix
+function setCloneIdWithSuffix(element, suffix) {
+    element.id = element.id.replace("CloneNode", "") + suffix;
+}
+
 /*-------------------------------------------------------->TEMPLATE<--------------------------------------------------------*/
 async function place_data_inTamplate(params) {
-    var dados_storage = JSON.parse(localStorage.popup_windows);
-    var placers = document.querySelector("section#conteudoRelatorio");
-    Object.values(params).forEach(toDepartamentos => {
-        const cloneNode_ul = placers.querySelector("div#cloneNode1").cloneNode("true");
-        /*REMOVE ATTRIBUTE CLONE*/
-        cloneNode_ul.classList.remove("d-none");
-        cloneNode_ul.classList.add("d-flex");
-        cloneNode_ul.removeAttribute("id");
-        /*PLACE DEPARTAMENTO*/
-        var placeDepartamento = cloneNode_ul.querySelector("ul.relatorio-departamentos > li > span");
-        if(toDepartamentos[0]?.departamento === undefined) placeDepartamento.innerHTML = "Funcionários Desligados".toUpperCase();
-        if(toDepartamentos[0]?.departamento != undefined) placeDepartamento.innerHTML = toDepartamentos[0]?.departamento.toUpperCase();
-        /*CREATE SECOND ORDER*/
-        var secondOrder = array_group_by(toDepartamentos, dados_storage.groupby);
-        secondOrder.then(toGroupBy => {
-            Object.values(toGroupBy).forEach(data2 => {
-                //console.log(data2.length);
-                const cloneNode_div = cloneNode_ul.querySelector("div#cloneNode3").cloneNode(true);
-                /*REMOVE ATTRIBUTE CLONE*/
-                cloneNode_div.removeAttribute("id");
-                cloneNode_div.classList.remove("d-none");
-                cloneNode_div.classList.add("d-flex");
-                const placeOrderBy = cloneNode_div.querySelectorAll("ul > li");
-                /*PLACE ORDER BY*/
-                var place_order = placeOrderBy[0].querySelector("span");
-                if(dados_storage.groupby === "motivo") place_order.innerHTML = data2[0].motivo_nome;
-                /*PLACE LINES*/
-                Object.values(data2).forEach(lines => {
-                    const add_lines = placeOrderBy[1].querySelector("table > tbody > tr#cloneNode2").cloneNode(true);
-                    /*REMOVE ID CLONE*/
-                    add_lines.classList.remove("d-none");
-                    add_lines.classList.add("d-flex");
-                    add_lines.removeAttribute("class");
-                    add_lines.removeAttribute("id");
-                    /*PLACE DATA*/
-                    add_lines.querySelectorAll("td")[0].innerHTML = lines.NF;
-                    add_lines.querySelectorAll("td")[1].innerHTML = lines.cod_cliente;
-                    add_lines.querySelectorAll("td")[2].innerHTML = lines.nome_cliente;
-                    add_lines.querySelectorAll("td")[3].innerHTML = lines.vendedor +" - "+ lines.nomevendedor;
-                    if(lines?.equipe === undefined) add_lines.querySelectorAll("td")[4].innerHTML = "-";
-                    if(lines?.equipe != undefined) add_lines.querySelectorAll("td")[4].innerHTML = lines.equipe;
-                    add_lines.querySelectorAll("td")[5].innerHTML = lines.motivo +" - "+ lines.motivo_nome;
-                    var avarias;
-                    if(lines?.avarias === undefined) {
-                        avarias = "-";
-                        add_lines.querySelectorAll("td")[6].innerHTML = "";
-                    }
-                    if(lines?.avarias != undefined) {
-                        avarias = pushAvarias(lines.avarias);                        
-                        avarias.then(resp => resp.json())
-                        .then(idata => {
-                            Object.values(idata).forEach(do_avarias => {
-                                console.log(do_avarias);
-                                if(do_avarias.furado === "") do_avarias.furado = "0";
-                                if(do_avarias.vazando === "") do_avarias.vazando = "0";
-                                if(do_avarias.vazio === "") do_avarias.vazio = "0";
-                                if(do_avarias.molhado === "") do_avarias.molhado = "0";
-                                if(do_avarias.rasgado === "") do_avarias.rasgado = "0";
-                                if(do_avarias.faltante === "") do_avarias.faltante = "0";
-                                var insert_itable = ""
-                                +"<table class=\"table table-striped\">"
-                                    +"<thead class=\"thead-primary\">"
-                                        +"<tr>"
-                                            +"<th scope=\"col\">Produto</th>"
-                                            +"<th scope=\"col\">Furado</th>"
-                                            +"<th scope=\"col\">Vazando</th>"
-                                            +"<th scope=\"col\">Vazio</th>"
-                                            +"<th scope=\"col\">Molhado</th>"
-                                            +"<th scope=\"col\">Rasgado</th>"
-                                            +"<th scope=\"col\">Faltante</th>"
-                                        +"</tr>"
-                                    +"</thead>" 
-                                    +"<tbody>"
-                                        +"<tr>"
-                                            +"<td>"+do_avarias.produto+"</td>"
-                                            +"<td>"+do_avarias.furado+"</td>"
-                                            +"<td>"+do_avarias.vazando+"</td>"
-                                            +"<td>"+do_avarias.vazio+"</td>"
-                                            +"<td>"+do_avarias.molhado+"</td>"
-                                            +"<td>"+do_avarias.rasgado+"</td>"
-                                            +"<td>"+do_avarias.faltante+"</td>"
-                                        +"</tr>"
-                                        +"<tr>"
-                                            +"<td colspan=\"7\">"+do_avarias.obs+"</td>"
-                                        +"</tr>"
-                                    +"</tbody>"
-                                +"</table>";
-                                add_lines.querySelectorAll("td")[6].innerHTML = insert_itable;
-                            });
-                        });
-                    }
-                    add_lines.querySelectorAll("td")[7].innerHTML = "-";
-                    placeOrderBy[1].querySelector("table > tbody").appendChild(add_lines);
-                });
-                placeOrderBy[2].innerHTML = "<hr><strong>Total:</strong> "+data2.length+"<hr>";
-                cloneNode_ul.appendChild(cloneNode_div);
-            });
-        });
-        placers.appendChild(cloneNode_ul);
-        placers.appendChild(document.createElement("hr"));
-        if(placers.querySelector("div#louder-container").classList.contains("d-flex")) {
-            placers.querySelector("div#louder-container").classList.remove("d-flex");
-            placers.querySelector("div#louder-container").classList.add("d-none");
+    const relatorioOptions = JSON.parse(localStorage.popup_windows);
+    try {
+        // Load Motoristas data
+        let motoristas;
+        if(relatorioOptions.groupby === "motorista") {
+            relatorioOptions.groupby = "agregado_id";
+            motoristas = await getJsonData("logistica", "transportadores", "relatorio");
+        } else if(relatorioOptions.groupby === "equipe") {
+            relatorioOptions.groupby = "equipenome";
         }
-    });    
+        const relatorioContentPlacer = document.querySelector("#relatorioContentPlacer");
+        let i = 0;
+        for(let departamentosData of Object.values(params)) {
+            const relatorioContent = document.querySelector("#relatorioContentCloneNode").cloneNode(true);
+            setCloneIdWithSuffix(relatorioContent, `-${i}`);
+            // PLACE DEPARTAMENTO
+            const departamentoPlacer = relatorioContent.querySelector("ul.relatorio-departamentos > li > span");
+            let departamento = "FUNCIONÁRIOS DESLIGADOS";
+            if(departamentosData[0].departamento) departamento = departamentosData[0].departamento.toUpperCase();
+            departamentoPlacer.innerHTML = departamento;
+            // Create a lowercase string class name separated by "-" using the department name
+            const departamentoClass = departamento.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase().split(" ").join("-");
+            console.log(departamentoClass);
+            relatorioContent.classList.add(departamentoClass);
+            // CREATE SECOND ORDER
+            let groupedByDepartamentosData = array_group_by(departamentosData, relatorioOptions.groupby);
+            groupedByDepartamentosData = await filterBy(groupedByDepartamentosData, relatorioOptions.filterby);
+            let j = 0;
+            for(let departamentoItems of Object.values(groupedByDepartamentosData)) {
+                if(departamentoItems.length === 0) break;
+
+                const idSuffix = `-${i}_${j}`;
+                const groupData = document.querySelector("#groupDataCloneNode").cloneNode(true);
+                setCloneIdWithSuffix(groupData, idSuffix);
+                const orderByDataPlacer = groupData.querySelectorAll("ul > li");
+                // PLACE ORDER BY
+                const orderByOptionKey = orderByDataPlacer[0].querySelectorAll("span")[0];
+                const orderByOptionValue = orderByDataPlacer[0].querySelectorAll("span")[1];
+                if(relatorioOptions.groupby === "motivo") {
+                    orderByOptionKey.innerHTML = "MOTIVO: ";
+                    orderByOptionValue.innerHTML = departamentoItems[0].motivo_nome.toUpperCase();
+                } else if(relatorioOptions.groupby === "agregado_id") {
+                    orderByOptionKey.innerHTML = "MOTORISTA: ";
+                    const motoristaId = parseInt(departamentoItems[0].agregado_id);
+                    let motoristaName = departamentoItems[0].agregado_id + " - Não encontrado";
+                    motoristas?.some(motoristaInfo => {
+                        if(parseInt(motoristaInfo.ids) === motoristaId) {
+                            motoristaName = motoristaInfo.transportador;
+                            return true;
+                        }
+                        return false;
+                    })
+                    orderByOptionValue.innerHTML = motoristaName.toUpperCase();
+                } else if(relatorioOptions.groupby === "equipenome") {
+                    orderByOptionKey.innerHTML = "EQUIPE: ";
+                    let equipe = "-";
+                    if(departamentoItems[0].equipenome) equipe = departamentoItems[0].equipenome.toUpperCase();
+                    orderByOptionValue.innerHTML = equipe;
+                }
+
+                const groupDataItemStartPlacer = groupData.querySelector("#groupDataItemStartPlacer");
+                let startNewGroup = true;
+                let groupDataStartTable = null;
+                // PLACE LINES
+                let k = 0
+                for(let groupItem of Object.values(departamentoItems)) {
+                    const innerIdSuffix = idSuffix +  `_${k}`;
+                    if(startNewGroup) {
+                        if(groupDataStartTable) groupDataItemStartPlacer.appendChild(groupDataStartTable);
+                        groupDataStartTable = document.querySelector("#groupDataItemStartCloneNode").cloneNode(true);
+                        setCloneIdWithSuffix(groupDataStartTable, innerIdSuffix);
+                        startNewGroup = false;
+                    }
+                    const groupItemLine = document.querySelector("#groupItemLineCloneNode").cloneNode(true);
+                    setCloneIdWithSuffix(groupItemLine, innerIdSuffix);
+                    // PLACE DATA
+                    const groupItemLineData = groupItemLine.querySelectorAll("td");
+                    groupItemLineData[0].innerHTML = groupItem.NF;
+                    groupItemLineData[1].innerHTML = groupItem.cod_cliente;
+                    groupItemLineData[2].innerHTML = capitalize(groupItem.nome_cliente);
+                    groupItemLineData[3].innerHTML = groupItem.vendedor +" - "+ capitalize(groupItem.nomevendedor);
+                    let equipe = "-";
+                    if(groupItem.equipenome) equipe = groupItem.equipenome.toUpperCase();
+                    groupItemLineData[4].innerHTML = equipe;
+                    groupItemLineData[5].innerHTML = groupItem.motivo +" - "+ groupItem.motivo_nome;
+                    const avariasAndFeedbackPlacer = groupDataStartTable.querySelector("#avariasAndFeedbackPlacer");
+                    if(groupItem.avarias) {
+                        try {
+                            const avariasTable = document.querySelector("#avariasTableCloneNode").cloneNode(true);
+                            setCloneIdWithSuffix(avariasTable, innerIdSuffix);
+                            const avarias = await pushAvarias(groupItem.avarias);
+                            const avariasProdutoTablePlacer = avariasTable.querySelector("#avariasProdutoTablePlacer");
+                            for(let do_avarias of Object.values(avarias)) {
+                                if(do_avarias.furado === "") do_avarias.furado = 0;
+                                if(do_avarias.vazando === "") do_avarias.vazando = 0;
+                                if(do_avarias.vazio === "") do_avarias.vazio = 0;
+                                if(do_avarias.molhado === "") do_avarias.molhado = 0;
+                                if(do_avarias.rasgado === "") do_avarias.rasgado = 0;
+                                if(do_avarias.faltante === "") do_avarias.faltante = 0;
+                                const avariasProdutoTable = document.querySelector("#avariasProdutoTableCloneNode").cloneNode(true);
+                                setCloneIdWithSuffix(avariasProdutoTable, innerIdSuffix);
+                                const avariasProdutoTableDataCells = avariasProdutoTable.querySelectorAll("td");
+                                avariasProdutoTableDataCells[0].innerText = do_avarias.produto;
+                                avariasProdutoTableDataCells[1].innerText = parseInt(do_avarias.furado);
+                                avariasProdutoTableDataCells[2].innerText = parseInt(do_avarias.vazando);
+                                avariasProdutoTableDataCells[3].innerText = parseInt(do_avarias.vazio);
+                                avariasProdutoTableDataCells[4].innerText = parseInt(do_avarias.molhado);
+                                avariasProdutoTableDataCells[5].innerText = parseInt(do_avarias.rasgado);
+                                avariasProdutoTableDataCells[6].innerText = parseInt(do_avarias.faltante);
+                                avariasProdutoTable.querySelectorAll("div")[0].innerText = do_avarias.obs;
+                                avariasProdutoTablePlacer.appendChild(avariasProdutoTable);
+                            }
+                            avariasAndFeedbackPlacer.appendChild(avariasTable);
+                        } catch(e) {
+                            console.error(e);
+                        }
+                        startNewGroup = true;
+                        console.log(groupItemLineData[2].innerHTML + " has avaria")
+                    }
+                    if(groupItem.feedback) {
+                        const feedbackContainer = document.querySelector("#feedbackTableCloneNode").cloneNode(true);
+                        setCloneIdWithSuffix(feedbackContainer, innerIdSuffix);
+                        avariasAndFeedbackPlacer.appendChild(feedbackContainer);
+                        startNewGroup = true;
+                    }
+                    groupDataStartTable.querySelector("#groupItemLinePlacer").appendChild(groupItemLine);
+                    k++;
+                }
+                groupDataItemStartPlacer.appendChild(groupDataStartTable);
+                orderByDataPlacer[2].innerHTML = "<strong>Total:</strong> " + departamentoItems.length;
+                relatorioContent.appendChild(groupData);
+                j++;
+            }
+            if(relatorioContent.children.length > 1) relatorioContentPlacer.appendChild(relatorioContent);
+            else relatorioContent.remove();
+            i++;
+        }
+        if(relatorioContentPlacer.querySelector("div#louder-container").classList.contains("d-flex")) {
+            relatorioContentPlacer.querySelector("div#louder-container").classList.remove("d-flex");
+            relatorioContentPlacer.querySelector("div#louder-container").classList.add("d-none");
+        }
+        if(relatorioContentPlacer.children.length === 1) noDataDisponivel("Nenhum dado encontrado")
+    } catch(e) {
+        console.error(e);
+    }
 }
 /*--------------------------------------------------------->FACTORY<---------------------------------------------------------*/
 /*ADICIONAR EQUIPE VENDAS AO OPEN LOOP*/
@@ -204,7 +253,7 @@ async function getEquipeVendas(params) {
             results = await results?.json();
             if(parseInt(results.status) === 0) {
                 equipe_vendas_extended = {...equipe_vendas};
-                equipe_vendas_extended.nomevendedor = "Ex. Funcionários";
+                equipe_vendas_extended.nomevendedor = "Ex Funcionário";
             }
             if(parseInt(results.status) === 1){
                 const dados_equipe_setor_vendas = results?.data[0];
@@ -218,7 +267,7 @@ async function getEquipeVendas(params) {
     return nArray;
 }
 /*AJUSTAR OPEN LOOP TO SORT*/
-async function array_group_by(params, config) {
+function array_group_by(params, config) {
     const newObj = params.reduce(function (acc, currentValue) {
         if (!acc[currentValue[config]]) {
             acc[currentValue[config]] = [];
@@ -228,6 +277,46 @@ async function array_group_by(params, config) {
     }, {});
     return newObj;    
 }
+
+// Filter data
+async function filterBy(data, filters) {
+    const filteredData = {};
+    let i = 0;
+    for(let groupData of Object.values(data)) {
+        const filteredGroupData = [];
+        for(let item of groupData) {
+            let addItem = false;
+            // Check motivo filter
+            if(!filters.motivo || (filters.motivo && filters.motivo.id === item.motivo)) addItem = true;
+            // Check empresa filter
+            if(addItem && (!filters.empresa || (filters.empresa && filters.empresa.id === item.filial))) addItem = true;
+            else addItem = false;
+            // Check avaria filter
+            if(addItem) {
+                if(filters.avaria) {
+                    addItem = false;
+                    if(item.avarias) {   
+                        const avarias = await pushAvarias(item.avarias);
+                        for(let avaria of avarias) {
+                            const avariaName = filters.avaria.desc.toLowerCase();
+                            if(avaria[avariaName]) addItem = true;
+                        }
+                    }
+                }
+            }
+            // Add to group data filtered items array
+            if(addItem) filteredGroupData.push(item);
+        }
+        // Add the array to the object
+        if(filteredGroupData.length > 0) {
+            filteredData[i] = filteredGroupData;
+            i++;
+        }
+    }
+    return filteredData;
+}
+
+// Unserialize avarias
 async function pushAvarias(params) {
     var patterns_avarias = patterns_relatorios();
     patterns_avarias.path = "../../../relatorios-module/core/listar-unserie-avarias-core.php";    
@@ -236,6 +325,7 @@ async function pushAvarias(params) {
     var idata = new FormData();
     idata.append("entry", params);
     var config = {method: "post", body: idata};
-    var avarias_ret = await fetch(loud_request, config);
-    return avarias_ret;
+    const avarias_response = await fetch(loud_request, config);
+    const avarias = await avarias_response.json();
+    return avarias;
 }

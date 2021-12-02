@@ -77,6 +77,13 @@ class Logistica_loopdata
                 $result = $loops->loopdata_exec();
                 $resultSet = $result->num_rows;
                 break;
+            case 'listar-retronos-nfe-paginations-search':
+                $loops->build = $this->build;
+                $sql = $loops->loopdata_listar_registros_nfe_search();
+                $loops->entry = $sql;
+                $result = $loops->loopdata_exec();
+                $resultSet = $result->num_rows;
+                break;
             case 'salvar-retornos-nfe':
                 $verifica = json_decode($loops->verifica_if_returns());
                 if ($verifica->status == "0") $result = json_encode($verifica);
@@ -96,12 +103,13 @@ class Logistica_loopdata
     /*SQL -> retorno sql*/
     public function loopdata_sql_retorno_nfes()
     {
+        /*PATTERNS*/
         $patterns = json_decode($this->entry);
-        $ini = ((intval($patterns->ini) * intval($patterns->max)) - (intval($patterns->max) - 1));
-        if (isset($patterns->current)) $ini = ((intval($patterns->current) * intval($patterns->max)) - (intval($patterns->max) - 1));
-
-        if ($ini < 0) $ini = 0;
-
+        if (!isset($patterns->current)) $ini = $patterns->ini;
+        if (isset($patterns->current)) {
+            if (intval($patterns->current) == 1) $ini = 0;
+            if (intval($patterns->current) != 1) $ini = ((intval($patterns->current) * intval($patterns->max)) - intval($patterns->max));
+        }
         $sql = "SELECT * FROM uni_intra_retorno_nfes";
         $sql .= " ";
         $sql .= "LIMIT " . trim($ini) . ", " . trim($patterns->max);
@@ -112,34 +120,36 @@ class Logistica_loopdata
     {
         /*PREPARE DATA TO SEARCH*/
         $patterns = json_decode($this->entry);
-        $patterns_search = json_decode($this->entry);
-        $removes = array("a:2:", ";}", "{");
 
         /*SQL INIT*/
         $sql = "SELECT * FROM uni_intra_retorno_nfes";
         $sql .= " WHERE ";
         /*IF EXIST PROPERTY -> motorista*/
-        if (property_exists($patterns_search->search, "motorista") == true) {
-            $sql .= "uirn_agregado_id = '" . trim($patterns_search->search->motorista->id) . "'";
-            if (count(get_object_vars($patterns_search->search)) > 1) $sql .= " AND ";
+        if (property_exists($patterns->search->searchdata, "motorista") == true) {
+            $sql .= "uirn_agregado_id = '" . trim($patterns->search->searchdata->motorista->id) . "'";
+            if (count(get_object_vars($patterns->search->searchdata)) > 1) $sql .= " AND ";
         }
         /*IF EXIST PROPERTY -> equipe*/
-        if (property_exists($patterns_search->search, "equipe") == true) {
-            $search_part = serialize(json_decode(json_encode($patterns_search->search->equipe, true), true));
-            $search_part = str_replace($removes, "", $search_part);
-            $sql .= "uirn_notas_cliente LIKE '%" . $search_part . "%'";
-            if (count(get_object_vars($patterns_search->search)) > 2) $sql .= " AND ";
+        if (property_exists($patterns->search->searchdata, "equipe") == true) {
+            $sql .= "uirn_notas_cliente LIKE '%" . $patterns->search->searchdata->equipe->name . "%'";
+            if (count(get_object_vars($patterns->search->searchdata)) > 2) $sql .= " AND ";
         }
         /*IF EXIST PROPERTY -> motivo*/
-        if (property_exists($patterns_search->search, "motivos") == true) {
-            $search_part2 = $patterns_search->search->motivos->name;
-            $sql .= "uirn_notas_retorno LIKE '%" . trim($search_part2) . "%'";
-            if (count(get_object_vars($patterns_search->search)) > 3) $sql .= " AND ";
+        if (property_exists($patterns->search->searchdata, "motivos") == true) {
+            $sql .= "uirn_notas_retorno LIKE '%" . trim($patterns->search->searchdata->motivos->name) . "%'";
+            if (count(get_object_vars($patterns->search->searchdata)) > 3) $sql .= " AND ";
+        }
+        if (property_exists($patterns->search->searchdata, "nf") == true) {
+            $nf_search = $patterns->search->searchdata->nf;
+            $nfe = 's:' . strlen($nf_search) . ':"' . $nf_search . '"';
+            $sql .= "(uirn_notas_retorno LIKE '%" . $nfe . "%'";
+            $sql .= " OR ";
+            $sql .= "uirn_romaneios = '" . trim($patterns->search->searchdata->romaneio) . "')";
         }
         $sql .= " LIMIT " . trim($patterns->ini) . ", " . trim($patterns->max);
         return $sql;
     }
-    /*SQL*/
+    /*SQL -> INSERT DATA*/
     public function loopdata_insert_registros_nfe()
     {
         $patterns = json_decode($this->entry);
@@ -185,6 +195,39 @@ class Logistica_loopdata
     public function loopdata_listar_registros_nfe()
     {
         $sql = "SELECT uirn_id FROM uni_intra_retorno_nfes";
+        return $sql;
+    }
+    /*SQL*/
+    public function loopdata_listar_registros_nfe_search()
+    {
+        /*PREPARE DATA TO SEARCH*/
+        $patterns = $this->build["origin"];
+
+        /*SQL INIT*/
+        $sql = "SELECT * FROM uni_intra_retorno_nfes";
+        $sql .= " WHERE ";
+        /*IF EXIST PROPERTY -> motorista*/
+        if (property_exists($patterns->search->searchdata, "motorista") == true) {
+            $sql .= "uirn_agregado_id = '" . trim($patterns->search->searchdata->motorista->id) . "'";
+            if (count(get_object_vars($patterns->search->searchdata)) > 1) $sql .= " AND ";
+        }
+        /*IF EXIST PROPERTY -> equipe*/
+        if (property_exists($patterns->search->searchdata, "equipe") == true) {
+            $sql .= "uirn_notas_cliente LIKE '%" . $patterns->search->searchdata->equipe->name . "%'";
+            if (count(get_object_vars($patterns->search->searchdata)) > 1) $sql .= " AND ";
+        }
+        /*IF EXIST PROPERTY -> motivo*/
+        if (property_exists($patterns->search->searchdata, "motivos") == true) {
+            $sql .= "uirn_notas_retorno LIKE '%" . trim($patterns->search->searchdata->motivos->name) . "%'";
+            if (count(get_object_vars($patterns->search->searchdata)) > 1) $sql .= " AND ";
+        }
+        if (property_exists($patterns->search->searchdata, "nf") == true) {
+            $nf_search = $patterns->search->searchdata->nf;
+            $nfe = 's:' . strlen($nf_search) . ':"' . $nf_search . '"';
+            $sql .= "(uirn_notas_retorno LIKE '%" . $nfe . "%'";
+            $sql .= " OR ";
+            $sql .= "uirn_romaneios = '" . trim($patterns->search->searchdata->romaneio) . "')";
+        }
         return $sql;
     }
     /*SQL*/
@@ -239,7 +282,7 @@ class Logistica_loopdata
     public function loopdata_no_build()
     {
         $array_combine = array();
-        $array_combine["status"] = 1;
+        $array_combine["status"] = 0;
         $array_combine["data"] = array();
         $array_combine["msn"] = "Desculpe, não foi possível localizar os dados solicitados! -> " . $this->swit . "";
         return json_encode($array_combine);
@@ -265,7 +308,7 @@ class Logistica_loopdata
     public function gerar_dados_cliente()
     {
         /*DADOS CLIENTE*/
-        $dados_cli = array("codcliente", "nomecliente", "vendedor");
+        $dados_cli = array("cod_cliente", "nome_cliente", "vendedor");
         /*CONFIG*/
         $nArray = array();
         $array_final = array();
@@ -287,7 +330,7 @@ class Logistica_loopdata
     public function gerar_dados_retornos()
     {
         /*DADOS CLIENTE*/
-        $dados_nfe = array("codcliente", "nomecliente", "vendedor");
+        $dados_nfe = array("codcliente", "nomecliente", "vendedor", "empresa");
         /*CONFIG*/
         $nArray = array();
         $array_final = array();
@@ -300,6 +343,7 @@ class Logistica_loopdata
                     if ($tags == "liberadopor") $tags = "liberado_por";
                     if ($tags == "motivonome") $tags = "motivo_nome";
                     if ($tags == "codmotivo") $tags = "cod_motivo";
+                    if ($tags == "empresa") $tags = "filial";
                     if ($tags == "nfe") $tags = "NF";
                     $nArray[$tags] = $content;
                 }

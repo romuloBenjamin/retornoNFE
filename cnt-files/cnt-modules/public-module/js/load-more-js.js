@@ -46,9 +46,12 @@ const hideLoadMoreLoading = () => {
 
 // Set pagination and make the new request
 const loadMore = (pattern) => {
-    pattern.paginations.current++;
-    showLoadMoreLoading();
-    sendRequest(pattern);
+    // Only the last one will have less than MAX_ENTRIES_PER_PAGE if it wasn't disabled on previous hideLoadMoreLoading pass
+    if(loadedEntries % MAX_ENTRIES_PER_PAGE === 0) {
+        pattern.paginations.current++;
+        showLoadMoreLoading();
+        sendRequest(pattern);
+    }
 }
 
 // Add the on click event on load more button

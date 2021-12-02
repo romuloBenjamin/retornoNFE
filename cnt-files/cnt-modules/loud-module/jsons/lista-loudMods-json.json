@@ -26,6 +26,11 @@
             "file": "paginations-loopdata"
         },
         {
+            "module": "public",
+            "folder":"class",
+            "file": "paginations-factory"
+        },
+        {
             "module": "usuarios",
             "folder":"class",
             "file": "usuarios-compound"

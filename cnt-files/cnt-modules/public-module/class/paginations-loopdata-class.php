@@ -14,16 +14,11 @@ class Paginations_loopdata
     public function loopdata_paginations()
     {
         $loops = new Paginations_loopdata();
+        $loops->entry = $this->entry;
         switch ($this->swit) {
-            case 'listar-funcionarios-paginations-max-view':
-                $loops->entry = $this->entry;
-                $loops->swit = "listar-paginations-max-view";
-                $loops->build = $this->build;
-                return $loops->loopdata_funcionarios();
-                break;
-            case 'listar-retronos-nfe-paginations-max-view':
-                $loops->entry = $this->entry;
-                $loops->swit = "listar-paginations-max-view";
+            case 'listar-retronos-nfe-paginations':
+                if ($this->entry->search_mode == true) $loops->swit = "listar-retronos-nfe-paginations-search";
+                if ($this->entry->search_mode == false) $loops->swit = $this->swit;
                 $loops->build = $this->build;
                 return $loops->loopdata_logistica();
                 break;

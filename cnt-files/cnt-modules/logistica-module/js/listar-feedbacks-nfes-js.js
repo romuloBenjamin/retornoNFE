@@ -17,7 +17,7 @@ sendRequest(feedbackPattern);
 
 // Receive the request that was sent
 function receiveRequest(params) {
-    if(params) listarFeedbacks(params.data);
+    listarFeedbacks(params.data);
 }
 
 // Retrieve the total number of entries
@@ -30,58 +30,60 @@ initLoadMoreButton(feedbackPattern);
 
 // Build the feedbacks list
 async function listarFeedbacks(data) {
-    const placer = document.querySelector("#feedbackPlacer");
-    for(const [index, dataItem] of data.entries()) {
-        for(const [nfeIndex, nfeData] of dataItem.data_nfe.entries()) {
-            // Cliente data
-            const clienteData = dataItem.data_cli[nfeIndex];
-            // Clone the original node
-            const originalFeedbackLine = document.querySelector("#feedbackCloneNode");
-            const feedbackClone = originalFeedbackLine.cloneNode(true);
-            const idSuffix = `-${(index + loadedEntries)}_${nfeIndex}`;
-            // Set clone id
-            feedbackClone.id = feedbackClone.id.replace("CloneNode", "") + idSuffix;
-            const dataCells = feedbackClone.querySelectorAll("td");
-            //if(index === 0) console.log(dataItem);
-            // NF number
-            dataCells[0].innerHTML = nfeData.NF;
-            // Vendedor
-            dataCells[1].innerHTML = clienteData.vendedor + " - " + await getVendedorName(clienteData.vendedor);
-            // Cliente
-            let clienteName = clienteData.nome_cliente;
-            if(clienteName === "") clienteName = "Não encontrado";
-            dataCells[2].innerHTML = clienteData.cod_cliente + " - " + clienteName;
-            // Filial
-            const filialId = parseInt(nfeData.filial);
-            dataCells[3].innerHTML = filialId + " - " + await getFilialName(filialId);
-            // Motivo
-            dataCells[4].innerHTML = parseInt(nfeData.motivo) + " - " + nfeData.motivo_nome;
-            // Feedbacks
-            const feedbacks = nfeData.feedbacks;
-            const feedbackContainer = dataCells[5].querySelector("#textareaPlacer");
-            feedbackContainer.id += idSuffix;
-            if(feedbacks) {
-                // Append the feedbacks
-            } else {
-                // Test
-                const random = Math.floor(Math.random() * 3) + 1;
-                for(let i = 0; i < random; i++) {
-                    addFeedbackTextarea(feedbackContainer, true);
+    if(data) {
+        const placer = document.querySelector("#feedbackPlacer");
+        for(const [index, dataItem] of data.entries()) {
+            for(const [nfeIndex, nfeData] of dataItem.data_nfe.entries()) {
+                // Cliente data
+                const clienteData = dataItem.data_cli[nfeIndex];
+                // Clone the original node
+                const originalFeedbackLine = document.querySelector("#feedbackCloneNode");
+                const feedbackClone = originalFeedbackLine.cloneNode(true);
+                const idSuffix = `-${(index + loadedEntries)}_${nfeIndex}`;
+                // Set clone id
+                feedbackClone.id = feedbackClone.id.replace("CloneNode", "") + idSuffix;
+                const dataCells = feedbackClone.querySelectorAll("td");
+                //if(index === 0) console.log(dataItem);
+                // NF number
+                dataCells[0].innerHTML = nfeData.NF;
+                // Vendedor
+                dataCells[1].innerHTML = clienteData.vendedor + " - " + await getVendedorName(clienteData.vendedor);
+                // Cliente
+                let clienteName = clienteData.nome_cliente;
+                if(clienteName === "") clienteName = "Não encontrado";
+                dataCells[2].innerHTML = clienteData.cod_cliente + " - " + clienteName;
+                // Filial
+                const filialId = parseInt(nfeData.filial);
+                dataCells[3].innerHTML = filialId + " - " + await getFilialName(filialId);
+                // Motivo
+                dataCells[4].innerHTML = parseInt(nfeData.motivo) + " - " + nfeData.motivo_nome;
+                // Feedbacks
+                const feedbacks = nfeData.feedbacks;
+                const feedbackContainer = dataCells[5].querySelector("#textareaPlacer");
+                feedbackContainer.id += idSuffix;
+                if(feedbacks) {
+                    // Append the feedbacks
+                } else {
+                    // Test
+                    const random = Math.floor(Math.random() * 3) + 1;
+                    for(let i = 0; i < random; i++) {
+                        addFeedbackTextarea(feedbackContainer, true);
+                    }
                 }
+                // Edit Button
+                const editButton = dataCells[5].querySelector("#editButton");
+                editButton.id += idSuffix;
+                editButton.addEventListener('click', editFeedback, false);
+                // Save Button
+                const saveButton = dataCells[5].querySelector("#saveButton")
+                saveButton.id += idSuffix;
+                saveButton.addEventListener('click', saveFeedback, false);
+                // Append it to the placer
+                placer.appendChild(feedbackClone);
             }
-            // Edit Button
-            const editButton = dataCells[5].querySelector("#editButton");
-            editButton.id += idSuffix;
-            editButton.addEventListener('click', editFeedback, false);
-            // Save Button
-            const saveButton = dataCells[5].querySelector("#saveButton")
-            saveButton.id += idSuffix;
-            saveButton.addEventListener('click', saveFeedback, false);
-            // Append it to the placer
-            placer.appendChild(feedbackClone);
         }
+        addToLoadedEntries(data.length);
     }
-    addToLoadedEntries(data.length);
     hideLoadMoreLoading();
 }
 

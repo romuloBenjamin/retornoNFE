@@ -64,7 +64,9 @@ function hideLoading() {
 function getFormData() {
     const form = document.querySelector("#geradorRelatoriosForm");
     const formElements = form.elements;
-    const formData = {};
+    const formData = {
+        filterby: {}
+    };
     for(let element of formElements) {
         let property = element.id.toLowerCase();
         if(element.tagName === "INPUT") {
@@ -86,7 +88,7 @@ function getFormData() {
                 if(property[property.length - 1] === "s") property = property.slice(0, -1);
                 let optionText = element.options[element.selectedIndex].text;
                 if(optionText.includes(" - ")) optionText = optionText.split(" - ")[1];
-                formData[property] = {
+                formData["filterby"][property] = {
                     id: element.value,
                     desc: optionText
                 }

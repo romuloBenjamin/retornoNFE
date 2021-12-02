@@ -2,12 +2,12 @@ document.onkeydown = emptyLocalStorage_f5;
 document.onkeyup = emptyLocalStorage_f5;
 
 var popups_path = "http://127.0.0.1:8080/2.0/retorno-nfes/";
+//var popups_path = "http://127.0.0.1/2.0/retorno-nfes/";
 
 /*IDENTIFICAR F5*/
 function emptyLocalStorage_f5(params) {
     if(params.keyCode === 116){
-        if(localStorage.hasOwnProperty("listar")) localStorage.removeItem("listar");
-        if(localStorage.hasOwnProperty("searchdata")) localStorage.removeItem("searchdata");
+        localStorage.clear();
     }
 }
 /*PUSH PAGE -> IR PARA PAGINA*/
@@ -41,25 +41,29 @@ async function sendRequest(params) {
     try {
         var results = await fetch(louds, config);
         results = await results?.json();
+        console.log(results);
         if(params.swit === "listar-funcionarios-short") await receiveRequest(results, params);
-        if(params.swit === "listar-retornos-nfe") await receiveRequest(results, params);
-        if(params.swit === "listar-retornos-nfe-search") await receiveRequest(results, params, true);
-        if(params.swit === "listar-retronos-nfe-paginations") prepare_paginations_object(results, params.paginations);
+        if(params.swit === "listar-retornos-nfe") receiveRequest_listar_nfe(results, params);
+        if(params.swit === "listar-retornos-nfe-search") await receiveRequest_listar_nfe(results, params);
         if(params.swit === "listar-feedbacks-nfe") await receiveRequest(results, params);
+        if(params.swit === "listar-retronos-nfe-paginations") receiveRequest_paginations(results, params);
         if(params.swit === "listar-feedbacks-nfe-paginations") setTotalEntries(results);
         if(params.swit === "pesquisar-romaneios") await receiveRequest(results, params);
         if(params.swit === "salvar-retornos-nfe") await receiveRequest_popup(results, params);
         if(params.swit === "listar-relatorio-sintetico") await receiveRequest_relatorios(results, params);
     } catch (error) {
-        console.log("erro ao gerar REQUEST Principal");
+        console.log(error);
+        //console.log("erro ao gerar REQUEST Principal");
         setTimeout(()=>{
             //location.reload();
         }, 600);
     }
 }
 /*GET N REQUEST*/
-function createRequestPath(params) {
-    var path = "cnt-files/cnt-modules/[MODULES]/[FOLDER]/[FILE]";
+function createRequestPath(params, origin) {
+    let path = "";
+    if(origin === "relatorio") path = "../../../../../";
+    path += "cnt-files/cnt-modules/[MODULES]/[FOLDER]/[FILE]";
     path = path.replace("[MODULES]", params.module+"-module");
     path = path.replace("[FOLDER]", params.folder);
     if(params.extensions === "php") path = path.replace("[FILE]", "listar-"+params.file+"-core.php");
@@ -123,14 +127,14 @@ function camel_case(params) {
 }
 
 // Receives a module and a file and returns its data
-async function getJsonData(module, file) {
+async function getJsonData(module, file, origin) {
     /* Request config */
     const requestData = {};
     requestData.module = module;
     requestData.folder = "jsons";
     requestData.extensions = "json";
     requestData.file = file;
-    requestData.path = createRequestPath(requestData);
+    requestData.path = createRequestPath(requestData, origin);
     const request = loudRequest(requestData);
     try {
         /* Request the data */
@@ -138,7 +142,7 @@ async function getJsonData(module, file) {
         const json = await response?.json();
         return json?.dataset[0]?.data;
     } catch (e) {
-        console.log("Falha ao buscar dados de filiais -> " + requestData.file);
+        console.log("Falha ao buscar dados -> " + requestData.file);
     }
     return null;
 }

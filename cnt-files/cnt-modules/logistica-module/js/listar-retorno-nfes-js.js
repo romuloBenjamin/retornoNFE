@@ -1,5 +1,4 @@
 /*OBJ PATTERNS OF MODULE*/
-var patterns = setRetornosNFEPatterns();
 function setRetornosNFEPatterns() {
     var patterns = {};
     patterns.module = "logistica";
@@ -7,44 +6,41 @@ function setRetornosNFEPatterns() {
     patterns.file = "retornos-nfe";
     patterns.extensions = "php";
     patterns.swit = "listar-retornos-nfe";
-    patterns.paginations = setPaginations(0, false);
+    patterns.paginations = setPaginations();
     patterns.path = createRequestPath(patterns);
     return patterns;
 }
 /*-------------------------->SEND REQUEST DATA<--------------------------*/
 /*DEFAULT DATA LISTAR REGISTROS -> SEND REQUEST*/
-//console.log(patterns);
-var send_request = pre_sendRequest("retornoNFE");
-var send_request_paginations = pre_sendRequest("Paginations");
-
-/*PRE SEND REQUEST*/
-async function pre_sendRequest(str) {
+function prepare_sendRequest() {
     var patterns = setRetornosNFEPatterns();
-    if(str === "Paginations") patterns.swit = "listar-retronos-nfe-paginations";
-    await sendRequest(patterns);
+    sendRequest(patterns);
 }
-/*ONCHANGE DATA LISTAR REGISTROS -> SEND REQUEST*/
-//var listarRegistros = document.querySelector("select#forListar");
-
+prepare_sendRequest();
 /*-------------------------->RECEIVE REQUEST DATA<--------------------------*/
 /*RECIEVE REQUEST*/
-async function receiveRequest(params, patterns, search = false) {
-    /*IF EMPTY DATA*/
-    if(params.data.length === 0) return emptySearch(params, true);
-    if(params.data.length > 0) {
-        if(search === true) emptySearch(params);
+async function receiveRequest_listar_nfe(params, patterns) {
+    /*PRIMARY RESULTSET*/
+    if(patterns.paginations?.search === undefined){
         /*SET LOOPDATA*/
         var loops = params.data;
         /*SET PLACERS*/
         var placers = document.querySelector("table#table-retorno-nfe > tbody");
         //console.log(params);
-        /*BUILD VIEWER*/
-        if(search === false) var build_loopdata = build_loopRequest(loops, placers);
-        if(search === true) {
-            var build_loopdata = build_loopRequest(loops, placers);
-            return false;
-        }
-    } 
+        build_loopRequest(loops, placers);
+    }
+    /*SEARCH RESULTSET*/
+    if(patterns.paginations?.search != undefined){
+        await emptySearch();
+        /*SET LOOPDATA*/
+        var loops = params.data;
+        /*SET PLACERS*/
+        var placers = document.querySelector("table#table-retorno-nfe > tbody");
+        //console.log(params);
+        build_loopRequest(loops, placers);
+    }
+    /*START PAGINATIONS*/
+    prepare_paginations(patterns);    
 }
 
 /*VIEW RECEIVE REQUEST IN FOREACH LOOP*/
@@ -100,18 +96,13 @@ function listar_retornos(params) {
 }
 
 /*LISTAR EMPTY DATA NFE*/
-function emptySearch(params, mode = false) {
+async function emptySearch() {
     var placers = document.querySelector("table#table-retorno-nfe > tbody");
     var removeLines = placers.querySelectorAll("tr");
-    for (let index = 1; index < removeLines.length; index++) {
-        const rem = removeLines[index];
-        rem.remove();
-    }
-    /*IF MODE FALSE*/
-    if(mode === true){
-        placers.appendChild(document.createElement("tr")).setAttribute("id", "emptySearch");
-        placers.querySelector("tr#emptySearch").innerHTML = "<td colspan=\"10\"><span class=\"d-flex alert alert-warning w-100\">"+params.msn.split("->")[0]+"</span></td>";
-    }
+    removeLines.forEach((rem, indice) => {
+        if(indice != 0) rem.remove();
+    });
+    return;
 }
 
 /*LISTAR NFES*/

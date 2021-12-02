@@ -99,12 +99,12 @@
                             </div>
                             <select id="forAvarias" class="form-control form-control-sm" name="forAvarias">
                                 <option selected="true" value="0">Escolha...</option>
-                                <option value="0">Furado</option>
-                                <option value="1">Vazando</option>
-                                <option value="2">Vazio</option>
-                                <option value="3">Molhado</option>
-                                <option value="4">Rasgado</option>
-                                <option value="5">Faltante</option>
+                                <option value="1">Furado</option>
+                                <option value="2">Vazando</option>
+                                <option value="3">Vazio</option>
+                                <option value="4">Molhado</option>
+                                <option value="5">Rasgado</option>
+                                <option value="6">Faltante</option>
                             </select>
                         </div>
                     </div>

@@ -1083,13 +1083,13 @@ section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro hr 
   margin-right: 0.5rem;
 }
 
-#geradorRelatoriosPanel #geradorRelatoriosForm .loading-text {
-  margin-left: 0.75rem;
-}
-
 #geradorRelatoriosPanel #geradorRelatoriosForm #avariasOptionContainer,
 #geradorRelatoriosPanel #geradorRelatoriosForm #empresasContainer {
   margin: 0 0 0.5rem 0;
+}
+
+.loading-text {
+  margin-left: 0.75rem;
 }
 
 .container-nfes-data small {
@@ -1184,6 +1184,119 @@ section.container-dados-nfe-retornadas div.form-parts-transportador-cadastro hr 
 
 .feedbacks-container #table-feedbacks-nfe .button-container .feedback-button:not(:last-child) {
   margin-bottom: 0.5rem;
+}
+
+#relatorioContentPlacer li {
+  background-color: transparent !important;
+}
+
+#relatorioContentPlacer .thead-primary {
+  background-color: rgba(0, 0, 0, 0.09) !important;
+}
+
+#relatorioContentPlacer .vendas {
+  background-color: #dcdbea;
+}
+
+#relatorioContentPlacer .funcionarios-desligados {
+  background-color: #afc2c6;
+}
+
+#relatorioContentPlacer .rh {
+  background-color: #dcd3b8;
+}
+
+#relatorioContentPlacer th,
+#relatorioContentPlacer td {
+  border: none;
+}
+
+#container-relatorio .conteudo-interno-relatorios {
+  border: 5px double #888888;
+}
+
+#container-relatorio #headerRelatorio {
+  height: auto;
+}
+
+#container-relatorio .container-relatorio-sintetico-sort {
+  background-color: rgba(156, 156, 156, 0.14);
+  border: 4px ridge #adadad;
+}
+
+#container-relatorio .container-relatorio-sintetico-sort:not(:first-child) {
+  margin: 0rem;
+}
+
+#container-relatorio #groupDataItemStartPlacer {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+#container-relatorio .table-container {
+  background-color: rgba(255, 255, 255, 0.11);
+  border: 1px solid #3d3d3d;
+}
+
+#container-relatorio .table-container:not(:last-child) {
+  border-bottom: 0;
+}
+
+#container-relatorio .table-container .main-table {
+  -webkit-box-flex: 3 !important;
+      -ms-flex: 3 !important;
+          flex: 3 !important;
+}
+
+#container-relatorio .table-container .main-table table {
+  margin-bottom: 0 !important;
+}
+
+#container-relatorio .avarias-and-feedback-placer {
+  -webkit-box-flex: 1 !important;
+      -ms-flex: 1 !important;
+          flex: 1 !important;
+}
+
+#container-relatorio .avarias-and-feedback-placer:last-child {
+  margin-bottom: 0;
+}
+
+#container-relatorio .avarias-and-feedback-placer .avarias-table {
+  margin-bottom: 0;
+}
+
+#container-relatorio .avarias-and-feedback-placer .avarias-table td {
+  border: 1px solid #dee2e6;
+}
+
+#container-relatorio .avarias-and-feedback-placer .avarias-table #avariasProdutoTablePlacer {
+  border: none;
+  width: 100%;
+}
+
+#container-relatorio .avarias-and-feedback-placer .avarias-table #avariasProdutoTablePlacer .avarias-produto-table {
+  width: 30%;
+  border: none;
+  margin-bottom: 0;
+}
+
+#container-relatorio .avarias-and-feedback-placer .avarias-table #avariasProdutoTablePlacer .avarias-produto-table td,
+#container-relatorio .avarias-and-feedback-placer .avarias-table #avariasProdutoTablePlacer .avarias-produto-table th {
+  padding: 0.5rem;
+  border: none;
+}
+
+#container-relatorio .avarias-and-feedback-placer .avarias-table #avariasProdutoTablePlacer .obs-textarea {
+  margin: 1rem;
+}
+
+#container-relatorio .avarias-and-feedback-placer .feedback-table {
+  height: 100%;
+}
+
+#container-relatorio .avarias-and-feedback-placer .feedback-table tbody {
+  border: 1px solid #dee2e6;
 }
 
 .paginations-controls .qtd-registros {
